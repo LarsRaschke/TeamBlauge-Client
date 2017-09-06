@@ -11,7 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import model.User;
+
 
 public class LoginController {
 
@@ -23,7 +23,6 @@ public class LoginController {
     @FXML
     private JFXTextField textFieldLogInScreenUsername;
 
-    // currently Invisible
     @FXML JFXPasswordField textFieldLogInScreenPassword;
 
     @FXML
@@ -44,8 +43,6 @@ public class LoginController {
     	
     	System.out.println("created LoginController");
     	
-    	
-        
     }
     
     public void initnshit() {
@@ -86,8 +83,12 @@ public class LoginController {
     	checkLoginData();
     }
     
+    private String username = "fiete";
+    //private String passwort = "123";
+    
     public void checkLoginData() {
-    	main.log("Check Login");
+
+main.log("Check Login");
     	
     	main.user = Abfragen.erstelleUser(textFieldLogInScreenUsername.getText());
     	
@@ -97,6 +98,7 @@ public class LoginController {
 	    else {
 	    	infoLabelLogInScreen.setText("Falscher Username!");
 	    }
+
     }
 
     @FXML
