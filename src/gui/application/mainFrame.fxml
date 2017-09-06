@@ -163,7 +163,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXMasonryPane fx:id="mansoryPaneTags" layoutX="3.0" layoutY="459.0" prefHeight="103.0" prefWidth="340.0" style="-fx-background-color: white;" />
+                  <JFXMasonryPane fx:id="mansoryPaneTags" layoutX="3.0" layoutY="459.0" prefHeight="103.0" prefWidth="340.0" style="-fx-background-color: orange;" />
                </children>
             </AnchorPane>
         </content>
