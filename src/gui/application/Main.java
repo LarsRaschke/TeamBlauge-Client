@@ -15,7 +15,7 @@ public class Main extends Application {
 
 	BorderPane root = new BorderPane();
 	Stage primaryStage = new Stage();
-	
+
 	public User user;
 
 	@Override
@@ -24,8 +24,8 @@ public class Main extends Application {
 			this.primaryStage = primaryStage;
 			this.primaryStage.setTitle("BLAUGE Kanban");
 			initRoot();
-			showLogin();
-
+			// showLogin();
+			showGUI();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
