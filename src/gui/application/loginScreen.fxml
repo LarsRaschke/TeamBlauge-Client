@@ -51,14 +51,9 @@
          </graphic>
       </JFXButton>
       <Label fx:id="infoLabelLogInScreen" layoutX="520.0" layoutY="244.0" prefHeight="34.0" prefWidth="200.0" textAlignment="CENTER" textFill="RED" />
-      <ImageView fitHeight="150.0" fitWidth="297.0" layoutX="472.0" layoutY="33.0" preserveRatio="true">
+      <ImageView fitHeight="150.0" fitWidth="297.0" layoutX="472.0" layoutY="95.0" preserveRatio="true">
          <image>
-            <Image url="@../resources/Icons/BLAUGE_Labs_Logo.png" />
-         </image>
-      </ImageView>
-      <ImageView fitHeight="35.0" fitWidth="200.0" layoutX="520.0" layoutY="166.0">
-         <image>
-            <Image url="@../resources/Icons/KANBAN_Schriftzug.png" />
+            <Image url="@../resources/Icons/BLAUGE_Labs_Logo_2.png" />
          </image>
       </ImageView>
    </children>
