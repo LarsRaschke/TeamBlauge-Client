@@ -31,7 +31,7 @@
          <font>
             <Font name="Roboto Light" size="15.0" />
          </font></Label>
-      <MenuButton fx:id="menuButtonFilter" layoutX="14.0" layoutY="61.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Filter">
+      <MenuButton fx:id="menuButtonFilter" layoutX="677.0" layoutY="60.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Filter">
          <items>
             <CheckMenuItem mnemonicParsing="false" text="Meine" />
             <CheckMenuItem mnemonicParsing="false" text="A" />
@@ -185,7 +185,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="buttonProceed" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="946.0" layoutY="50.0" onAction="#buttonProceedPressed" prefHeight="50.0" prefWidth="70.0" ripplerFill="ORANGE">
+      <JFXButton fx:id="buttonProceed" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="409.0" layoutY="50.0" onAction="#buttonProceedPressed" prefHeight="50.0" prefWidth="70.0" ripplerFill="ORANGE">
          <graphic>
             <ImageView fitHeight="40.0" fitWidth="40.0">
                <image>
@@ -194,7 +194,14 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="buttonReturn" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="876.0" layoutY="50.0" onAction="#buttonReturnPressed" prefHeight="50.0" prefWidth="70.0" ripplerFill="ORANGE" />
+      <JFXButton fx:id="buttonReturn" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="339.0" layoutY="50.0" onAction="#buttonReturnPressed" prefHeight="50.0" prefWidth="70.0" ripplerFill="ORANGE">
+         <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0">
+               <image>
+                  <Image url="@../resources/Icons/ios7-custom-back.png" />
+               </image>
+            </ImageView>
+         </graphic></JFXButton>
       <JFXButton fx:id="buttonInformation" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="827.0" layoutY="100.0" onAction="#buttonInformationPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="25.0">
@@ -248,12 +255,12 @@
             <Font name="Roboto Light" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="labelFinished" alignment="CENTER" layoutX="544.0" layoutY="100.0" prefHeight="30.0" prefWidth="286.0" style="-fx-background-color: #969696;" text="Finished">
+      <Label fx:id="labelFinished" alignment="CENTER" layoutX="544.0" layoutY="100.0" prefHeight="30.0" prefWidth="273.0" style="-fx-background-color: #969696;" text="Finished">
          <font>
             <Font name="Roboto Light" size="15.0" />
          </font>
       </Label>
-      <JFXButton fx:id="buttonNewTask" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="780.0" layoutY="50.0" onAction="#buttonNewTaskPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE">
+      <JFXButton fx:id="buttonNewTask" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="50.0" onAction="#buttonNewTaskPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE">
          <graphic>
             <ImageView fitHeight="40.0" fitWidth="40.0">
                <image>
@@ -262,18 +269,14 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="891.0" layoutY="55.0">
-         <image>
-            <Image url="@../resources/Icons/ios7-custom-back.png" />
-         </image>
-      </ImageView>
       <ScrollPane fx:id="scrollPaneMansory" layoutY="130.0" prefHeight="590.0" prefWidth="830.0" style="-fx-background-color: #969696;">
         <content>
-          <AnchorPane fx:id="anchorPaneMansory" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="815.0" style="-fx-background-color: #969696;">
+          <AnchorPane fx:id="anchorPaneMansory" minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="815.0" style="-fx-background-color: #969696;">
                <children>
-                  <JFXMasonryPane fx:id="mansoryPaneToDo" prefHeight="800.0" prefWidth="272.0" style="-fx-background-color: #969696;" />
-                  <JFXMasonryPane fx:id="mansoryPaneDoing" layoutX="272.0" prefHeight="590.0" prefWidth="271.0" style="-fx-background-color: #888888;" />
-                  <JFXMasonryPane fx:id="mansoryPaneFinished" layoutX="543.0" prefHeight="590.0" prefWidth="272.0" style="-fx-background-color: #969696;" />
+                  <JFXMasonryPane fx:id="mansoryPaneToDo" prefHeight="0.0" prefWidth="272.0" style="-fx-background-color: #969696;" />
+                  <JFXMasonryPane fx:id="mansoryPaneDoing" layoutX="272.0" prefHeight="0.0" prefWidth="271.0" style="-fx-background-color: #888888;" />
+                  <JFXMasonryPane fx:id="mansoryPaneFinished" layoutX="543.0" prefHeight="0.0" prefWidth="272.0" style="-fx-background-color: #969696;" />
+                  <Label layoutX="272.0" prefHeight="590.0" prefWidth="271.0" style="-fx-background-color: #888888;" />
                </children>
             </AnchorPane>
         </content>

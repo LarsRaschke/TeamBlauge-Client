@@ -313,14 +313,15 @@ public class GUIController {
     
     @FXML
     void buttonNewTaskPressed(ActionEvent event) {
-    	for (int i = 0; i < 10; i++){
     		Label lbl = new Label();
     		lbl.setPrefSize(100, 100);
     		lbl.setStyle("-fx-background-color: white");
-    		lbl.setText("Ich bin Post-It " + i);
-    		anchorPaneMansory.setPrefHeight(i * 180);
-    		mansoryPaneToDo.setPrefHeight(i * 180);   		
+    		mansoryPaneToDo.setPrefHeight(mansoryPaneToDo.getPrefHeight() + 180);
+    		mansoryPaneDoing.setPrefHeight(mansoryPaneToDo.getPrefHeight() + 180);
+    		mansoryPaneFinished.setPrefHeight(mansoryPaneToDo.getPrefHeight() + 180);
     		mansoryPaneToDo.getChildren().add(lbl);
-    	}
+    		if (mansoryPaneToDo.getPrefHeight() > anchorPaneMansory.getPrefHeight()){
+    			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 180);
+    		}
     }
 }
