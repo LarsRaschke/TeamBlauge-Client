@@ -276,9 +276,8 @@
           <AnchorPane fx:id="anchorPaneMansory" minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="815.0" style="-fx-background-color: #969696;">
                <children>
                   <VBox fx:id="mansoryPaneToDo" prefHeight="590.0" prefWidth="271.0" />
-                  <VBox fx:id="mansoryPaneDoing" layoutX="272.0" prefHeight="590.0" prefWidth="271.0" />
+                  <VBox fx:id="mansoryPaneDoing" layoutX="272.0" prefHeight="590.0" prefWidth="271.0" style="-fx-background-color: #888888;" />
                   <VBox fx:id="mansoryPaneFinished" layoutX="543.0" prefHeight="584.0" prefWidth="271.0" />
-                  <Label fx:id="labelMasonryPaneOptic" layoutX="272.0" prefHeight="590.0" prefWidth="271.0" style="-fx-background-color: #888888;" />
                </children>
             </AnchorPane>
         </content>

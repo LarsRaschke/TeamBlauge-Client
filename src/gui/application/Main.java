@@ -26,6 +26,7 @@ public class Main extends Application {
 			initRoot();
 			// showLogin();
 			showGUI();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
