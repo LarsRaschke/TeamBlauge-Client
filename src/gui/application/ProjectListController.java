@@ -148,6 +148,7 @@ public class ProjectListController {
     		textAreaProjectDescription.editableProperty().set(true);
         	this.buttonEditProjectDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
         	textAreaProjectDescription.setStyle("text-area-background: white;");
+
     	}
     }
     
