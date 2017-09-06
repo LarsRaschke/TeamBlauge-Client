@@ -269,7 +269,7 @@
       </ImageView>
       <ScrollPane fx:id="scrollPaneMansory" layoutY="130.0" prefHeight="590.0" prefWidth="830.0" style="-fx-background-color: #969696;">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="815.0" style="-fx-background-color: #969696;">
+          <AnchorPane fx:id="anchorPaneMansory" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="815.0" style="-fx-background-color: #969696;">
                <children>
                   <JFXMasonryPane fx:id="mansoryPaneToDo" prefHeight="800.0" prefWidth="272.0" style="-fx-background-color: #969696;" />
                   <JFXMasonryPane fx:id="mansoryPaneDoing" layoutX="272.0" prefHeight="590.0" prefWidth="271.0" style="-fx-background-color: #888888;" />
