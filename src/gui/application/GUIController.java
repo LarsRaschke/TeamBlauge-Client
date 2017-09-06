@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXColorPicker;
@@ -165,6 +166,8 @@ public class GUIController {
 
 	private Label activeLabel;
 	
+	private ArrayList<Label> LabelList;
+	
 	public GUIController() {
 		this.colorPicker = new JFXColorPicker();
 		// this.colorPicker.editableProperty().bind(column.editableProperty());
@@ -187,7 +190,7 @@ public class GUIController {
     	textFieldTaskname.editableProperty().set(false);
     	textAreaDescription.editableProperty().set(false);
     	
-    	labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
+//    	labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
 		
 		((Scene) labelProjectname.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -317,6 +320,7 @@ public class GUIController {
     @FXML
     void buttonNewTaskPressed(ActionEvent event) {
     		Label lbl = new Label();
+    		
     		lbl.setPrefSize(100, 100);
     		lbl.setStyle("-fx-background-color: white");
     		mansoryPaneToDo.setPrefHeight(mansoryPaneToDo.getPrefHeight() + 180);
@@ -330,33 +334,9 @@ public class GUIController {
     	    lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
     	        @Override
     	        public void handle(MouseEvent e) {
-    	        	labelUser.setText("PENIS");
+    	        	//Hier Code einfügen der beim Click ausgeführt wird
     	        }
     	      });
+    	    LabelList.add(lbl);
     }
-    
-    
-    //---- noch nicht fertig, nur von oben kopiert (new task button funktion)---------------
-    @FXML
-    void buttonAddTagPressed(ActionEvent event) {
-    		Label lbl = new Label();
-    		lbl.setPrefSize(100, 100);
-    		lbl.setStyle("-fx-background-color: white");
-    		mansoryPaneToDo.setPrefHeight(mansoryPaneToDo.getPrefHeight() + 180);
-    		mansoryPaneDoing.setPrefHeight(mansoryPaneToDo.getPrefHeight() + 180);
-    		mansoryPaneFinished.setPrefHeight(mansoryPaneToDo.getPrefHeight() + 180);
-    		mansoryPaneToDo.getChildren().add(lbl);
-    		if (mansoryPaneToDo.getPrefHeight() > anchorPaneMansory.getPrefHeight()){
-    			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 180);
-    		}
-
-    	    lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
-    	        @Override
-    	        public void handle(MouseEvent e) {
-    	        	labelUser.setText("PENIS");
-    	        }
-    	      });
-    }
-    
-    //-------------------------------------------------------------------------------------------
 }
