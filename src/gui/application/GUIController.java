@@ -153,9 +153,15 @@ public class GUIController {
 
 	@FXML
 	private JFXMasonryPane mansoryPaneFinished;
+	
+	@FXML
+	private JFXMasonryPane mansoryPaneTags;
 
 	@FXML
 	private AnchorPane anchorPaneMansory;
+	
+	@FXML
+	private AnchorPane anchorPaneTaskInformation;
 
 	@FXML
 	private ScrollPane scrollPaneMansory;
@@ -334,5 +340,34 @@ public class GUIController {
 			}
 		});
 		LabelList.add(lbl);
+	}
+	
+	@FXML
+	void buttonAddTagPressed(ActionEvent event) {
+		main.log("Add Tag", "Button pressed");
+		Label lbl = new Label();
+
+		lbl.setPrefSize(30, 10);
+		lbl.setMaxHeight(5);
+		lbl.setMaxWidth(40);
+		
+		lbl.setText(textFieldTags.getText());
+				
+		lbl.setStyle("-fx-background-color: green; -fx-padding: 2px; -fx-background-radius: 15px; width:40pt; height:10pt; display:inline-block");
+
+		mansoryPaneTags.setPrefHeight(mansoryPaneTags.getPrefHeight() + 180);
+		
+		mansoryPaneTags.getChildren().add(lbl);
+		if (mansoryPaneTags.getPrefHeight() > anchorPaneTaskInformation.getPrefHeight()) {
+			anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getPrefHeight() + 180);
+		}
+
+		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				
+			}
+		});
+		//LabelList.add(lbl);
 	}
 }
