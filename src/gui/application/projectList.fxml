@@ -97,7 +97,7 @@
                </children></AnchorPane>
         </content>
       </ScrollPane>
-      <JFXButton fx:id="buttonAddProject" contentDisplay="GRAPHIC_ONLY" layoutX="501.0" layoutY="50.0" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE" text="Button">
+      <JFXButton fx:id="buttonAddProject" contentDisplay="GRAPHIC_ONLY" layoutX="501.0" layoutY="50.0" onAction="#buttonAddProjectPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE" text="Button">
          <graphic>
             <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
