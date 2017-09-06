@@ -258,7 +258,7 @@
             <Image url="@../resources/Icons/ios7-custom-back.png" />
          </image>
       </ImageView>
-      <ScrollPane layoutY="130.0" prefHeight="590.0" prefWidth="830.0" style="-fx-background-color: #969696;">
+      <ScrollPane fx:id="scrollPaneMansory" layoutY="130.0" prefHeight="590.0" prefWidth="830.0" style="-fx-background-color: #969696;">
         <content>
           <AnchorPane fx:id="anchorPaneMansory" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="815.0" style="-fx-background-color: #969696;">
                <children>

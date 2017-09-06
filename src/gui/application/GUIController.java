@@ -23,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -147,6 +148,9 @@ public class GUIController {
     
     @FXML
     private AnchorPane anchorPaneMansory;
+    
+    @FXML
+    private ScrollPane scrollPaneMansory;
 
 	private Main main;
 
@@ -307,8 +311,8 @@ public class GUIController {
     		lbl.setPrefSize(100, 100);
     		lbl.setStyle("-fx-background-color: white");
     		lbl.setText("Ich bin Post-It " + i);
-    		mansoryPaneToDo.setPrefHeight(i * 110);
-    		
+    		anchorPaneMansory.setPrefHeight(i * 180);
+    		mansoryPaneToDo.setPrefHeight(i * 180);   		
     		mansoryPaneToDo.getChildren().add(lbl);
     	}
     }
