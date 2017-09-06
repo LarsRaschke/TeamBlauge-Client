@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.function.DoubleToIntFunction;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXColorPicker;
@@ -32,8 +33,6 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
@@ -74,6 +73,9 @@ public class GUIController {
 
 	@FXML
 	private Label labelActualStatus;
+
+	@FXML
+	private Label labelMasonryPaneOptic;
 
 	@FXML
 	private JFXTextField textFieldTaskname;
@@ -164,19 +166,6 @@ public class GUIController {
 
 	@FXML
 	private ScrollPane scrollPaneMansory;
-	
-	@FXML
-	private JFXMasonryPane mansoryPaneTags;
-
-	@FXML
-	private AnchorPane anchorPaneTaskInformation;
-	
-	@FXML
-	private AnchorPane anchorPaneTaskInformation1;
-	@FXML
-	private AnchorPane anchorPaneTaskInformation2;
-	@FXML
-	private AnchorPane anchorPaneTaskInformation3;
 
 	private Main main;
 
@@ -185,6 +174,8 @@ public class GUIController {
 	private Label activeLabel;
 
 	private ArrayList<Label> LabelList;
+
+	private static int usedScrollBarHeight;
 
 	private static int taskCounter;
 
@@ -224,10 +215,6 @@ public class GUIController {
 		mansoryPaneFinished.setAlignment(Pos.TOP_CENTER);
 		mansoryPaneFinished.setSpacing(10);
 
-		
-		
-		
-		
 		// labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
 
 		((Scene) labelProjectname.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -247,7 +234,7 @@ public class GUIController {
 				}
 			}
 		});
-		
+
 		this.textFieldTags.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent ke) {
@@ -256,7 +243,7 @@ public class GUIController {
 				}
 			}
 		});
-		
+
 		this.buttonAddTag.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent ke) {
@@ -294,7 +281,17 @@ public class GUIController {
 
 	@FXML
 	void buttonProceedPressed(ActionEvent event) {
-
+		if (activeLabel.getParent() == mansoryPaneToDo) {
+			mansoryPaneToDo.getChildren().remove(activeLabel);
+			mansoryPaneDoing.getChildren().add(activeLabel);
+		} 
+		else if (activeLabel.getParent() == mansoryPaneDoing) {
+			mansoryPaneDoing.getChildren().remove(activeLabel);
+			mansoryPaneFinished.getChildren().add(activeLabel);
+		} 
+		else if (activeLabel.getParent() == mansoryPaneFinished) {
+			buttonProceed.setVisible(false);
+		}
 	}
 
 	@FXML
@@ -304,7 +301,17 @@ public class GUIController {
 
 	@FXML
 	void buttonReturnPressed(ActionEvent event) {
-
+		if (activeLabel.getParent() == mansoryPaneToDo) {
+			buttonReturn.setVisible(false);
+		} 
+		else if (activeLabel.getParent() == mansoryPaneDoing) {
+			mansoryPaneDoing.getChildren().remove(activeLabel);
+			mansoryPaneToDo.getChildren().add(activeLabel);
+		} 
+		else if (activeLabel.getParent() == mansoryPaneFinished) {
+			mansoryPaneFinished.getChildren().remove(activeLabel);
+			mansoryPaneDoing.getChildren().add(activeLabel);
+		}
 	}
 
 	@FXML
@@ -367,78 +374,76 @@ public class GUIController {
 	@FXML
 	void buttonNewTaskPressed(ActionEvent event) {
 		createTask();
+		usedScrollBarHeight = usedScrollBarHeight + 90;
+
+		main.log(anchorPaneMansory.getPrefHeight(), "anchorPaneMansory");
+		main.log(mansoryPaneToDo.getPrefHeight(), "mansoryPaneToDo");
 
 		// Passt Groesse des Pane automatisch an die Anzahl der Tasks an
-		if (mansoryPaneTags.getPrefHeight() > anchorPaneTaskInformation.getPrefHeight()) {
-			anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getPrefHeight() + 180);
+		if (mansoryPaneToDo.getPrefHeight() <= usedScrollBarHeight) {
+
+			main.log(usedScrollBarHeight);
+			mansoryPaneToDo.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
 		}
 
 	}
 
-	
+	@FXML
+	private JFXMasonryPane mansoryPaneTags;
+
+	@FXML
+	private AnchorPane anchorPaneTaskInformation;
 
 	@FXML
 	void buttonAddTagPressed(ActionEvent event) {
 		main.log("Button pressed", "Add Tag");
-		
-		if(!textFieldTags.getText().equals("")) {
-		
-			createTag(textFieldTags.getText());
-		}
-		else {
-			main.log("Kein Text eingegeben!", "Add Tag");
-		}
-	}
-	
-	public void createTag(String name) {
-		Label lbl = new Label();
 
-		this.mansoryPaneTags.setCellHeight(20);
-		this.mansoryPaneTags.setCellWidth(40);
+		if (/* !textFieldTags.getText().equals("") */true) {
 
-		lbl.setText(" "+name+" ");
-		textFieldTags.setText("");
-		lbl.setAlignment(Pos.CENTER);
-		lbl.setStyle("-fx-background-color: #969696; -fx-background-radius: 15px; display:inline-block");
-		mansoryPaneTags.setStyle("height:wrap-content");
-		
-		mansoryPaneTags.autosize();
-		anchorPaneTaskInformation2.setPrefHeight(mansoryPaneTags.getHeight()+130);//+95
-		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
-		mansoryPaneTags.getChildren().add(lbl);
+			Label lbl = new Label();
 
-		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				
+			this.mansoryPaneTags.setCellHeight(20);
+			this.mansoryPaneTags.setCellWidth(40);
+
+			lbl.setText(" " + textFieldTags.getText() + " ");
+			textFieldTags.setText("");
+			lbl.setAlignment(Pos.CENTER);
+			lbl.setStyle("-fx-background-color: #969696; -fx-background-radius: 15px; display:inline-block");
+
+			mansoryPaneTags.setPrefHeight(mansoryPaneTags.getPrefHeight() + 20);
+
+			mansoryPaneTags.getChildren().add(lbl);
+			if (mansoryPaneTags.getPrefHeight() > anchorPaneTaskInformation.getPrefHeight()) {
+				anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getHeight());
 			}
-		});
-	}
-	
-	@FXML
-	void buttonAddTagPressed2(ActionEvent event) {
-		createTask();
-		
-		//Passt Groesse des Pane automatisch an die Anzahl der Tasks an
-		if (mansoryPaneTags.getPrefHeight() > anchorPaneTaskInformation.getPrefHeight()) {
-			anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getPrefHeight() + 180);
+
+			lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent e) {
+
+				}
+			});
+			// LabelList.add(lbl);
+		} else {
+			main.log("Kein Text eingegeben!", "Add Tag");
 		}
 
 	}
 
 	private void createTask() {
-		taskCounter++;
+		this.taskCounter++;
 		main.log("Add Task", "Button pressed");
 		Label lbl = new Label();
+		lbl.setId("Task " + taskCounter);
 
 		lbl.setPrefSize(200, 75);
-		lbl.setMinSize(200, 70);
+		lbl.setMinSize(200, 75);
 		lbl.setAlignment(Pos.CENTER);
 		lbl.setText(textFieldTaskname.getText());
 		lbl.setStyle(
-				"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block; -fx-margin: -20;");
+				"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 
-		mansoryPaneToDo.setMinHeight(mansoryPaneToDo.getMinHeight() + 180);
 		mansoryPaneToDo.getChildren().add(lbl);
 
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -446,6 +451,9 @@ public class GUIController {
 			public void handle(MouseEvent e) {
 				buttonReturn.setVisible(true);
 				buttonProceed.setVisible(true);
+				activeLabel = lbl;
+				main.log(lbl.getId());
+
 			}
 		});
 	}
