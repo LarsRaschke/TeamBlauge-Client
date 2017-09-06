@@ -322,7 +322,7 @@ public class GUIController {
 		lbl.setId("Task " + taskCounter);
 		lbl.setAlignment(Pos.CENTER);
 
-		lbl.setPrefSize(100, 100);
+		lbl.setPrefSize(100, 50);
 		lbl.setStyle(
 				"-fx-background-color: white; -fx-background-color: white; -fx-padding: 10px; -fx-background-radius: 10px;");
 
@@ -343,44 +343,55 @@ public class GUIController {
 			}
 		});
 	}
-	
+
 	@FXML
 	private JFXMasonryPane mansoryPaneTags;
-	
+
 	@FXML
 	private AnchorPane anchorPaneTaskInformation;
 
-		@FXML
-		void buttonAddTagPressed(ActionEvent event) {
-			main.log("Add Tag", "Button pressed");
-			Label lbl = new Label();
-
-			lbl.setPrefSize(30, 10);
-			lbl.setMaxHeight(5);
-			lbl.setMaxWidth(40);
-			
-			lbl.setText(textFieldTags.getText());
-					
-			lbl.setStyle("-fx-background-color: green; -fx-padding: 2px; -fx-background-radius: 15px; width:40pt; height:10pt; display:inline-block");
-
-			mansoryPaneTags.setPrefHeight(mansoryPaneTags.getPrefHeight() + 180);
-			
-			mansoryPaneTags.getChildren().add(lbl);
-			if (mansoryPaneTags.getPrefHeight() > anchorPaneTaskInformation.getPrefHeight()) {
-				anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getPrefHeight() + 180);
-			}
-
-			lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent e) {
-					
-				}
-			});
-			//LabelList.add(lbl);
-			
+	@FXML
+	void buttonAddTagPressed(ActionEvent event) {
+		createTask();
+		
+		//Passt Groesse des Pane automatisch an die Anzahl der Tasks an
+		if (mansoryPaneTags.getPrefHeight() > anchorPaneTaskInformation.getPrefHeight()) {
+			anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getPrefHeight() + 180);
 		}
 
+	}
+
+	private void createTask() {
+		taskCounter++;
+		main.log("Add Tag", "Button pressed");
+		Label lbl = new Label();
+
+		lbl.setPrefSize(30, 10);
+		lbl.setMaxHeight(5);
+		lbl.setMaxWidth(40);
+
+		lbl.setText(textFieldTags.getText());
+
+		lbl.setStyle(
+				"-fx-background-color: green; -fx-padding: 2px; -fx-background-radius: 50px; width:40pt; height:10pt; display:inline-block");
+
+		mansoryPaneTags.setPrefHeight(mansoryPaneTags.getPrefHeight() + 180);
+
+		mansoryPaneTags.getChildren().add(lbl);
+
+		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+
+			}
+		});
+	}
+
 	void getTaskInfoFromServer(String id) {
-		
+		/*
+		 * textFieldTaskname.setText(String value); labelActualAuthor.setText(String
+		 * value); labelActualStatus.setText(String value);
+		 * textAreaDescription.setText(String value); labelTags.setText(String value);
+		 */
 	}
 }
