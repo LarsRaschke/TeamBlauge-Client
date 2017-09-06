@@ -19,6 +19,7 @@ import com.sun.prism.paint.Color;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ColorPicker;
@@ -31,6 +32,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 
 public class GUIController {
@@ -168,6 +170,8 @@ public class GUIController {
 
 	private ArrayList<Label> LabelList;
 
+	private static int taskCounter;
+
 	public GUIController() {
 		this.colorPicker = new JFXColorPicker();
 		// this.colorPicker.editableProperty().bind(column.editableProperty());
@@ -185,7 +189,7 @@ public class GUIController {
 
 	/*
 	 * Quasi erweiterter Konstruktor, der in der Main aufgerufen wird, da bspw
-	 * keylistener nicht im Konstruktor angelegt werden können
+	 * keylistener nicht im Konstruktor angelegt werden koe�nnen
 	 */
 	public void initnshit() {
 		// hier können keylistener und sowas initialisiert werden
@@ -314,10 +318,15 @@ public class GUIController {
 
 	@FXML
 	void buttonNewTaskPressed(ActionEvent event) {
-		Label lbl = new Label();
-
+		Label lbl = new Label("Task " + taskCounter);
+		lbl.setId("Task " + taskCounter);
+		lbl.setAlignment(Pos.CENTER);
+		
 		lbl.setPrefSize(100, 100);
-		lbl.setStyle("-fx-background-color: white");
+		lbl.setStyle("rounded-label");
+		lbl.setStyle(
+				"-fx-background-color: white; -fx-background-color: white; -fx-padding: 10px; -fx-background-radius: 10px;");
+
 		mansoryPaneToDo.setPrefHeight(mansoryPaneToDo.getPrefHeight() + 180);
 		mansoryPaneDoing.setPrefHeight(mansoryPaneToDo.getPrefHeight() + 180);
 		mansoryPaneFinished.setPrefHeight(mansoryPaneToDo.getPrefHeight() + 180);
@@ -331,8 +340,13 @@ public class GUIController {
 			public void handle(MouseEvent e) {
 				buttonReturn.setVisible(true);
 				buttonProceed.setVisible(true);
+
 			}
 		});
 		LabelList.add(lbl);
+	}
+
+	void getTaskInfoFromServer(int id) {
+
 	}
 }
