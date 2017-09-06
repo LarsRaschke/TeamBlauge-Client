@@ -1,22 +1,34 @@
 package gui.application;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXColorPicker;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXMasonryPane;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import com.sun.prism.paint.Color;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 
 public class GUIController {
 	@FXML
@@ -90,12 +102,6 @@ public class GUIController {
     
     @FXML
     private ImageView buttonEditTaskNameIcon;
-    
-    @FXML
-    private JFXButton buttonEditDescription;
-    
-    @FXML
-    private ImageView buttonEditDescriptionIcon;
 
     @FXML
     private JFXButton buttonProjectselection;
@@ -138,6 +144,9 @@ public class GUIController {
 
     @FXML
     private JFXMasonryPane mansoryPaneFinished;
+    
+    @FXML
+    private AnchorPane anchorPaneMansory;
 
 	private Main main;
 
@@ -162,10 +171,9 @@ public class GUIController {
 	 */
 	public void initnshit() {
 		//hier können keylistener und sowas initialisiert werden
-
-	labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
     	textFieldTaskname.editableProperty().set(false);
-    	textAreaDescription.editableProperty().set(false);
+    	
+    	labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
 		
 		((Scene) labelProjectname.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -173,23 +181,11 @@ public class GUIController {
             {
                 if (ke.getCode().equals(KeyCode.ESCAPE))
                 {
-                	buttonLogOutPressed(null);
                     main.showLogin();
                 }
             }
         });
 		
-		this.buttonEditTaskName.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent ke)
-            {
-                if (ke.getCode().equals(KeyCode.ENTER))
-                {
-                	buttonEditTaskNamePressed(null);
-                }
-            }
-        });
-
 	}
 	
 	public void setMainApp(Main main) {
@@ -236,17 +232,21 @@ public class GUIController {
 
     }
     
+    //Image image = new Image(getClass().getResourceAsStream("save.png"));
     
     @FXML
     void buttonEditTaskNamePressed(ActionEvent event) {
     	if(textFieldTaskname.editableProperty().get()){
     		textFieldTaskname.editableProperty().set(false);
         	saveEnteredTaskname(textFieldTaskname.getText());
-        	this.buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
-        	textFieldTaskname.setStyle("-fx-background-color: orange;");
+    		/*
+    		 * TODO:
+    		 * ändere das icon des buttons zu 'Compose' funktioniert noch nicht
+    		 */
         		
     	}
     	else {
+    		
     		this.textFieldTaskname.setOnKeyPressed(new EventHandler<KeyEvent>() {
 	            @Override
 	            public void handle(KeyEvent ke)
@@ -255,47 +255,61 @@ public class GUIController {
 	                {
 	                	saveEnteredTaskname(textFieldTaskname.getText());
 	                	textFieldTaskname.editableProperty().set(false);
-	                	buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
-	                	textFieldTaskname.setStyle("-fx-background-color: orange;");
+	                	
+	                    /*
+	                     * TODO:
+	                     * ändere Buttonicon wieder zu stift funktioniert noch nicht
+	                     * wenn >TAB< gedrueckt waehrend im Textfield soll fokus auf Button gelegt werden
+	                     */ 
+	                	
 	                }
 	            } 
 	        });
+    	
     		textFieldTaskname.editableProperty().set(true);
-        	this.buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
-        	textFieldTaskname.setStyle("-fx-background-color: white;");
+    		
+    		
+    		//------IN-WORK-(FIETE)--------------------------------------------------------------------------------------------
+    		
+    		//File f = new File("file:\\src\\resources\\Icons\\save.png");
+        	//Image img = new Image(f.toURI().toString(), true);
+        	//buttonEditTaskNameIcon.setImage(this.image);
+        	System.out.println("Button zu save.png geaendert");
+        	
+        	ImageView buttonEditTaskNameIcon2 = new ImageView( new Image("file:.\\src\\resources\\Icons\\save.png"));
+        	buttonEditTaskName.setGraphic(buttonEditTaskNameIcon2);
+    		
+        	
+        	
+        	
+        	
+    		//---------------------------------------------------------------------------------------------------
+
+        	
+    		/*
+    		 * TODO:
+    		 * ändere Icon zu speichern icon
+    		 */
+    		
     	}
     }
-    
     void saveEnteredTaskname(String name) {
     	//Nur zum Testen:
+    	textFieldTaskname.setText(name);
     	labelActualAuthor.setText(name);
-    }
-    
-    @FXML
-    void buttonEditDescriptionPressed(ActionEvent event) {
-    	if(textAreaDescription.editableProperty().get()){
-    		textAreaDescription.editableProperty().set(false);
-        	saveEnteredDescription(textAreaDescription.getText());
-        	this.buttonEditDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
-        	textAreaDescription.setStyle("text-area-background: orange;");
-        		
-    	}
-    	else {
-    		
-    		textAreaDescription.editableProperty().set(true);
-        	this.buttonEditDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
-        	textAreaDescription.setStyle("text-area-background: white;");
-    	}
-    }
-    
-    void saveEnteredDescription(String name) {
-    	//Nur zum Testen:
-    	labelActualStatus.setText(name);
     }
     
     
     @FXML
     void buttonNewTaskPressed(ActionEvent event) {
-    	labelProjectname.setText("    Neuer Task?");
+    	for (int i = 0; i < 10; i++){
+    		Label lbl = new Label();
+    		lbl.setPrefSize(100, 100);
+    		lbl.setStyle("-fx-background-color: white");
+    		lbl.setText("Ich bin Post-It " + i);
+    		mansoryPaneToDo.setPrefHeight(i * 110);
+    		
+    		mansoryPaneToDo.getChildren().add(lbl);
+    	}
     }
 }
