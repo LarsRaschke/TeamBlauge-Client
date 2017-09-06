@@ -27,6 +27,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
 public class GUIController {
@@ -143,6 +144,9 @@ public class GUIController {
 
     @FXML
     private JFXMasonryPane mansoryPaneFinished;
+    
+    @FXML
+    private AnchorPane anchorPaneMansory;
 
 	private Main main;
 
