@@ -162,6 +162,8 @@ public class GUIController {
 
 	private JFXColorPicker colorPicker; // https://github.com/jfoenixadmin/JFoenix/issues/408
 
+	private Label activeLabel;
+	
 	public GUIController() {
 		this.colorPicker = new JFXColorPicker();
 		// this.colorPicker.editableProperty().bind(column.editableProperty());
@@ -236,7 +238,7 @@ public class GUIController {
 
     @FXML
     void buttonProceedPressed(ActionEvent event) {
-
+    	
     }
 
     @FXML
