@@ -298,6 +298,14 @@ public class GUIController {
     
     @FXML
     void buttonNewTaskPressed(ActionEvent event) {
-    	labelProjectname.setText("    Neuer Task?");
+    	for (int i = 0; i < 10; i++){
+    		Label lbl = new Label();
+    		lbl.setPrefSize(100, 100);
+    		lbl.setStyle("-fx-background-color: white");
+    		lbl.setText("Ich bin Post-It " + i);
+    		mansoryPaneToDo.setPrefHeight(i * 110);
+    		
+    		mansoryPaneToDo.getChildren().add(lbl);
+    	}
     }
 }
