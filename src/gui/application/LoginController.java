@@ -68,7 +68,10 @@ public class LoginController {
             }
         });
     	this.textFieldLogInScreenPassword.setVisible(false);
-    	//main.showGUI();
+    	
+    	
+    	main.showGUI();
+    
     }
     
     
