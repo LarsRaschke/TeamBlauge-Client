@@ -217,6 +217,24 @@ public class GUIController {
 				}
 			}
 		});
+		
+		this.textFieldTags.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent ke) {
+				if (ke.getCode().equals(KeyCode.ENTER)) {
+					buttonAddTagPressed(null);
+				}
+			}
+		});
+		
+		this.buttonAddTag.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent ke) {
+				if (ke.getCode().equals(KeyCode.ENTER)) {
+					buttonAddTagPressed(null);
+				}
+			}
+		});
 
 	}
 
@@ -354,32 +372,40 @@ public class GUIController {
 
 		@FXML
 		void buttonAddTagPressed(ActionEvent event) {
-			main.log("Add Tag", "Button pressed");
-			Label lbl = new Label();
-
-			lbl.setPrefSize(30, 10);
-			lbl.setMaxHeight(5);
-			lbl.setMaxWidth(40);
+			main.log("Button pressed", "Add Tag");
 			
-			lbl.setText(textFieldTags.getText());
-					
-			lbl.setStyle("-fx-background-color: green; -fx-padding: 2px; -fx-background-radius: 15px; width:40pt; height:10pt; display:inline-block");
-
-			mansoryPaneTags.setPrefHeight(mansoryPaneTags.getPrefHeight() + 180);
+			if(/*!textFieldTags.getText().equals("")*/true) {
 			
-			mansoryPaneTags.getChildren().add(lbl);
-			if (mansoryPaneTags.getPrefHeight() > anchorPaneTaskInformation.getPrefHeight()) {
-				anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getPrefHeight() + 180);
-			}
+				Label lbl = new Label();
 
-			lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent e) {
-					
+				lbl.setPrefSize(0, 0);
+				lbl.setMinHeight(0);
+				lbl.setMaxHeight(60);
+				lbl.setMaxWidth(80);
+				
+				lbl.setText(textFieldTags.getText());
+				textFieldTags.setText("");
+				lbl.setAlignment(Pos.CENTER);
+				lbl.setStyle("-fx-background-color: green; -fx-margin:-5; -fx-padding: -5; -fx-background-radius: 15px; width:wrap-text; height:wrap-text; height:5px; display:inline-block");
+	
+				mansoryPaneTags.setPrefHeight(mansoryPaneTags.getPrefHeight() + 50);
+				
+				mansoryPaneTags.getChildren().add(lbl);
+				if (mansoryPaneTags.getPrefHeight() > anchorPaneTaskInformation.getPrefHeight()) {
+					anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getPrefHeight() + 50);
 				}
-			});
-			//LabelList.add(lbl);
-			
+	
+				lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+					@Override
+					public void handle(MouseEvent e) {
+						
+					}
+				});
+				//LabelList.add(lbl);
+			}
+			else {
+				main.log("Kein Text eingegeben!", "Add Tag");
+			}
 		}
 
 	void getTaskInfoFromServer(int id) {
