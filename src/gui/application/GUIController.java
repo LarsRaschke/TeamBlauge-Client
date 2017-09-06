@@ -217,6 +217,24 @@ public class GUIController {
 				}
 			}
 		});
+		
+		this.textFieldTags.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent ke) {
+				if (ke.getCode().equals(KeyCode.ENTER)) {
+					buttonAddTagPressed(null);
+				}
+			}
+		});
+		
+		this.buttonAddTag.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent ke) {
+				if (ke.getCode().equals(KeyCode.ENTER)) {
+					buttonAddTagPressed(null);
+				}
+			}
+		});
 
 	}
 
