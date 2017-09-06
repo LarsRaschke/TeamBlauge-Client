@@ -101,6 +101,11 @@ public class ProjectListController {
 		main.showGUI();
 	}
 	
+	@FXML
+	void buttonAddProjectPressed(ActionEvent event){
+		
+	}
+	
     @FXML
     void buttonEditProjectNamePressed(ActionEvent event) {
     	if(textFieldProjectName.editableProperty().get()){

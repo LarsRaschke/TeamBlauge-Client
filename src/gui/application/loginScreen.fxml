@@ -51,7 +51,7 @@
          </graphic>
       </JFXButton>
       <Label fx:id="infoLabelLogInScreen" layoutX="520.0" layoutY="244.0" prefHeight="34.0" prefWidth="200.0" textAlignment="CENTER" textFill="RED" />
-      <ImageView fitHeight="150.0" fitWidth="297.0" layoutX="472.0" layoutY="95.0" preserveRatio="true">
+      <ImageView fitHeight="90.0" fitWidth="239.0" layoutX="501.0" layoutY="112.0" preserveRatio="true">
          <image>
             <Image url="@../resources/Icons/BLAUGE_Labs_Logo_2.png" />
          </image>

@@ -28,6 +28,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
@@ -162,6 +163,8 @@ public class GUIController {
 
 	private JFXColorPicker colorPicker; // https://github.com/jfoenixadmin/JFoenix/issues/408
 
+	private Label activeLabel;
+	
 	public GUIController() {
 		this.colorPicker = new JFXColorPicker();
 		// this.colorPicker.editableProperty().bind(column.editableProperty());
@@ -236,7 +239,7 @@ public class GUIController {
 
     @FXML
     void buttonProceedPressed(ActionEvent event) {
-
+    	
     }
 
     @FXML
@@ -323,5 +326,12 @@ public class GUIController {
     		if (mansoryPaneToDo.getPrefHeight() > anchorPaneMansory.getPrefHeight()){
     			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 180);
     		}
+
+    	    lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+    	        @Override
+    	        public void handle(MouseEvent e) {
+    	        	labelUser.setText("PENIS");
+    	        }
+    	      });
     }
 }
