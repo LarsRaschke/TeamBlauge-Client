@@ -334,4 +334,29 @@ public class GUIController {
     	        }
     	      });
     }
+    
+    
+    //---- noch nicht fertig, nur von oben kopiert (new task button funktion)---------------
+    @FXML
+    void buttonAddTagPressed(ActionEvent event) {
+    		Label lbl = new Label();
+    		lbl.setPrefSize(100, 100);
+    		lbl.setStyle("-fx-background-color: white");
+    		mansoryPaneToDo.setPrefHeight(mansoryPaneToDo.getPrefHeight() + 180);
+    		mansoryPaneDoing.setPrefHeight(mansoryPaneToDo.getPrefHeight() + 180);
+    		mansoryPaneFinished.setPrefHeight(mansoryPaneToDo.getPrefHeight() + 180);
+    		mansoryPaneToDo.getChildren().add(lbl);
+    		if (mansoryPaneToDo.getPrefHeight() > anchorPaneMansory.getPrefHeight()){
+    			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 180);
+    		}
+
+    	    lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+    	        @Override
+    	        public void handle(MouseEvent e) {
+    	        	labelUser.setText("PENIS");
+    	        }
+    	      });
+    }
+    
+    //-------------------------------------------------------------------------------------------
 }
