@@ -74,7 +74,7 @@ public class ProjectListController {
 	public void init() {
 		textFieldProjectName.editableProperty().set(false);
     	textAreaProjectDescription.editableProperty().set(false);
-    	
+    	labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
     	((Scene) labelProjectList.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent ke)
