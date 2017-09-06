@@ -321,9 +321,8 @@ public class GUIController {
 		Label lbl = new Label("Task " + taskCounter);
 		lbl.setId("Task " + taskCounter);
 		lbl.setAlignment(Pos.CENTER);
-		
+
 		lbl.setPrefSize(100, 100);
-		lbl.setStyle("rounded-label");
 		lbl.setStyle(
 				"-fx-background-color: white; -fx-background-color: white; -fx-padding: 10px; -fx-background-radius: 10px;");
 
@@ -340,13 +339,12 @@ public class GUIController {
 			public void handle(MouseEvent e) {
 				buttonReturn.setVisible(true);
 				buttonProceed.setVisible(true);
-
+				getTaskInfoFromServer(lbl.getId());
 			}
 		});
-		LabelList.add(lbl);
 	}
 
-	void getTaskInfoFromServer(int id) {
-
+	void getTaskInfoFromServer(String id) {
+		
 	}
 }
