@@ -167,7 +167,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="buttonLogOut" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="1170.0" onAction="#buttonLogOutPressed" prefHeight="50.0" prefWidth="70.0" ripplerFill="ORANGE">
+      <JFXButton fx:id="buttonLogOut" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="1170.0" onAction="#buttonLogOutPressed" prefHeight="50.0" prefWidth="70.0" ripplerFill="ORANGE">
          <graphic>
             <ImageView fitHeight="40.0" fitWidth="40.0">
                <image>
@@ -176,7 +176,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="buttonProceed" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="946.0" layoutY="50.0" onAction="#buttonProceedPressed" prefHeight="50.0" prefWidth="70.0" ripplerFill="ORANGE">
+      <JFXButton fx:id="buttonProceed" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="946.0" layoutY="50.0" onAction="#buttonProceedPressed" prefHeight="50.0" prefWidth="70.0" ripplerFill="ORANGE">
          <graphic>
             <ImageView fitHeight="40.0" fitWidth="40.0">
                <image>
@@ -185,8 +185,8 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="buttonReturn" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="876.0" layoutY="50.0" onAction="#buttonReturnPressed" prefHeight="50.0" prefWidth="70.0" ripplerFill="ORANGE" />
-      <JFXButton fx:id="buttonInformation" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="827.0" layoutY="100.0" onAction="#buttonInformationPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE">
+      <JFXButton fx:id="buttonReturn" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="876.0" layoutY="50.0" onAction="#buttonReturnPressed" prefHeight="50.0" prefWidth="70.0" ripplerFill="ORANGE" />
+      <JFXButton fx:id="buttonInformation" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="827.0" layoutY="100.0" onAction="#buttonInformationPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="25.0">
                <image>
@@ -195,7 +195,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="buttonTags" alignment="CENTER" cache="true" contentDisplay="GRAPHIC_ONLY" layoutX="827.0" layoutY="150.0" onAction="#buttonTagsPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffa100">
+      <JFXButton fx:id="buttonTags" alignment="CENTER" buttonType="RAISED" cache="true" contentDisplay="GRAPHIC_ONLY" layoutX="827.0" layoutY="150.0" onAction="#buttonTagsPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffa100">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="25.0">
                <image>
@@ -204,7 +204,7 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <JFXButton fx:id="buttonComments" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="827.0" layoutY="200.0" onAction="#buttonCommentsPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffa100">
+      <JFXButton fx:id="buttonComments" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="827.0" layoutY="200.0" onAction="#buttonCommentsPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffa100">
          <graphic>
             <ImageView fitHeight="25.0" fitWidth="25.0">
                <image>
@@ -244,7 +244,7 @@
             <Font name="Roboto Light" size="15.0" />
          </font>
       </Label>
-      <JFXButton fx:id="buttonNewTask" alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="780.0" layoutY="50.0" onAction="#buttonNewTaskPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE">
+      <JFXButton fx:id="buttonNewTask" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="780.0" layoutY="50.0" onAction="#buttonNewTaskPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE">
          <graphic>
             <ImageView fitHeight="40.0" fitWidth="40.0">
                <image>
