@@ -163,6 +163,15 @@ public class GUIController {
 
 	@FXML
 	private AnchorPane anchorPaneMansory;
+	
+	@FXML
+	private AnchorPane anchorPaneTaskInformation1;
+	
+	@FXML
+	private AnchorPane anchorPaneTaskInformation2;
+	
+	@FXML
+	private AnchorPane anchorPaneTaskInformation3;
 
 	@FXML
 	private ScrollPane scrollPaneMansory;
@@ -397,39 +406,41 @@ public class GUIController {
 
 	@FXML
 	void buttonAddTagPressed(ActionEvent event) {
-		main.log("Button pressed", "Add Tag");
-
-		if (/* !textFieldTags.getText().equals("") */true) {
-
-			Label lbl = new Label();
-
-			this.mansoryPaneTags.setCellHeight(20);
-			this.mansoryPaneTags.setCellWidth(40);
-
-			lbl.setText(" " + textFieldTags.getText() + " ");
-			textFieldTags.setText("");
-			lbl.setAlignment(Pos.CENTER);
-			lbl.setStyle("-fx-background-color: #969696; -fx-background-radius: 15px; display:inline-block");
-
-			mansoryPaneTags.setPrefHeight(mansoryPaneTags.getPrefHeight() + 20);
-
-			mansoryPaneTags.getChildren().add(lbl);
-			if (mansoryPaneTags.getPrefHeight() > anchorPaneTaskInformation.getPrefHeight()) {
-				anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getHeight());
-			}
-
-			lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent e) {
-
-				}
-			});
-			// LabelList.add(lbl);
-		} else {
+		main.log("Button pressed", "Add Tag");		
+		if(!textFieldTags.getText().equals("")) {
+		
+			createTag(textFieldTags.getText());
+		}
+		else {
 			main.log("Kein Text eingegeben!", "Add Tag");
 		}
-
 	}
+	
+	public void createTag(String name) {
+		Label lbl = new Label();
+
+		this.mansoryPaneTags.setCellHeight(20);
+		this.mansoryPaneTags.setCellWidth(40);
+
+		lbl.setText(" "+name+" ");
+		textFieldTags.setText("");
+		lbl.setAlignment(Pos.CENTER);
+		lbl.setStyle("-fx-background-color: #969696; -fx-background-radius: 15px; display:inline-block");
+		mansoryPaneTags.setStyle("height:wrap-content");
+		
+		mansoryPaneTags.autosize();
+		anchorPaneTaskInformation2.setPrefHeight(mansoryPaneTags.getHeight()+130);//+95
+		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
+		mansoryPaneTags.getChildren().add(lbl);
+
+		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				
+			}
+		});
+	}
+
 
 	private void createTask() {
 		this.taskCounter++;
