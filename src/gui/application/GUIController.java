@@ -182,6 +182,7 @@ public class GUIController {
 	public void initnshit() {
 		//hier können keylistener und sowas initialisiert werden
     	textFieldTaskname.editableProperty().set(false);
+    	textAreaDescription.editableProperty().set(false);
     	
     	labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
 		
