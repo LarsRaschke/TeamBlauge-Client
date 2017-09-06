@@ -255,7 +255,7 @@
             <Font name="Roboto Light" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="labelFinished" alignment="CENTER" layoutX="544.0" layoutY="100.0" prefHeight="30.0" prefWidth="286.0" style="-fx-background-color: #969696;" text="Finished">
+      <Label fx:id="labelFinished" alignment="CENTER" layoutX="544.0" layoutY="100.0" prefHeight="30.0" prefWidth="273.0" style="-fx-background-color: #969696;" text="Finished">
          <font>
             <Font name="Roboto Light" size="15.0" />
          </font>
@@ -271,11 +271,12 @@
       </JFXButton>
       <ScrollPane fx:id="scrollPaneMansory" layoutY="130.0" prefHeight="590.0" prefWidth="830.0" style="-fx-background-color: #969696;">
         <content>
-          <AnchorPane fx:id="anchorPaneMansory" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="815.0" style="-fx-background-color: #969696;">
+          <AnchorPane fx:id="anchorPaneMansory" minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="815.0" style="-fx-background-color: #969696;">
                <children>
-                  <JFXMasonryPane fx:id="mansoryPaneToDo" prefHeight="800.0" prefWidth="272.0" style="-fx-background-color: #969696;" />
-                  <JFXMasonryPane fx:id="mansoryPaneDoing" layoutX="272.0" prefHeight="590.0" prefWidth="271.0" style="-fx-background-color: #888888;" />
-                  <JFXMasonryPane fx:id="mansoryPaneFinished" layoutX="543.0" prefHeight="590.0" prefWidth="272.0" style="-fx-background-color: #969696;" />
+                  <JFXMasonryPane fx:id="mansoryPaneToDo" prefHeight="0.0" prefWidth="272.0" style="-fx-background-color: #969696;" />
+                  <JFXMasonryPane fx:id="mansoryPaneDoing" layoutX="272.0" prefHeight="0.0" prefWidth="271.0" style="-fx-background-color: #888888;" />
+                  <JFXMasonryPane fx:id="mansoryPaneFinished" layoutX="543.0" prefHeight="0.0" prefWidth="272.0" style="-fx-background-color: #969696;" />
+                  <Label layoutX="272.0" prefHeight="590.0" prefWidth="271.0" style="-fx-background-color: #888888;" />
                </children>
             </AnchorPane>
         </content>
