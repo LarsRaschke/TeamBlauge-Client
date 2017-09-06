@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.function.DoubleToIntFunction;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXColorPicker;
@@ -72,6 +73,9 @@ public class GUIController {
 
 	@FXML
 	private Label labelActualStatus;
+
+	@FXML
+	private Label labelMasonryPaneOptic;
 
 	@FXML
 	private JFXTextField textFieldTaskname;
@@ -209,10 +213,6 @@ public class GUIController {
 		mansoryPaneFinished.setAlignment(Pos.TOP_CENTER);
 		mansoryPaneFinished.setSpacing(10);
 
-		
-		
-		
-		
 		// labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
 
 		((Scene) labelProjectname.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -232,7 +232,7 @@ public class GUIController {
 				}
 			}
 		});
-		
+
 		this.textFieldTags.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent ke) {
@@ -241,7 +241,7 @@ public class GUIController {
 				}
 			}
 		});
-		
+
 		this.buttonAddTag.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent ke) {
@@ -352,10 +352,19 @@ public class GUIController {
 	@FXML
 	void buttonNewTaskPressed(ActionEvent event) {
 		createTask();
+		taskCounter = taskCounter + 90;
+
+		main.log(anchorPaneMansory.getPrefHeight(), "anchorPaneMansory");
+		main.log(mansoryPaneToDo.getPrefHeight(), "mansoryPaneToDo");
 
 		// Passt Groesse des Pane automatisch an die Anzahl der Tasks an
-		if (mansoryPaneTags.getPrefHeight() > anchorPaneTaskInformation.getPrefHeight()) {
-			anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getPrefHeight() + 180);
+		if (mansoryPaneToDo.getPrefHeight() <= taskCounter) {
+
+			main.log(taskCounter);
+			mansoryPaneToDo.setPrefHeight(anchorPaneMansory.getPrefHeight() + 1);
+			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 100);
+			labelMasonryPaneOptic.setPrefHeight(labelMasonryPaneOptic.getPrefHeight() + 80);
+
 		}
 
 	}
@@ -369,22 +378,21 @@ public class GUIController {
 	@FXML
 	void buttonAddTagPressed(ActionEvent event) {
 		main.log("Button pressed", "Add Tag");
-		
-		if(/*!textFieldTags.getText().equals("")*/true) {
-		
+
+		if (/* !textFieldTags.getText().equals("") */true) {
+
 			Label lbl = new Label();
 
 			this.mansoryPaneTags.setCellHeight(20);
 			this.mansoryPaneTags.setCellWidth(40);
 
-			
-			lbl.setText(" "+textFieldTags.getText()+" ");
+			lbl.setText(" " + textFieldTags.getText() + " ");
 			textFieldTags.setText("");
 			lbl.setAlignment(Pos.CENTER);
 			lbl.setStyle("-fx-background-color: #969696; -fx-background-radius: 15px; display:inline-block");
 
 			mansoryPaneTags.setPrefHeight(mansoryPaneTags.getPrefHeight() + 20);
-			
+
 			mansoryPaneTags.getChildren().add(lbl);
 			if (mansoryPaneTags.getPrefHeight() > anchorPaneTaskInformation.getPrefHeight()) {
 				anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getHeight());
@@ -393,41 +401,28 @@ public class GUIController {
 			lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 				@Override
 				public void handle(MouseEvent e) {
-					
+
 				}
 			});
-			//LabelList.add(lbl);
-		}
-		else {
+			// LabelList.add(lbl);
+		} else {
 			main.log("Kein Text eingegeben!", "Add Tag");
-		}
-		
-	}
-	
-	@FXML
-	void buttonAddTagPressed2(ActionEvent event) {
-		createTask();
-		
-		//Passt Groesse des Pane automatisch an die Anzahl der Tasks an
-		if (mansoryPaneTags.getPrefHeight() > anchorPaneTaskInformation.getPrefHeight()) {
-			anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getPrefHeight() + 180);
 		}
 
 	}
 
 	private void createTask() {
-		taskCounter++;
+		this.taskCounter++;
 		main.log("Add Task", "Button pressed");
 		Label lbl = new Label();
 
 		lbl.setPrefSize(200, 75);
-		lbl.setMinSize(200, 70);
+		lbl.setMinSize(200, 75);
 		lbl.setAlignment(Pos.CENTER);
 		lbl.setText(textFieldTaskname.getText());
 		lbl.setStyle(
-				"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block; -fx-margin: -20;");
+				"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 
-		mansoryPaneToDo.setMinHeight(mansoryPaneToDo.getMinHeight() + 180);
 		mansoryPaneToDo.getChildren().add(lbl);
 
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
