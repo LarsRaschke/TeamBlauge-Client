@@ -102,6 +102,12 @@ public class GUIController {
     
     @FXML
     private ImageView buttonEditTaskNameIcon;
+    
+    @FXML
+    private JFXButton buttonEditDescription;
+    
+    @FXML
+    private ImageView buttonEditDescriptionIcon;
 
     @FXML
     private JFXButton buttonProjectselection;
@@ -186,6 +192,17 @@ public class GUIController {
             }
         });
 		
+		this.buttonEditTaskName.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent ke)
+            {
+                if (ke.getCode().equals(KeyCode.ENTER))
+                {
+                	buttonEditTaskNamePressed(null);
+                }
+            }
+        });
+		
 	}
 	
 	public void setMainApp(Main main) {
@@ -232,21 +249,16 @@ public class GUIController {
 
     }
     
-    //Image image = new Image(getClass().getResourceAsStream("save.png"));
-    
     @FXML
     void buttonEditTaskNamePressed(ActionEvent event) {
     	if(textFieldTaskname.editableProperty().get()){
     		textFieldTaskname.editableProperty().set(false);
         	saveEnteredTaskname(textFieldTaskname.getText());
-    		/*
-    		 * TODO:
-    		 * ändere das icon des buttons zu 'Compose' funktioniert noch nicht
-    		 */
+        	this.buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
+        	textFieldTaskname.setStyle("-fx-background-color: orange;");
         		
     	}
     	else {
-    		
     		this.textFieldTaskname.setOnKeyPressed(new EventHandler<KeyEvent>() {
 	            @Override
 	            public void handle(KeyEvent ke)
@@ -255,48 +267,42 @@ public class GUIController {
 	                {
 	                	saveEnteredTaskname(textFieldTaskname.getText());
 	                	textFieldTaskname.editableProperty().set(false);
-	                	
-	                    /*
-	                     * TODO:
-	                     * ändere Buttonicon wieder zu stift funktioniert noch nicht
-	                     * wenn >TAB< gedrueckt waehrend im Textfield soll fokus auf Button gelegt werden
-	                     */ 
-	                	
+	                	buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
+	                	textFieldTaskname.setStyle("-fx-background-color: orange;");
 	                }
 	            } 
 	        });
-    	
     		textFieldTaskname.editableProperty().set(true);
-    		
-    		
-    		//------IN-WORK-(FIETE)--------------------------------------------------------------------------------------------
-    		
-    		//File f = new File("file:\\src\\resources\\Icons\\save.png");
-        	//Image img = new Image(f.toURI().toString(), true);
-        	//buttonEditTaskNameIcon.setImage(this.image);
-        	System.out.println("Button zu save.png geaendert");
-        	
-        	ImageView buttonEditTaskNameIcon2 = new ImageView( new Image("file:.\\src\\resources\\Icons\\save.png"));
-        	buttonEditTaskName.setGraphic(buttonEditTaskNameIcon2);
-    		
-        	
-        	
-        	
-        	
-    		//---------------------------------------------------------------------------------------------------
-
-        	
-    		/*
-    		 * TODO:
-    		 * ändere Icon zu speichern icon
-    		 */
-    		
+        	this.buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
+        	textFieldTaskname.setStyle("-fx-background-color: white;");
     	}
     }
+    
     void saveEnteredTaskname(String name) {
     	//Nur zum Testen:
-    	textFieldTaskname.setText(name);
     	labelActualAuthor.setText(name);
+    }
+    
+    @FXML
+    void buttonEditDescriptionPressed(ActionEvent event) {
+    	if(textAreaDescription.editableProperty().get()){
+    		textAreaDescription.editableProperty().set(false);
+        	saveEnteredDescription(textAreaDescription.getText());
+        	this.buttonEditDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
+        	textAreaDescription.setStyle("text-area-background: orange;");
+        		
+    	}
+    	else {
+    		
+    		textAreaDescription.editableProperty().set(true);
+        	this.buttonEditDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
+        	textAreaDescription.setStyle("text-area-background: white;");
+    	}
+    }
+    
+    void saveEnteredDescription(String name) {
+    	//Nur zum Testen:
+    	labelActualStatus.setText(name);
     }
     
     
