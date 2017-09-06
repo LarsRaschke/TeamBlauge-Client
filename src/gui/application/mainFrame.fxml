@@ -15,6 +15,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1240.0" style="-fx-background-color: #737373;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.application.GUIController">
@@ -45,8 +46,6 @@
         <content>
           <AnchorPane fx:id="anchorPaneTaskInformation" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="349.0" style="-fx-background-color: #FFA500;">
                <children>
-               <AnchorPane fx:id="anchorPaneTaskInformation1" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="349.0" style="-fx-background-color: #FFA500;">
-               <children>
                   <Label fx:id="labelTaskname" layoutX="5.0" layoutY="5.0" prefHeight="25.0" prefWidth="75.0" text="Taskname:">
                      <font>
                         <Font name="Roboto Light" size="15.0" />
@@ -72,7 +71,18 @@
                         <Font name="Roboto Light" size="15.0" />
                      </font>
                   </Label>
-                  
+                  <Label fx:id="labelTags" layoutX="5.0" layoutY="400.0" prefHeight="25.0" prefWidth="100.0" text="Tags:">
+                     <font>
+                        <Font name="Roboto Light" size="15.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0">
+                           <image>
+                              <Image url="@../resources/Icons/pricetags.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Label>
                   <Label fx:id="labelActualAuthor" layoutX="85.0" layoutY="55.0" prefHeight="25.0" prefWidth="260.0" text="Autor einfügen">
                      <font>
                         <Font name="Roboto Light" size="15.0" />
@@ -103,55 +113,17 @@
                         <Font name="Roboto Light" size="15.0" />
                      </font>
                   </JFXTextArea>
-                        <JFXButton fx:id="buttonEditComments" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="305.0" layoutY="200.0" onAction="#buttonEditDescriptionPressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373" text="SaveDescription">
-                           <graphic>
-                              <ImageView fx:id="buttonEditDescriptionIcon" fitHeight="25.0" fitWidth="25.0">
-                                 <image>
-                                    <Image url="@../resources/Icons/compose.png" />
-                                 </image>
-                              </ImageView>
-                           </graphic>
-                        </JFXButton>
-                  </children>
-            </AnchorPane>
-            
-            <AnchorPane fx:id="anchorPaneTaskInformation2" layoutY="400.0" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="349.0" style="-fx-background-color: #FFA500;">
-               <children>
-               
-                  <Label fx:id="labelTags" layoutX="5.0" layoutY="0.0" prefHeight="25.0" prefWidth="100.0" text="Tags:">
-                     <font>
-                        <Font name="Roboto Light" size="15.0" />
-                     </font>
+                  <JFXButton fx:id="buttonEditComments" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="305.0" layoutY="201.0" onAction="#buttonEditDescriptionPressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373" text="SaveDescription">
                      <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0">
+                        <ImageView fx:id="buttonEditDescriptionIcon" fitHeight="25.0" fitWidth="25.0">
                            <image>
-                              <Image url="@../resources/Icons/pricetags.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Label>
-                  <JFXButton fx:id="buttonAddTag" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="305.0" layoutY="25.0" onAction="#buttonAddTagPressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0">
-                           <image>
-                              <Image url="@../resources/Icons/plus-round.png" />
+                              <Image url="@../resources/Icons/compose.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXTextField fx:id="textFieldTags" focusColor="#b71c1c" layoutX="5.0" layoutY="25.0" prefWidth="300.0">
-                     <font>
-                        <Font name="Roboto Light" size="15.0" />
-                     </font>
-                  </JFXTextField>
-				  <JFXMasonryPane fx:id="mansoryPaneTags" layoutX="3.0" layoutY="60.0" prefHeight="103.0" prefWidth="340.0" style="-fx-background-color: orange;" />
-                  </children>
-            </AnchorPane>
-            
-            
-                  <AnchorPane fx:id="anchorPaneTaskInformation3" layoutY="600.0" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="349.0" style="-fx-background-color: #FFA500;">
-               <children>
-                  <Label fx:id="labelComments" layoutX="5.0" layoutY="0.0" prefHeight="25.0" prefWidth="120.0" text="Kommentare:">
+                  <JFXListView fx:id="listViewTags" layoutX="5.0" layoutY="455.0" prefHeight="100.0" prefWidth="339.0" style="-fx-background-color: orange;" />
+                  <Label fx:id="labelComments" layoutX="5.0" layoutY="565.0" prefHeight="25.0" prefWidth="120.0" text="Kommentare:">
                      <font>
                         <Font name="Roboto Light" size="15.0" />
                      </font>
@@ -163,15 +135,27 @@
                         </ImageView>
                      </graphic>
                   </Label>
-                  <JFXListView fx:id="listViewComments" layoutX="5.0" layoutY="60.0" prefHeight="100.0" prefWidth="339.0" />
-                  
-                  
-                  <JFXTextField fx:id="textFieldComments" focusColor="#b71c1c" layoutX="5.0" layoutY="25.0" prefWidth="300.0">
+                  <JFXListView fx:id="listViewComments" layoutX="5.0" layoutY="620.0" prefHeight="100.0" prefWidth="339.0" />
+                  <JFXTextField fx:id="textFieldTags" focusColor="#b71c1c" layoutX="5.0" layoutY="425.0" prefWidth="300.0">
                      <font>
                         <Font name="Roboto Light" size="15.0" />
                      </font>
                   </JFXTextField>
-                  <JFXButton fx:id="buttonAddComment" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="305.0" layoutY="25.0" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373">
+                  <JFXButton fx:id="buttonAddTag" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="305.0" layoutY="421.0" onAction="#buttonAddTagPressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373">
+                     <graphic>
+                        <ImageView fitHeight="25.0" fitWidth="25.0">
+                           <image>
+                              <Image url="@../resources/Icons/plus-round.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <JFXTextField fx:id="textFieldComments" focusColor="#b71c1c" layoutX="5.0" layoutY="590.0" prefWidth="300.0">
+                     <font>
+                        <Font name="Roboto Light" size="15.0" />
+                     </font>
+                  </JFXTextField>
+                  <JFXButton fx:id="buttonAddComment" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="305.0" layoutY="586.0" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373">
                      <graphic>
                         <ImageView fitHeight="25.0" fitWidth="25.0">
                            <image>
@@ -180,8 +164,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  </children>
-            </AnchorPane>
+                  <JFXMasonryPane fx:id="mansoryPaneTags" layoutX="3.0" layoutY="459.0" prefHeight="103.0" prefWidth="340.0" style="-fx-background-color: white;" />
                </children>
             </AnchorPane>
         </content>
@@ -292,9 +275,9 @@
         <content>
           <AnchorPane fx:id="anchorPaneMansory" minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="815.0" style="-fx-background-color: #969696;">
                <children>
-                  <JFXMasonryPane fx:id="mansoryPaneToDo" prefHeight="0.0" prefWidth="272.0" style="-fx-background-color: #969696;" />
-                  <JFXMasonryPane fx:id="mansoryPaneDoing" layoutX="272.0" prefHeight="0.0" prefWidth="271.0" style="-fx-background-color: #888888;" />
-                  <JFXMasonryPane fx:id="mansoryPaneFinished" layoutX="543.0" prefHeight="0.0" prefWidth="272.0" style="-fx-background-color: #969696;" />
+                  <VBox fx:id="mansoryPaneToDo" prefHeight="590.0" prefWidth="271.0" />
+                  <VBox fx:id="mansoryPaneDoing" layoutX="272.0" prefHeight="590.0" prefWidth="271.0" />
+                  <VBox fx:id="mansoryPaneFinished" layoutX="543.0" prefHeight="584.0" prefWidth="271.0" />
                   <Label layoutX="272.0" prefHeight="590.0" prefWidth="271.0" style="-fx-background-color: #888888;" />
                </children>
             </AnchorPane>

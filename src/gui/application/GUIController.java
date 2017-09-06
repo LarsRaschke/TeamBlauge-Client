@@ -32,6 +32,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 
@@ -148,13 +149,13 @@ public class GUIController {
 	private Label labelFinished;
 
 	@FXML
-	private JFXMasonryPane mansoryPaneToDo;
+	private VBox mansoryPaneToDo;
 
 	@FXML
-	private JFXMasonryPane mansoryPaneDoing;
+	private VBox mansoryPaneDoing;
 
 	@FXML
-	private JFXMasonryPane mansoryPaneFinished;
+	private VBox mansoryPaneFinished;
 
 	@FXML
 	private AnchorPane anchorPaneMansory;
@@ -195,9 +196,23 @@ public class GUIController {
 		// hier können keylistener und sowas initialisiert werden
 		textFieldTaskname.editableProperty().set(false);
 		textAreaDescription.editableProperty().set(false);
+
+		// Button Init
 		buttonReturn.setVisible(false);
 		buttonProceed.setVisible(false);
 
+		// Kanban columns Init
+		mansoryPaneToDo.setAlignment(Pos.TOP_CENTER);
+		mansoryPaneToDo.setSpacing(10);
+		mansoryPaneDoing.setAlignment(Pos.TOP_CENTER);
+		mansoryPaneDoing.setSpacing(10);
+		mansoryPaneFinished.setAlignment(Pos.TOP_CENTER);
+		mansoryPaneFinished.setSpacing(10);
+
+		
+		
+		
+		
 		// labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
 
 		((Scene) labelProjectname.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -336,30 +351,13 @@ public class GUIController {
 
 	@FXML
 	void buttonNewTaskPressed(ActionEvent event) {
-		Label lbl = new Label("Task " + taskCounter);
-		lbl.setId("Task " + taskCounter);
-		lbl.setAlignment(Pos.CENTER);
+		createTask();
 
-		lbl.setPrefSize(100, 50);
-		lbl.setStyle(
-				"-fx-background-color: white; -fx-background-color: white; -fx-padding: 10px; -fx-background-radius: 10px;");
-
-		mansoryPaneToDo.setPrefHeight(mansoryPaneToDo.getPrefHeight() + 180);
-		mansoryPaneDoing.setPrefHeight(mansoryPaneToDo.getPrefHeight() + 180);
-		mansoryPaneFinished.setPrefHeight(mansoryPaneToDo.getPrefHeight() + 180);
-		mansoryPaneToDo.getChildren().add(lbl);
-		if (mansoryPaneToDo.getPrefHeight() > anchorPaneMansory.getPrefHeight()) {
-			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 180);
+		// Passt Groesse des Pane automatisch an die Anzahl der Tasks an
+		if (mansoryPaneTags.getPrefHeight() > anchorPaneTaskInformation.getPrefHeight()) {
+			anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getPrefHeight() + 180);
 		}
 
-		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				buttonReturn.setVisible(true);
-				buttonProceed.setVisible(true);
-				getTaskInfoFromServer(lbl.getId());
-			}
-		});
 	}
 
 	@FXML
@@ -419,26 +417,24 @@ public class GUIController {
 
 	private void createTask() {
 		taskCounter++;
-		main.log("Add Tag", "Button pressed");
+		main.log("Add Task", "Button pressed");
 		Label lbl = new Label();
 
-		lbl.setPrefSize(30, 10);
-		lbl.setMaxHeight(5);
-		lbl.setMaxWidth(40);
-
-		lbl.setText(textFieldTags.getText());
-
+		lbl.setPrefSize(200, 75);
+		lbl.setMinSize(200, 70);
+		lbl.setAlignment(Pos.CENTER);
+		lbl.setText(textFieldTaskname.getText());
 		lbl.setStyle(
-				"-fx-background-color: green; -fx-padding: 2px; -fx-background-radius: 50px; width:40pt; height:10pt; display:inline-block");
+				"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block; -fx-margin: -20;");
 
-		mansoryPaneTags.setPrefHeight(mansoryPaneTags.getPrefHeight() + 180);
-
-		mansoryPaneTags.getChildren().add(lbl);
+		mansoryPaneToDo.setMinHeight(mansoryPaneToDo.getMinHeight() + 180);
+		mansoryPaneToDo.getChildren().add(lbl);
 
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-
+				buttonReturn.setVisible(true);
+				buttonProceed.setVisible(true);
 			}
 		});
 	}
