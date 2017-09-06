@@ -376,21 +376,20 @@ public class GUIController {
 		
 			Label lbl = new Label();
 
-			lbl.setPrefSize(0, 0);
-			lbl.setMinHeight(0);
-			lbl.setMaxHeight(60);
-			lbl.setMaxWidth(80);
+			this.mansoryPaneTags.setCellHeight(20);
+			this.mansoryPaneTags.setCellWidth(40);
+
 			
-			lbl.setText(textFieldTags.getText());
+			lbl.setText(" "+textFieldTags.getText()+" ");
 			textFieldTags.setText("");
 			lbl.setAlignment(Pos.CENTER);
-			lbl.setStyle("-fx-background-color: green; -fx-margin:-5; -fx-padding: -5; -fx-background-radius: 15px; width:wrap-text; height:wrap-text; height:5px; display:inline-block");
+			lbl.setStyle("-fx-background-color: #969696; -fx-background-radius: 15px; display:inline-block");
 
-			mansoryPaneTags.setPrefHeight(mansoryPaneTags.getPrefHeight() + 50);
+			mansoryPaneTags.setPrefHeight(mansoryPaneTags.getPrefHeight() + 20);
 			
 			mansoryPaneTags.getChildren().add(lbl);
 			if (mansoryPaneTags.getPrefHeight() > anchorPaneTaskInformation.getPrefHeight()) {
-				anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getPrefHeight() + 50);
+				anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getHeight());
 			}
 
 			lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
