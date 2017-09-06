@@ -175,7 +175,9 @@ public class GUIController {
 
 	private ArrayList<Label> LabelList;
 
-	private static int usedScrollBarHeight;
+	private static int usedScrollBarHeight_ToDo;
+	private static int usedScrollBarHeight_Doing;
+	private static int usedScrollBarHeight_Finished;
 
 	private static int taskCounter;
 
@@ -281,15 +283,17 @@ public class GUIController {
 
 	@FXML
 	void buttonProceedPressed(ActionEvent event) {
+
 		if (activeLabel.getParent() == mansoryPaneToDo) {
+			usedScrollBarHeight_ToDo = usedScrollBarHeight_ToDo - 90;
 			mansoryPaneToDo.getChildren().remove(activeLabel);
 			mansoryPaneDoing.getChildren().add(activeLabel);
-		} 
-		else if (activeLabel.getParent() == mansoryPaneDoing) {
+		} else if (activeLabel.getParent() == mansoryPaneDoing) {
+			usedScrollBarHeight_Doing = usedScrollBarHeight_Doing - 90;
 			mansoryPaneDoing.getChildren().remove(activeLabel);
 			mansoryPaneFinished.getChildren().add(activeLabel);
-		} 
-		else if (activeLabel.getParent() == mansoryPaneFinished) {
+		} else if (activeLabel.getParent() == mansoryPaneFinished) {
+			usedScrollBarHeight_Finished = usedScrollBarHeight_Finished - 90;
 			buttonProceed.setVisible(false);
 		}
 	}
@@ -302,13 +306,16 @@ public class GUIController {
 	@FXML
 	void buttonReturnPressed(ActionEvent event) {
 		if (activeLabel.getParent() == mansoryPaneToDo) {
+			usedScrollBarHeight_ToDo = usedScrollBarHeight_ToDo - 90;
 			buttonReturn.setVisible(false);
-		} 
-		else if (activeLabel.getParent() == mansoryPaneDoing) {
+			
+		} else if (activeLabel.getParent() == mansoryPaneDoing) {
+			usedScrollBarHeight_Doing = usedScrollBarHeight_Doing - 90;
 			mansoryPaneDoing.getChildren().remove(activeLabel);
 			mansoryPaneToDo.getChildren().add(activeLabel);
-		} 
-		else if (activeLabel.getParent() == mansoryPaneFinished) {
+			
+		} else if (activeLabel.getParent() == mansoryPaneFinished) {
+			usedScrollBarHeight_Finished = usedScrollBarHeight_Finished - 90;
 			mansoryPaneFinished.getChildren().remove(activeLabel);
 			mansoryPaneDoing.getChildren().add(activeLabel);
 		}
@@ -374,18 +381,12 @@ public class GUIController {
 	@FXML
 	void buttonNewTaskPressed(ActionEvent event) {
 		createTask();
-		usedScrollBarHeight = usedScrollBarHeight + 90;
+		usedScrollBarHeight_ToDo = usedScrollBarHeight_ToDo + 90;
 
 		main.log(anchorPaneMansory.getPrefHeight(), "anchorPaneMansory");
 		main.log(mansoryPaneToDo.getPrefHeight(), "mansoryPaneToDo");
 
-		// Passt Groesse des Pane automatisch an die Anzahl der Tasks an
-		if (mansoryPaneToDo.getPrefHeight() <= usedScrollBarHeight) {
-
-			main.log(usedScrollBarHeight);
-			mansoryPaneToDo.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
-			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
-		}
+		checkScrollBarSpace();
 
 	}
 
@@ -429,6 +430,24 @@ public class GUIController {
 			main.log("Kein Text eingegeben!", "Add Tag");
 		}
 
+	}
+
+	public void checkScrollBarSpace() {
+		if (mansoryPaneToDo.getPrefHeight() <= usedScrollBarHeight_ToDo) {
+
+			mansoryPaneDoing.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+		}
+		if (mansoryPaneDoing.getPrefHeight() <= usedScrollBarHeight_Doing) {
+
+			mansoryPaneDoing.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+		}
+		if (mansoryPaneToDo.getPrefHeight() <= usedScrollBarHeight_Finished) {
+
+			mansoryPaneFinished.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+		}
 	}
 
 	private void createTask() {
