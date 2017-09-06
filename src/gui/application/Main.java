@@ -41,7 +41,7 @@ public class Main extends Application {
 			// Show the scene containing the root layout.
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
-			primaryStage.getIcons().add(new Image("file:BLAUGE_Labs_Logo_small.png"));
+			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("BLAUGE_Labs_Logo_small.png")));
 			primaryStage.show();
 
 		} catch (Exception e) {
