@@ -396,7 +396,7 @@ public class GUIController {
 	 */
 	@FXML
 	void buttonTagsPressed(ActionEvent event) {
-
+		createMoreTags(3);
 	}
 
 	/**
@@ -565,7 +565,8 @@ public class GUIController {
 		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
 		for( int i = 0; i < name-2; i++) {
 			String tag = "";
-			for( int a = 0; a < 10; a++) {
+			int b = (int) (2 + Math.random()*10);
+			for( int a = 0; a < b; a++) {
 				tag = tag + (char) (97 + Math.random()*26);
 
 			}
@@ -581,6 +582,8 @@ public class GUIController {
 		    Thread.currentThread().interrupt();
 		}
 		
+		
+		
 		//TimeUnit.SECONDS.sleep(1);
 		textFieldTags.setText("sdfsdfs");
 		buttonAddTagPressed(null);
@@ -588,6 +591,9 @@ public class GUIController {
 		textFieldTags.setText("nsvjlkv");
 		buttonAddTagPressed(null);
 		textFieldTags.setText("");
+		
+		anchorPaneTaskInformation3.setLayoutY(anchorPaneTaskInformation1.getHeight()+anchorPaneTaskInformation2.getHeight()+200);
+		anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getPrefHeight()+200);
 
 		
 	}
