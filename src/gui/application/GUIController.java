@@ -176,6 +176,12 @@ public class GUIController {
 	@FXML
 	private ScrollPane scrollPaneMansory;
 
+	@FXML
+	private JFXMasonryPane mansoryPaneTags;
+
+	@FXML
+	private AnchorPane anchorPaneTaskInformation;
+
 	private Main main;
 
 	private JFXColorPicker colorPicker; // https://github.com/jfoenixadmin/JFoenix/issues/408
@@ -317,12 +323,12 @@ public class GUIController {
 		if (activeLabel.getParent() == mansoryPaneToDo) {
 			usedScrollBarHeight_ToDo = usedScrollBarHeight_ToDo - 90;
 			buttonReturn.setVisible(false);
-			
+
 		} else if (activeLabel.getParent() == mansoryPaneDoing) {
 			usedScrollBarHeight_Doing = usedScrollBarHeight_Doing - 90;
 			mansoryPaneDoing.getChildren().remove(activeLabel);
 			mansoryPaneToDo.getChildren().add(activeLabel);
-			
+
 		} else if (activeLabel.getParent() == mansoryPaneFinished) {
 			usedScrollBarHeight_Finished = usedScrollBarHeight_Finished - 90;
 			mansoryPaneFinished.getChildren().remove(activeLabel);
@@ -398,12 +404,6 @@ public class GUIController {
 		checkScrollBarSpace();
 
 	}
-
-	@FXML
-	private JFXMasonryPane mansoryPaneTags;
-
-	@FXML
-	private AnchorPane anchorPaneTaskInformation;
 
 	@FXML
 	void buttonAddTagPressed(ActionEvent event) {
@@ -491,7 +491,7 @@ public class GUIController {
 		/*
 		 * textFieldTaskname.setText(String value); labelActualAuthor.setText(String
 		 * value); labelActualStatus.setText(String value);
-		 * textAreaDescription.setText(String value); labelTags.setText(String value);
+		 * textAreaDescription.setText(String value)
 		 */
 	}
 }
