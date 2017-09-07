@@ -1,5 +1,8 @@
 package gui.application;
 
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
@@ -15,6 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import model.interfaces.RMI_Projektmanager;
 
 /*
  * TODO:
@@ -160,6 +164,15 @@ public class ProjectListController {
 
 	@FXML
 	void buttonSaveNewProjectPressed(ActionEvent event) {
-
+		
+		try {
+			
+			Registry registry = LocateRegistry.getRegistry(null);
+			RMI_Projektmanager manager = (RMI_Projektmanager) registry.lookup("manager");
+			manager.erstelleProjekt(main.user, textFieldProjectName.getText(), "");
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
