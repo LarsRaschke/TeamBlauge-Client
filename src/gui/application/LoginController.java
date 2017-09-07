@@ -52,6 +52,8 @@ public class LoginController {
 	}
 
 	public void initnshit() {
+		textFieldLogInScreenUsername.setText("schmidfi");
+		
 		this.textFieldLogInScreenPassword.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent ke) {
@@ -78,7 +80,7 @@ public class LoginController {
 	}
 
 	/**
-	 * Methode wird beim drücken des Login-Buttons ausgeführt. Ruft die Methode
+	 * Methode wird beim drï¿½cken des Login-Buttons ausgefï¿½hrt. Ruft die Methode
 	 * checkLoginData() aus
 	 * 
 	 * @param event
@@ -92,7 +94,7 @@ public class LoginController {
 	// private String passwort = "123";
 
 	/**
-	 * Überprüft, ob der eingegebene Username auf dem Server hinterlegt ist.
+	 * ï¿½berprï¿½ft, ob der eingegebene Username auf dem Server hinterlegt ist.
 	 * 
 	 */
 	public void checkLoginData() {

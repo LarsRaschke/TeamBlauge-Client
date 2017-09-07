@@ -271,6 +271,24 @@ public class GUIController {
 				}
 			}
 		});
+		
+		this.buttonAddComment.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent ke) {
+				if (ke.getCode().equals(KeyCode.ENTER)) {
+					buttonAddCommentPressed(null);
+				}
+			}
+		});
+		
+		this.textFieldComments.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent ke) {
+				if (ke.getCode().equals(KeyCode.ENTER)) {
+					buttonAddCommentPressed(null);
+				}
+			}
+		});
 
 	}
 
@@ -580,7 +598,7 @@ public class GUIController {
 		main.log("Button pressed", "Comment");		
 		if(!textFieldComments.getText().equals("")) {
 		
-			createComment(textFieldComments.getText(), "Fiete Schmidt");//main.user.getVorname() + ", " + main.user.getNachname());
+			createComment(textFieldComments.getText(), main.user.getVorname() + ", " + main.user.getNachname());
 		}
 		else {
 			main.log("Kein Text eingegeben!", "Comment");
@@ -611,7 +629,7 @@ public class GUIController {
 		lbl.setText(author + ":\n\t"+ name);
 		textFieldComments.setText("");
 		lbl.setAlignment(Pos.TOP_LEFT);
-		lbl.setStyle("display:inline-block; -fx-padding: 0;");
+		lbl.setStyle("display:inline-block; -fx-padding: 0; -fx-background-color: #969696;");
 		mansoryPaneComments.getChildren().add(lbl);
 		mansoryPaneComments.setPrefHeight(mansoryPaneComments.getHeight() + 75);
 		anchorPaneTaskInformation3.setPrefHeight(mansoryPaneComments.getHeight()+100);//+95
