@@ -37,6 +37,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 
 public class GUIController {
+	private boolean LDAPConnection = false;
+	
 	@FXML
 	private Label labelProjectname;
 
@@ -45,6 +47,9 @@ public class GUIController {
 
 	@FXML
 	private Label labelUser;
+	
+	@FXML
+	private Label labelBenachrichtigung;
 
 	@FXML
 	private MenuButton menuButtonFilter;
@@ -194,6 +199,9 @@ public class GUIController {
 	private static int usedScrollBarHeight_Finished;
 
 	private static int taskCounter;
+	
+	private String usernameVN = "";
+	private String usernameNV = "";
 
 	public GUIController() {
 		this.colorPicker = new JFXColorPicker();
@@ -231,7 +239,19 @@ public class GUIController {
 		mansoryPaneFinished.setAlignment(Pos.TOP_CENTER);
 		mansoryPaneFinished.setSpacing(10);
 
-		labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
+		if(LDAPConnection) {
+			usernameVN = main.user.getVorname() + " " + main.user.getNachname();
+			usernameNV = main.user.getNachname() + ", " + main.user.getVorname();
+		}
+		else {
+			guilog("Keine Verbindung zum LDAP Server");
+			usernameVN = "Hans Dampf";
+			usernameNV = "Dampf, Hans";
+		}
+		
+		labelUser.setText("    "+usernameNV);
+		labelProjectname.setText("    Testprojekt");
+		labelProjectinformation.setText("    Erstelldatum: 07.07.2017, Ersteller: Fiete Schmidt");
 
 		((Scene) labelProjectname.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
@@ -604,7 +624,7 @@ public class GUIController {
 		main.log("Button pressed", "Comment");		
 		if(!textFieldComments.getText().equals("")) {
 		
-			createComment(textFieldComments.getText(), main.user.getVorname() + " " + main.user.getNachname());
+			createComment(textFieldComments.getText(), usernameVN);
 		}
 		else {
 			main.log("Kein Text eingegeben!", "Comment");
@@ -739,6 +759,10 @@ public class GUIController {
 
 				textFieldTaskname.setText(activeLabel.getText());
 				
+				 //lbl.setStyle("-fx-border-width: 2; -fx-border-color: red;");
+				
+				 lbl.setStyle("-fx-border-width: 2; -fx-border-color: red; -fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+
 			}
 		});
 	}
@@ -753,5 +777,13 @@ public class GUIController {
 		 * value); labelActualStatus.setText(String value);
 		 * textAreaDescription.setText(String value)
 		 */
+	}
+	
+	void guilog(String text) {
+		labelBenachrichtigung.setText(text);
+	}
+	
+	void guilog(int text) {
+		labelBenachrichtigung.setText(""+text);
 	}
 }

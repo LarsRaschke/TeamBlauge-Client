@@ -24,8 +24,8 @@ public class Main extends Application {
 			this.primaryStage = primaryStage;
 			this.primaryStage.setTitle("BLAUGE Kanban");
 			initRoot();
-			showLogin();
-			// showGUI();
+			//showLogin();
+			showGUI();
 
 		} catch (Exception e) {
 			e.printStackTrace();

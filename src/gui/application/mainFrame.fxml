@@ -41,13 +41,13 @@
             <Font name="Roboto Light" size="15.0" />
          </font>
       </MenuButton>
-      <ScrollPane layoutX="876.0" layoutY="100.0" prefHeight="620.0" prefWidth="364.0">
+      <ScrollPane hbarPolicy="NEVER" layoutX="876.0" layoutY="100.0" prefHeight="620.0" prefWidth="364.0">
         <content>
         
         
         
         
-          <AnchorPane fx:id="anchorPaneTaskInformation" minHeight="0.0" minWidth="0.0" prefHeight="660.0" prefWidth="349.0" style="-fx-background-color: #FFA500;">
+          <AnchorPane fx:id="anchorPaneTaskInformation" minHeight="0.0" minWidth="0.0" prefHeight="660.0" prefWidth="345.0" style="-fx-background-color: #FFA500;">
                <children>
                <AnchorPane fx:id="anchorPaneTaskInformation1" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="349.0" style="-fx-background-color: #FFA500;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -272,21 +272,6 @@
             </ContextMenu>
          </contextMenu>
       </Label>
-      <Label fx:id="labelToDo" alignment="CENTER" layoutY="100.0" prefHeight="30.0" prefWidth="273.0" style="-fx-background-color: #969696;" text="To Do">
-         <font>
-            <Font name="Roboto Light" size="15.0" />
-         </font>
-      </Label>
-      <Label fx:id="labelDoing" alignment="CENTER" layoutX="273.0" layoutY="100.0" prefHeight="31.0" prefWidth="271.0" style="-fx-background-color: #888888;" text="Doing">
-         <font>
-            <Font name="Roboto Light" size="15.0" />
-         </font>
-      </Label>
-      <Label fx:id="labelFinished" alignment="CENTER" layoutX="544.0" layoutY="100.0" prefHeight="30.0" prefWidth="273.0" style="-fx-background-color: #969696;" text="Finished">
-         <font>
-            <Font name="Roboto Light" size="15.0" />
-         </font>
-      </Label>
       <JFXButton fx:id="buttonNewTask" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="50.0" onAction="#buttonNewTaskPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE">
          <graphic>
             <ImageView fitHeight="40.0" fitWidth="40.0">
@@ -296,16 +281,41 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <ScrollPane fx:id="scrollPaneMansory" layoutY="130.0" prefHeight="590.0" prefWidth="830.0" style="-fx-background-color: #969696;">
+      <ScrollPane fx:id="scrollPaneMansory" hbarPolicy="NEVER" layoutY="130.0" prefHeight="596.0" prefWidth="835.0" style="-fx-background-color: #969696;" AnchorPane.bottomAnchor="25.0">
         <content>
-          <AnchorPane fx:id="anchorPaneMansory" minHeight="0.0" minWidth="0.0" prefHeight="590.0" prefWidth="815.0" style="-fx-background-color: #969696;">
+          <AnchorPane fx:id="anchorPaneMansory" minHeight="0.0" minWidth="0.0" prefHeight="596.0" prefWidth="820.0" style="-fx-background-color: #969696;">
                <children>
-                  <VBox fx:id="mansoryPaneToDo" prefHeight="590.0" prefWidth="271.0" />
-                  <VBox fx:id="mansoryPaneDoing" layoutX="272.0" prefHeight="590.0" prefWidth="271.0" style="-fx-background-color: #888888;" />
-                  <VBox fx:id="mansoryPaneFinished" layoutX="543.0" prefHeight="584.0" prefWidth="271.0" />
+                  <VBox fx:id="mansoryPaneToDo" prefHeight="596.0" prefWidth="271.0" AnchorPane.topAnchor="30.0" />
+                  <VBox fx:id="mansoryPaneDoing" layoutX="272.0" prefHeight="596.0" prefWidth="271.0" style="-fx-background-color: #888888;" AnchorPane.topAnchor="30.0" />
+                  <VBox fx:id="mansoryPaneFinished" layoutX="543.0" prefHeight="596.0" prefWidth="276.0" AnchorPane.topAnchor="30.0" />
                </children>
             </AnchorPane>
         </content>
       </ScrollPane>
+      <AnchorPane layoutX="29.0" layoutY="595.0" prefHeight="25.0" prefWidth="835.0" style="-fx-background-color: cdcdcd;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+         <children>
+            <Label layoutY="4.0" prefHeight="15.0" prefWidth="140.0" text="Benachrichtigungen:" AnchorPane.leftAnchor="10.0">
+               <font>
+                  <Font name="Roboto Light" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelBenachrichtigung" layoutX="158.0" layoutY="3.0" prefWidth="680.0" text=" " textFill="RED" AnchorPane.leftAnchor="150.0" />
+         </children>
+      </AnchorPane>
+      <Label fx:id="labelFinished" alignment="CENTER" prefHeight="30.0" prefWidth="273.0" style="-fx-background-color: #969696;" text="Finished" AnchorPane.leftAnchor="544.0" AnchorPane.topAnchor="100.0">
+         <font>
+            <Font name="Roboto Light" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelDoing" alignment="CENTER" prefHeight="31.0" prefWidth="271.0" style="-fx-background-color: #888888;" text="Doing" AnchorPane.leftAnchor="273.0" AnchorPane.topAnchor="100.0">
+         <font>
+            <Font name="Roboto Light" size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelToDo" alignment="CENTER" prefHeight="30.0" prefWidth="273.0" style="-fx-background-color: #969696;" text="To Do" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="100.0">
+         <font>
+            <Font name="Roboto Light" size="15.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
