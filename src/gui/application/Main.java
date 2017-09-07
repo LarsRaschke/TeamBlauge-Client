@@ -15,7 +15,7 @@ public class Main extends Application {
 
 	BorderPane root = new BorderPane();
 	Stage primaryStage = new Stage();
-	
+
 	public User user;
 
 	@Override
@@ -25,7 +25,8 @@ public class Main extends Application {
 			this.primaryStage.setTitle("BLAUGE Kanban");
 			initRoot();
 			showLogin();
-
+//			showGUI();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -97,6 +98,34 @@ public class Main extends Application {
 	 * Logfunktion, Ueberladen um mit und ohne Label loggen zu koennen
 	 */
 
+
+
+	public void log(String text) {
+		System.out.print("*** LOG: >No Label<:\t");
+		System.out.print(text + "\n");
+	}
+
+	public void log(double t) {
+		System.out.print("*** LOG: >No Label<:\t");
+		System.out.print(t + "\n");
+	}
+	
+	public void log(int t) {
+		System.out.print("*** LOG: >No Label<:\t");
+		System.out.print(t + "\n");
+	}
+
+	public void log(double t, String label) {
+		System.out.print("*** LOG: ");
+		if (label != "") {
+			System.out.print(label);
+		} else {
+			System.out.print(">No Label<");
+		}
+		System.out.print(":\t");
+		System.out.print(t + "\n");
+	}
+	
 	public void log(String text, String label) {
 		System.out.print("*** LOG: ");
 		if (label != "") {
@@ -106,14 +135,5 @@ public class Main extends Application {
 		}
 		System.out.print(":\t");
 		System.out.print(text + "\n");
-	}
-
-	public void log(String text) {
-		System.out.print("*** LOG: >No Label<:\t");
-		System.out.print(text + "\n");
-	}
-
-	public static void main(String[] args) {
-		launch(args);
 	}
 }
