@@ -77,6 +77,12 @@ public class LoginController {
 		this.main = main;
 	}
 
+	/**
+	 * Methode wird beim drücken des Login-Buttons ausgeführt. Ruft die Methode
+	 * checkLoginData() aus
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonLogInScreenLogInPressed(ActionEvent event) {
 		checkLoginData();
@@ -85,6 +91,10 @@ public class LoginController {
 	private String username = "fiete";
 	// private String passwort = "123";
 
+	/**
+	 * Überprüft, ob der eingegebene Username auf dem Server hinterlegt ist.
+	 * 
+	 */
 	public void checkLoginData() {
 
 		main.log("Check Login");
