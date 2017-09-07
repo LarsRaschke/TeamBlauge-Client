@@ -47,7 +47,7 @@
         
         
         
-          <AnchorPane fx:id="anchorPaneTaskInformation" minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="349.0" style="-fx-background-color: #FFA500;">
+          <AnchorPane fx:id="anchorPaneTaskInformation" minHeight="0.0" minWidth="0.0" prefHeight="660.0" prefWidth="349.0" style="-fx-background-color: #FFA500;">
                <children>
                <AnchorPane fx:id="anchorPaneTaskInformation1" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="349.0" style="-fx-background-color: #FFA500;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
@@ -153,7 +153,7 @@
             </AnchorPane>
             
             
-                  <AnchorPane fx:id="anchorPaneTaskInformation3" layoutY="500.0" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="349.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                  <AnchorPane fx:id="anchorPaneTaskInformation3" layoutY="500.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="349.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
                   <Label fx:id="labelComments" layoutX="5.0" layoutY="0.0" prefHeight="25.0" prefWidth="120.0" text="Kommentare:">
                      <font>

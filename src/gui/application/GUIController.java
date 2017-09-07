@@ -92,9 +92,6 @@ public class GUIController {
 	private Label labelComments;
 
 	@FXML
-	private JFXListView<?> listViewComments;
-
-	@FXML
 	private JFXTextField textFieldTags;
 
 	@FXML
@@ -543,6 +540,8 @@ public class GUIController {
 		anchorPaneTaskInformation
 				.setPrefHeight(400 + anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
 		mansoryPaneTags.getChildren().add(lbl);
+		
+		anchorPaneTaskInformation3.setLayoutY(anchorPaneTaskInformation1.getHeight()+anchorPaneTaskInformation2.getHeight());
 
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -598,7 +597,7 @@ public class GUIController {
 		main.log("Button pressed", "Comment");		
 		if(!textFieldComments.getText().equals("")) {
 		
-			createComment(textFieldComments.getText(), main.user.getVorname() + ", " + main.user.getNachname());
+			createComment(textFieldComments.getText(), main.user.getVorname() + " " + main.user.getNachname());
 		}
 		else {
 			main.log("Kein Text eingegeben!", "Comment");
@@ -626,32 +625,35 @@ public class GUIController {
 		name = insertPeriodically(name, "-\n\t", 25);
 		System.out.println(name);
 		
-		lbl.setText(author + ":\n\t"+ name);
+		int additionalLength = (name.length()/25+2)*20;
+		
+		lbl.setText(author + ":\n\n\t"+ name);
 		textFieldComments.setText("");
 		lbl.setAlignment(Pos.TOP_LEFT);
-		lbl.setStyle("display:inline-block; -fx-padding: 0; -fx-background-color: #969696;");
+		lbl.setStyle("display:inline-block; -fx-padding: 0; -fx-background-color: orange;");
 		mansoryPaneComments.getChildren().add(lbl);
-		mansoryPaneComments.setPrefHeight(mansoryPaneComments.getHeight() + 75);
-		anchorPaneTaskInformation3.setPrefHeight(mansoryPaneComments.getHeight()+100);//+95
-		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight()+80);
+		
+		mansoryPaneComments.setPrefHeight(mansoryPaneComments.getHeight() + additionalLength);
+		anchorPaneTaskInformation3.setPrefHeight(mansoryPaneComments.getPrefHeight()+220);//+95
+
+		anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation1.getHeight()+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
+/*
 		System.out.println("AnchorPane1: "+anchorPaneTaskInformation1.getHeight());
 		System.out.println("AnchorPane2: "+anchorPaneTaskInformation2.getHeight());
 		System.out.println("AnchorPane3: "+anchorPaneTaskInformation3.getHeight());
 		System.out.println("MasonaryPaneComment: "+mansoryPaneComments.getHeight());
-
 		System.out.println("AnchorPaneRoot: "+anchorPaneTaskInformation.getHeight());
+*/	
 		
-		anchorPaneTaskInformation2.setPrefHeight(mansoryPaneTags.getHeight() + 130);// +95
-		anchorPaneTaskInformation
-				.setPrefHeight(400 + anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
-		mansoryPaneTags.getChildren().add(lbl);
 
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-
+				anchorPaneTaskInformation3.setPrefHeight(mansoryPaneComments.getPrefHeight()+220);
+				anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation1.getHeight()+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
 			}
 		});
+
 	}
 
 	public static String insertPeriodically(
