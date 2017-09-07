@@ -396,7 +396,7 @@ public class GUIController {
 	 */
 	@FXML
 	void buttonTagsPressed(ActionEvent event) {
-		createMoreTags(3);
+		createMoreTags(25);
 	}
 
 	/**
@@ -431,6 +431,7 @@ public class GUIController {
 			});
 
 			textFieldTaskname.editableProperty().set(true);
+			textFieldTaskname.requestFocus();
 			this.buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
 			textFieldTaskname.setStyle("-fx-background-color: white;");
 		}
