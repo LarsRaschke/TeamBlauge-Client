@@ -122,5 +122,10 @@
          </font>
       </JFXButton>
       <Label layoutX="277.0" prefHeight="50.0" prefWidth="599.0" style="-fx-background-color: #969696;" />
+      <JFXButton fx:id="buttonSaveNewProject" buttonType="RAISED" layoutX="1095.0" layoutY="54.0" onAction="#buttonSaveNewProjectPressed" prefHeight="43.0" prefWidth="131.0" text="Projekt anlegen" textAlignment="CENTER">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

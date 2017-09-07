@@ -34,19 +34,19 @@ public class ProjectListController {
 
 	@FXML
 	private JFXTextField textFieldProjectName;
-	
+
 	@FXML
 	private JFXButton buttonEditProjectName;
-	
+
 	@FXML
 	private ImageView buttonEditProjectNameIcon;
 
 	@FXML
 	private JFXTextArea textAreaProjectDescription;
-	
+
 	@FXML
 	private JFXButton buttonEditProjectDescription;
-	
+
 	@FXML
 	private ImageView buttonEditProjectDescriptionIcon;
 
@@ -61,9 +61,12 @@ public class ProjectListController {
 
 	@FXML
 	private JFXButton buttonBack;
-	
+
 	@FXML
 	private Label labelProjectList;
+
+	@FXML
+	private JFXButton buttonSaveNewProject;
 
 	private Main main;
 
@@ -73,18 +76,16 @@ public class ProjectListController {
 
 	public void init() {
 		textFieldProjectName.editableProperty().set(false);
-    	textAreaProjectDescription.editableProperty().set(false);
-    	labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
-    	((Scene) labelProjectList.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent ke)
-            {
-                if (ke.getCode().equals(KeyCode.ESCAPE))
-                {
-                    main.showGUI();
-                }
-            }
-        });
+		textAreaProjectDescription.editableProperty().set(false);
+		labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
+		((Scene) labelProjectList.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent ke) {
+				if (ke.getCode().equals(KeyCode.ESCAPE)) {
+					main.showGUI();
+				}
+			}
+		});
 	}
 
 	public void setMainApp(Main main) {
@@ -100,65 +101,65 @@ public class ProjectListController {
 	void buttonBackPressed(ActionEvent event) {
 		main.showGUI();
 	}
-	
+
 	@FXML
-	void buttonAddProjectPressed(ActionEvent event){
-		
+	void buttonAddProjectPressed(ActionEvent event) {
+
 	}
-	
-    @FXML
-    void buttonEditProjectNamePressed(ActionEvent event) {
-    	if(textFieldProjectName.editableProperty().get()){
-    		textFieldProjectName.editableProperty().set(false);
-        	saveEnteredProjectName(textFieldProjectName.getText());
-        	this.buttonEditProjectNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
-        	textFieldProjectName.setStyle("-fx-background-color: orange;");
-        		
-    	}
-    	else {
-    		this.textFieldProjectName.setOnKeyPressed(new EventHandler<KeyEvent>() {
-	            @Override
-	            public void handle(KeyEvent ke)
-	            {
-	                if (ke.getCode().equals(KeyCode.ENTER))
-	                {
-	                	saveEnteredProjectName(textFieldProjectName.getText());
-	                	textFieldProjectName.editableProperty().set(false);
-	                	buttonEditProjectNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
-	                	textFieldProjectName.setStyle("-fx-background-color: orange;");
-	                }
-	            } 
-	        });
-    		textFieldProjectName.editableProperty().set(true);
-        	this.buttonEditProjectNameIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
-        	textFieldProjectName.setStyle("-fx-background-color: white;");
-    	}
-    }
-    
-    void saveEnteredProjectName(String name) {
-    	
-    }
-    
-    @FXML
-    void buttonEditProjectDescriptionPressed(ActionEvent event) {
-    	if(textAreaProjectDescription.editableProperty().get()){
-    		textAreaProjectDescription.editableProperty().set(false);
-        	saveEnteredProjectDescription(textAreaProjectDescription.getText());
-        	this.buttonEditProjectDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
-        	textAreaProjectDescription.setStyle("text-area-background: orange;");
-        		
-    	}
-    	else {
-    		
-    		textAreaProjectDescription.editableProperty().set(true);
-        	this.buttonEditProjectDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
-        	textAreaProjectDescription.setStyle("text-area-background: white;");
 
-    	}
-    }
-    
-    void saveEnteredProjectDescription(String name) {
+	@FXML
+	void buttonEditProjectNamePressed(ActionEvent event) {
+		if (textFieldProjectName.editableProperty().get()) {
+			textFieldProjectName.editableProperty().set(false);
+			saveEnteredProjectName(textFieldProjectName.getText());
+			this.buttonEditProjectNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
+			textFieldProjectName.setStyle("-fx-background-color: orange;");
 
-    }
+		} else {
+			this.textFieldProjectName.setOnKeyPressed(new EventHandler<KeyEvent>() {
+				@Override
+				public void handle(KeyEvent ke) {
+					if (ke.getCode().equals(KeyCode.ENTER)) {
+						saveEnteredProjectName(textFieldProjectName.getText());
+						textFieldProjectName.editableProperty().set(false);
+						buttonEditProjectNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
+						textFieldProjectName.setStyle("-fx-background-color: orange;");
+					}
+				}
+			});
+			textFieldProjectName.editableProperty().set(true);
+			this.buttonEditProjectNameIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
+			textFieldProjectName.setStyle("-fx-background-color: white;");
+		}
+	}
 
+	void saveEnteredProjectName(String name) {
+
+	}
+
+	@FXML
+	void buttonEditProjectDescriptionPressed(ActionEvent event) {
+		if (textAreaProjectDescription.editableProperty().get()) {
+			textAreaProjectDescription.editableProperty().set(false);
+			saveEnteredProjectDescription(textAreaProjectDescription.getText());
+			this.buttonEditProjectDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
+			textAreaProjectDescription.setStyle("text-area-background: orange;");
+
+		} else {
+
+			textAreaProjectDescription.editableProperty().set(true);
+			this.buttonEditProjectDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
+			textAreaProjectDescription.setStyle("text-area-background: white;");
+
+		}
+	}
+
+	void saveEnteredProjectDescription(String name) {
+
+	}
+
+	@FXML
+	void buttonSaveNewProjectPressed(ActionEvent event) {
+
+	}
 }

@@ -35,6 +35,12 @@ public class LoginController {
 	private JFXButton buttonLogInScreenInformation;
 
 	@FXML
+	private JFXButton buttonSaveNewProject;
+
+	@FXML
+	private JFXButton buttonNewProject;
+
+	@FXML
 	void buttonLogInScreenInformationPressed(ActionEvent event) {
 
 	}
@@ -98,4 +104,13 @@ public class LoginController {
 
 	}
 
+	@FXML
+	void buttonSaveNewProjectPressed(ActionEvent event) {
+
+	}
+
+	@FXML
+	void buttonNewProjectPressed(ActionEvent event) {
+
+	}
 }
