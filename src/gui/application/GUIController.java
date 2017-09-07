@@ -6,6 +6,8 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 import java.util.function.DoubleToIntFunction;
 
@@ -36,6 +38,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
+import model.interfaces.RMI_Projektmanager;
 
 public class GUIController {
 	@FXML
@@ -314,6 +317,15 @@ public class GUIController {
 
 	@FXML
 	void buttonProjectselectionPressed(ActionEvent event) {
+		try {
+
+			Registry registry = LocateRegistry.getRegistry(null);
+			RMI_Projektmanager manager = (RMI_Projektmanager) registry.lookup("manager");
+			main.projektliste = manager.ladeProjekte(main.user.getNutzername());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		main.showProjectList();
 	}
 

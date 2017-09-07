@@ -1,6 +1,7 @@
 package gui.application;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +18,7 @@ public class Main extends Application {
 	Stage primaryStage = new Stage();
 
 	public User user;
+	public ArrayList<String> projektliste;
 
 	@Override
 	public void start(Stage primaryStage) {

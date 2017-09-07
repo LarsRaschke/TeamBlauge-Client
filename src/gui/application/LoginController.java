@@ -1,5 +1,7 @@
 package gui.application;
 
+import java.util.ArrayList;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -82,9 +84,6 @@ public class LoginController {
 		checkLoginData();
 	}
 
-	private String username = "fiete";
-	// private String passwort = "123";
-
 	public void checkLoginData() {
 
 		main.log("Check Login");
@@ -92,6 +91,7 @@ public class LoginController {
 		main.user = Abfragen.erstelleUser(textFieldLogInScreenUsername.getText());
 
 		if (main.user != null) {
+			main.projektliste = new ArrayList<String>();
 			main.showGUI();
 		} else {
 			infoLabelLogInScreen.setText("Falscher Username!");
