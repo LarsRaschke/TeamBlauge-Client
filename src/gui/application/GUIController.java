@@ -35,7 +35,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.FileChooser;
 
 public class GUIController {
 	@FXML
@@ -163,24 +162,24 @@ public class GUIController {
 
 	@FXML
 	private AnchorPane anchorPaneMansory;
-	
+
 	@FXML
 	private AnchorPane anchorPaneTaskInformation1;
-	
+
 	@FXML
 	private AnchorPane anchorPaneTaskInformation2;
-	
+
 	@FXML
 	private AnchorPane anchorPaneTaskInformation3;
 
 	@FXML
 	private ScrollPane scrollPaneMansory;
-	
+
 	@FXML
-	private JFXMasonryPane mansoryPaneComments;
-	
+	private JFXMasonryPane mansoryPaneTags;
+
 	@FXML
-	private ImageView TagIcon; 
+	private AnchorPane anchorPaneTaskInformation;
 
 	private Main main;
 
@@ -190,7 +189,9 @@ public class GUIController {
 
 	private ArrayList<Label> LabelList;
 
-	private static int usedScrollBarHeight;
+	private static int usedScrollBarHeight_ToDo;
+	private static int usedScrollBarHeight_Doing;
+	private static int usedScrollBarHeight_Finished;
 
 	private static int taskCounter;
 
@@ -209,7 +210,7 @@ public class GUIController {
 
 	}
 
-	/*
+	/**
 	 * Quasi erweiterter Konstruktor, der in der Main aufgerufen wird, da bspw
 	 * keylistener nicht im Konstruktor angelegt werden koeï¿½nnen
 	 */
@@ -230,7 +231,7 @@ public class GUIController {
 		mansoryPaneFinished.setAlignment(Pos.TOP_CENTER);
 		mansoryPaneFinished.setSpacing(10);
 
-		// labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
+		labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
 
 		((Scene) labelProjectname.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
@@ -267,28 +268,6 @@ public class GUIController {
 				}
 			}
 		});
-		
-		this.textFieldComments.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent ke) {
-				if (ke.getCode().equals(KeyCode.ENTER)) {
-					buttonAddCommentPressed(null);
-				}
-			}
-		});
-
-		this.buttonAddComment.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent ke) {
-				if (ke.getCode().equals(KeyCode.ENTER)) {
-					buttonAddCommentPressed(null);
-				}
-			}
-		});
-		
-		
-		
-		
 
 	}
 
@@ -296,69 +275,120 @@ public class GUIController {
 		this.main = main;
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void ColorPickerSelectionChanged(ActionEvent event) {
 
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonCommentsPressed(ActionEvent event) {
-		//createMoreComment(12);
-	}
-	
-	@FXML
-	void buttonTagsPressed(ActionEvent event) {
-		createMoreTags(12);
-		
+
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonInformationPressed(ActionEvent event) {
 
 	}
 
+	/**
+	 * Logout des Users und Weiterleitung an das Login-Fenster
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonLogOutPressed(ActionEvent event) {
 		main.showLogin();
 	}
 
+	/**
+	 * Methode wird beim drücken des Proceed-Buttons ausgeführt. Es wird überprüft
+	 * in welchem Pane sich der aktuelle Task befindet. Passt die benötigte Höhe der
+	 * Scrollbar an.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonProceedPressed(ActionEvent event) {
+
 		if (activeLabel.getParent() == mansoryPaneToDo) {
+			usedScrollBarHeight_ToDo = usedScrollBarHeight_ToDo - 90;
 			mansoryPaneToDo.getChildren().remove(activeLabel);
 			mansoryPaneDoing.getChildren().add(activeLabel);
-		} 
-		else if (activeLabel.getParent() == mansoryPaneDoing) {
+		} else if (activeLabel.getParent() == mansoryPaneDoing) {
+			usedScrollBarHeight_Doing = usedScrollBarHeight_Doing - 90;
 			mansoryPaneDoing.getChildren().remove(activeLabel);
 			mansoryPaneFinished.getChildren().add(activeLabel);
-		} 
-		else if (activeLabel.getParent() == mansoryPaneFinished) {
-			buttonProceed.setVisible(false);
+		} else if (activeLabel.getParent() == mansoryPaneFinished) {
+			usedScrollBarHeight_Finished = usedScrollBarHeight_Finished - 90;
 		}
 	}
 
+	/**
+	 * Methode wird beim drücken des ProjectSelection-Buttons ausgeführt. Öffnet das
+	 * Fenster mit der Projektübersicht.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonProjectselectionPressed(ActionEvent event) {
 		main.showProjectList();
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonReturnPressed(ActionEvent event) {
 		if (activeLabel.getParent() == mansoryPaneToDo) {
-			buttonReturn.setVisible(false);
-		} 
-		else if (activeLabel.getParent() == mansoryPaneDoing) {
+			usedScrollBarHeight_ToDo = usedScrollBarHeight_ToDo - 90;
+
+		} else if (activeLabel.getParent() == mansoryPaneDoing) {
+			usedScrollBarHeight_Doing = usedScrollBarHeight_Doing - 90;
 			mansoryPaneDoing.getChildren().remove(activeLabel);
 			mansoryPaneToDo.getChildren().add(activeLabel);
-		} 
-		else if (activeLabel.getParent() == mansoryPaneFinished) {
+
+		} else if (activeLabel.getParent() == mansoryPaneFinished) {
+			usedScrollBarHeight_Finished = usedScrollBarHeight_Finished - 90;
 			mansoryPaneFinished.getChildren().remove(activeLabel);
 			mansoryPaneDoing.getChildren().add(activeLabel);
 		}
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
+	@FXML
+	void buttonTagsPressed(ActionEvent event) {
 
+	}
 
+	/**
+	 * Methode wird beim drücken des EditTask-Buttons ausgeführt. Der Button
+	 * wechselt zwischen "editieren" und "speichern".
+	 * 
+	 * Wird der der Text geändert, wird der Name des Aktiven Tasks geändert.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonEditTaskNamePressed(ActionEvent event) {
 		if (textFieldTaskname.editableProperty().get()) {
@@ -376,20 +406,38 @@ public class GUIController {
 						textFieldTaskname.editableProperty().set(false);
 						buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
 						textFieldTaskname.setStyle("-fx-background-color: orange;");
+						activeLabel.setText(textFieldTaskname.getText());
+						activeLabel.setId(textFieldTaskname.getText());
 					}
 				}
 			});
+
 			textFieldTaskname.editableProperty().set(true);
 			this.buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
 			textFieldTaskname.setStyle("-fx-background-color: white;");
 		}
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param name
+	 */
 	void saveEnteredTaskname(String name) {
 		// Nur zum Testen:
 		labelActualAuthor.setText(name);
 	}
 
+	/**
+	 * Methode wird beim Drücken des EditDescription-Button ausgeführt. Macht das
+	 * Textfeld zur Task-Beschreibung editierbar, sofern es im Moment nicht
+	 * editierbar ist. Ist es editierbar, wird es wieder gelocked.
+	 * 
+	 * Beim Klicken des Buttons wechselt das Icon entspechend seiner aktuellen
+	 * Funktion.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonEditDescriptionPressed(ActionEvent event) {
 		if (textAreaDescription.editableProperty().get()) {
@@ -406,206 +454,121 @@ public class GUIController {
 		}
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param name
+	 */
 	void saveEnteredDescription(String name) {
 		// Nur zum Testen:
 		labelActualStatus.setText(name);
 	}
 
+	/**
+	 * Methode wird beim Drücken des NewTask-Buttons ausgeführt. Führt die Methode
+	 * createTask() aus und erhöht die benötigte Höhe im ToDo-Pane
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonNewTaskPressed(ActionEvent event) {
 		createTask();
-		usedScrollBarHeight = usedScrollBarHeight + 90;
+		usedScrollBarHeight_ToDo = usedScrollBarHeight_ToDo + 90;
 
 		main.log(anchorPaneMansory.getPrefHeight(), "anchorPaneMansory");
 		main.log(mansoryPaneToDo.getPrefHeight(), "mansoryPaneToDo");
 
-		// Passt Groesse des Pane automatisch an die Anzahl der Tasks an
-		if (mansoryPaneToDo.getPrefHeight() <= usedScrollBarHeight) {
-
-			main.log(usedScrollBarHeight);
-			mansoryPaneToDo.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
-			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
-		}
+		checkScrollBarSpace();
 
 	}
 
-	@FXML
-	private JFXMasonryPane mansoryPaneTags;
-
-	@FXML
-	private AnchorPane anchorPaneTaskInformation;
-	
+	/**
+	 * Methode wird beim Drücken des AddTag-Buttons ausgeführt. Führt die Methode
+	 * addTag(String name)
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonAddTagPressed(ActionEvent event) {
-		main.log("Button pressed", "Add Tag");		
-		if(!textFieldTags.getText().equals("")) {
-		
+		main.log("Button pressed", "Add Tag");
+		if (!textFieldTags.getText().equals("")) {
+
 			createTag(textFieldTags.getText());
-		}
-		else {
+		} else {
 			main.log("Kein Text eingegeben!", "Add Tag");
 		}
 	}
-	
-	
-	
+
+	/**
+	 * Methode erstellt einen neuen Tag mit dem übergebenen Namen und fügt ihn an
+	 * passende Stelle im Tag-Pane an. Eine MouseEvent-Handle wird initialisiert
+	 * 
+	 * @param name
+	 */
 	public void createTag(String name) {
 		Label lbl = new Label();
 
 		this.mansoryPaneTags.setCellHeight(20);
 		this.mansoryPaneTags.setCellWidth(40);
 
-		lbl.setText(" "+name+" ");
+		lbl.setText(" " + name + " ");
 		textFieldTags.setText("");
 		lbl.setAlignment(Pos.CENTER);
 		lbl.setStyle("-fx-background-color: #969696; -fx-background-radius: 15px; display:inline-block");
-		mansoryPaneTags.getChildren().add(lbl);
-		
 		mansoryPaneTags.setStyle("height:wrap-content");
-		
+
 		mansoryPaneTags.autosize();
-		anchorPaneTaskInformation2.setPrefHeight(mansoryPaneTags.getHeight()+130);//+95
-		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
-		
+		anchorPaneTaskInformation2.setPrefHeight(mansoryPaneTags.getHeight() + 130);// +95
+		anchorPaneTaskInformation
+				.setPrefHeight(400 + anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
+		mansoryPaneTags.getChildren().add(lbl);
 
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				
-			}
-		});
-	}
-	
-	public void createMoreTags(String[] name) {
-		anchorPaneTaskInformation2.setPrefHeight(100 + name.length * 200);
-		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
-		for( int i = 0; i < name.length; i++) {
-			createTag(name[i]);
-		}
-	}
-	
-	public void createMoreTags(int name) {
-		anchorPaneTaskInformation2.setPrefHeight(100 + name * 200);
-		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
-		for( int i = 0; i < name-2; i++) {
-			String tag = "";
-			for( int a = 0; a < 10; a++) {
-				tag = tag + (char) (97 + Math.random()*26);
 
-			}
-			
-			createTag(tag);
-		}
-		try        
-		{
-		    Thread.sleep(1000);
-		} 
-		catch(InterruptedException ex) 
-		{
-		    Thread.currentThread().interrupt();
-		}
-		
-		//TimeUnit.SECONDS.sleep(1);
-		textFieldTags.setText("sdfsdfs");
-		buttonAddTagPressed(null);
-		textFieldTags.setText("");
-		textFieldTags.setText("nsvjlkv");
-		buttonAddTagPressed(null);
-		textFieldTags.setText("");
-
-		
-	}
-	
-	@FXML
-	void buttonAddCommentPressed(ActionEvent event) {
-		main.log("Button pressed", "Comment");		
-		if(!textFieldComments.getText().equals("")) {
-		
-			createComment(textFieldComments.getText(), "Fiete Schmidt");//main.user.getVorname() + ", " + main.user.getNachname());
-		}
-		else {
-			main.log("Kein Text eingegeben!", "Comment");
-		}
-	}
-	
-	public void createMoreComment(String[] name) {
-		anchorPaneTaskInformation3.setPrefHeight(100 + name.length * 200);
-		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
-		for( int i = 0; i < name.length; i++) {
-			createComment(name[i], "Christian Hopp");
-		}
-	}
-	
-	public void createComment(String name, String author) {
-		Label lbl = new Label();
-
-		this.mansoryPaneComments.setCellHeight(10);
-		this.mansoryPaneComments.setCellWidth(290);
-		this.mansoryPaneComments.setMaxWidth(300);
-		lbl.setMaxWidth(290);
-		
-		lbl.setWrapText(true);
-		
-		name = insertPeriodically(name, "-\n\t", 25);
-		System.out.println(name);
-		
-		lbl.setText(author + ":\n\t"+ name);
-		textFieldComments.setText("");
-		lbl.setAlignment(Pos.TOP_LEFT);
-		lbl.setStyle("display:inline-block; -fx-padding: 0;");
-		mansoryPaneComments.getChildren().add(lbl);
-		mansoryPaneComments.setPrefHeight(mansoryPaneComments.getHeight() + 75);
-		anchorPaneTaskInformation3.setPrefHeight(mansoryPaneComments.getHeight()+100);//+95
-		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight()+80);
-		System.out.println("AnchorPane1: "+anchorPaneTaskInformation1.getHeight());
-		System.out.println("AnchorPane2: "+anchorPaneTaskInformation2.getHeight());
-		System.out.println("AnchorPane3: "+anchorPaneTaskInformation3.getHeight());
-		System.out.println("MasonaryPaneComment: "+mansoryPaneComments.getHeight());
-
-		System.out.println("AnchorPaneRoot: "+anchorPaneTaskInformation.getHeight());
-		
-
-		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				
 			}
 		});
 	}
 
-	public static String insertPeriodically(
-		    String text, String insert, int period)
-		{
-		    StringBuilder builder = new StringBuilder(
-		         //text.length() + 2 * (text.length()/period)+1);
-		    	 text.length() + insert.length() * (text.length()/period)+1);
-		    
-		    int index = 0;
-		    String prefix = "";
-		    while (index < text.length())
-		    {
-		        // Don't put the insert in the very first iteration.
-		        // This is easier than appending it *after* each substring
-		        builder.append(prefix);
-		        prefix = insert;
-		        builder.append(text.substring(index, 
-		            Math.min(index + period, text.length())));
-		        index += period;
-		    }
-		    return builder.toString();
-		}
-	
+	/**
+	 * Überprüft, ob noch genug Platz in den Spalten ist. Sollte nicht genug Platz
+	 * sein, wird die Größte der Panes angepasst.
+	 */
+	public void checkScrollBarSpace() {
+		if (mansoryPaneToDo.getPrefHeight() <= usedScrollBarHeight_ToDo) {
 
+			mansoryPaneDoing.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+		}
+		if (mansoryPaneDoing.getPrefHeight() <= usedScrollBarHeight_Doing) {
+
+			mansoryPaneDoing.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+		}
+		if (mansoryPaneToDo.getPrefHeight() <= usedScrollBarHeight_Finished) {
+
+			mansoryPaneFinished.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+		}
+	}
+
+	/**
+	 * Methode erstellt einen neuen Task und fügt ihn am ToDo-Pane an. Eine
+	 * MouseEvent-Handle wird initialisiert und das erstellte Label wird zum Aktiven
+	 * Label. Die Buttons zum verschieben der Task werden sichtbar
+	 */
 	private void createTask() {
 		this.taskCounter++;
 		main.log("Add Task", "Button pressed");
 		Label lbl = new Label();
-		lbl.setId("Task " + taskCounter);
 
+		lbl.setId("Task " + taskCounter);
+		lbl.setText("Task " + taskCounter);
 		lbl.setPrefSize(200, 75);
 		lbl.setMinSize(200, 75);
 		lbl.setAlignment(Pos.CENTER);
-		lbl.setText(textFieldTaskname.getText());
+		// lbl.setText(textFieldTaskname.getText());
 		lbl.setStyle(
 				"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 
@@ -619,15 +582,21 @@ public class GUIController {
 				activeLabel = lbl;
 				main.log(lbl.getId());
 
+				textFieldTaskname.setText(activeLabel.getText());
+				
 			}
 		});
 	}
 
+	/**
+	 * Ruft die Informationen eines Task über seine ID auf und schreibt sie
+	 * @param id
+	 */
 	void getTaskInfoFromServer(String id) {
 		/*
 		 * textFieldTaskname.setText(String value); labelActualAuthor.setText(String
 		 * value); labelActualStatus.setText(String value);
-		 * textAreaDescription.setText(String value); labelTags.setText(String value);
+		 * textAreaDescription.setText(String value)
 		 */
 	}
 }
