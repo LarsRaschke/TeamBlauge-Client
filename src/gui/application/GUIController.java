@@ -407,6 +407,7 @@ public class GUIController {
 						buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
 						textFieldTaskname.setStyle("-fx-background-color: orange;");
 						activeLabel.setText(textFieldTaskname.getText());
+						activeLabel.setId(textFieldTaskname.getText());
 					}
 				}
 			});
@@ -582,10 +583,15 @@ public class GUIController {
 				main.log(lbl.getId());
 
 				textFieldTaskname.setText(activeLabel.getText());
+				
 			}
 		});
 	}
 
+	/**
+	 * Ruft die Informationen eines Task über seine ID auf und schreibt sie
+	 * @param id
+	 */
 	void getTaskInfoFromServer(String id) {
 		/*
 		 * textFieldTaskname.setText(String value); labelActualAuthor.setText(String
