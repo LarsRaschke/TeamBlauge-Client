@@ -177,6 +177,9 @@ public class GUIController {
 
 	@FXML
 	private JFXMasonryPane mansoryPaneTags;
+	
+	@FXML
+	private JFXMasonryPane mansoryPaneComments;
 
 	@FXML
 	private AnchorPane anchorPaneTaskInformation;
@@ -316,8 +319,8 @@ public class GUIController {
 	}
 
 	/**
-	 * Methode wird beim drücken des Proceed-Buttons ausgeführt. Es wird überprüft
-	 * in welchem Pane sich der aktuelle Task befindet. Passt die benötigte Höhe der
+	 * Methode wird beim drï¿½cken des Proceed-Buttons ausgefï¿½hrt. Es wird ï¿½berprï¿½ft
+	 * in welchem Pane sich der aktuelle Task befindet. Passt die benï¿½tigte Hï¿½he der
 	 * Scrollbar an.
 	 * 
 	 * @param event
@@ -339,8 +342,8 @@ public class GUIController {
 	}
 
 	/**
-	 * Methode wird beim drücken des ProjectSelection-Buttons ausgeführt. Öffnet das
-	 * Fenster mit der Projektübersicht.
+	 * Methode wird beim drï¿½cken des ProjectSelection-Buttons ausgefï¿½hrt. ï¿½ffnet das
+	 * Fenster mit der Projektï¿½bersicht.
 	 * 
 	 * @param event
 	 */
@@ -382,10 +385,10 @@ public class GUIController {
 	}
 
 	/**
-	 * Methode wird beim drücken des EditTask-Buttons ausgeführt. Der Button
+	 * Methode wird beim drï¿½cken des EditTask-Buttons ausgefï¿½hrt. Der Button
 	 * wechselt zwischen "editieren" und "speichern".
 	 * 
-	 * Wird der der Text geändert, wird der Name des Aktiven Tasks geändert.
+	 * Wird der der Text geï¿½ndert, wird der Name des Aktiven Tasks geï¿½ndert.
 	 * 
 	 * @param event
 	 */
@@ -429,7 +432,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Methode wird beim Drücken des EditDescription-Button ausgeführt. Macht das
+	 * Methode wird beim Drï¿½cken des EditDescription-Button ausgefï¿½hrt. Macht das
 	 * Textfeld zur Task-Beschreibung editierbar, sofern es im Moment nicht
 	 * editierbar ist. Ist es editierbar, wird es wieder gelocked.
 	 * 
@@ -465,8 +468,8 @@ public class GUIController {
 	}
 
 	/**
-	 * Methode wird beim Drücken des NewTask-Buttons ausgeführt. Führt die Methode
-	 * createTask() aus und erhöht die benötigte Höhe im ToDo-Pane
+	 * Methode wird beim Drï¿½cken des NewTask-Buttons ausgefï¿½hrt. Fï¿½hrt die Methode
+	 * createTask() aus und erhï¿½ht die benï¿½tigte Hï¿½he im ToDo-Pane
 	 * 
 	 * @param event
 	 */
@@ -483,7 +486,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Methode wird beim Drücken des AddTag-Buttons ausgeführt. Führt die Methode
+	 * Methode wird beim Drï¿½cken des AddTag-Buttons ausgefï¿½hrt. Fï¿½hrt die Methode
 	 * addTag(String name)
 	 * 
 	 * @param event
@@ -500,7 +503,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Methode erstellt einen neuen Tag mit dem übergebenen Namen und fügt ihn an
+	 * Methode erstellt einen neuen Tag mit dem ï¿½bergebenen Namen und fï¿½gt ihn an
 	 * passende Stelle im Tag-Pane an. Eine MouseEvent-Handle wird initialisiert
 	 * 
 	 * @param name
@@ -530,10 +533,135 @@ public class GUIController {
 			}
 		});
 	}
+	
+	
+	public void createMoreTags(String[] name) {
+		anchorPaneTaskInformation2.setPrefHeight(100 + name.length * 200);
+		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
+		for( int i = 0; i < name.length; i++) {
+			createTag(name[i]);
+		}
+	}
+	
+	public void createMoreTags(int name) {
+		anchorPaneTaskInformation2.setPrefHeight(100 + name * 200);
+		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
+		for( int i = 0; i < name-2; i++) {
+			String tag = "";
+			for( int a = 0; a < 10; a++) {
+				tag = tag + (char) (97 + Math.random()*26);
+
+			}
+			
+			createTag(tag);
+		}
+		try        
+		{
+		    Thread.sleep(1000);
+		} 
+		catch(InterruptedException ex) 
+		{
+		    Thread.currentThread().interrupt();
+		}
+		
+		//TimeUnit.SECONDS.sleep(1);
+		textFieldTags.setText("sdfsdfs");
+		buttonAddTagPressed(null);
+		textFieldTags.setText("");
+		textFieldTags.setText("nsvjlkv");
+		buttonAddTagPressed(null);
+		textFieldTags.setText("");
+
+		
+	}
+	
+	@FXML
+	void buttonAddCommentPressed(ActionEvent event) {
+		main.log("Button pressed", "Comment");		
+		if(!textFieldComments.getText().equals("")) {
+		
+			createComment(textFieldComments.getText(), "Fiete Schmidt");//main.user.getVorname() + ", " + main.user.getNachname());
+		}
+		else {
+			main.log("Kein Text eingegeben!", "Comment");
+		}
+	}
+	
+	public void createMoreComment(String[] name) {
+		anchorPaneTaskInformation3.setPrefHeight(100 + name.length * 200);
+		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
+		for( int i = 0; i < name.length; i++) {
+			createComment(name[i], "Christian Hopp");
+		}
+	}
+	
+	public void createComment(String name, String author) {
+		Label lbl = new Label();
+
+		this.mansoryPaneComments.setCellHeight(10);
+		this.mansoryPaneComments.setCellWidth(290);
+		this.mansoryPaneComments.setMaxWidth(300);
+		lbl.setMaxWidth(290);
+		
+		lbl.setWrapText(true);
+		
+		name = insertPeriodically(name, "-\n\t", 25);
+		System.out.println(name);
+		
+		lbl.setText(author + ":\n\t"+ name);
+		textFieldComments.setText("");
+		lbl.setAlignment(Pos.TOP_LEFT);
+		lbl.setStyle("display:inline-block; -fx-padding: 0;");
+		mansoryPaneComments.getChildren().add(lbl);
+		mansoryPaneComments.setPrefHeight(mansoryPaneComments.getHeight() + 75);
+		anchorPaneTaskInformation3.setPrefHeight(mansoryPaneComments.getHeight()+100);//+95
+		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight()+80);
+		System.out.println("AnchorPane1: "+anchorPaneTaskInformation1.getHeight());
+		System.out.println("AnchorPane2: "+anchorPaneTaskInformation2.getHeight());
+		System.out.println("AnchorPane3: "+anchorPaneTaskInformation3.getHeight());
+		System.out.println("MasonaryPaneComment: "+mansoryPaneComments.getHeight());
+
+		System.out.println("AnchorPaneRoot: "+anchorPaneTaskInformation.getHeight());
+		
+		anchorPaneTaskInformation2.setPrefHeight(mansoryPaneTags.getHeight() + 130);// +95
+		anchorPaneTaskInformation
+				.setPrefHeight(400 + anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
+		mansoryPaneTags.getChildren().add(lbl);
+
+		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+
+			}
+		});
+	}
+
+	public static String insertPeriodically(
+		    String text, String insert, int period)
+		{
+		    StringBuilder builder = new StringBuilder(
+		         //text.length() + 2 * (text.length()/period)+1);
+		    	 text.length() + insert.length() * (text.length()/period)+1);
+		    
+		    int index = 0;
+		    String prefix = "";
+		    while (index < text.length())
+		    {
+		        // Don't put the insert in the very first iteration.
+		        // This is easier than appending it *after* each substring
+		        builder.append(prefix);
+		        prefix = insert;
+		        builder.append(text.substring(index, 
+		            Math.min(index + period, text.length())));
+		        index += period;
+		    }
+		    return builder.toString();
+		}
+	
 
 	/**
-	 * Überprüft, ob noch genug Platz in den Spalten ist. Sollte nicht genug Platz
-	 * sein, wird die Größte der Panes angepasst.
+	 * ï¿½berprï¿½ft, ob noch genug Platz in den Spalten ist. Sollte nicht genug Platz
+	 * sein, wird die Grï¿½ï¿½te der Panes angepasst.
 	 */
 	public void checkScrollBarSpace() {
 		if (mansoryPaneToDo.getPrefHeight() <= usedScrollBarHeight_ToDo) {
@@ -554,7 +682,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Methode erstellt einen neuen Task und fügt ihn am ToDo-Pane an. Eine
+	 * Methode erstellt einen neuen Task und fï¿½gt ihn am ToDo-Pane an. Eine
 	 * MouseEvent-Handle wird initialisiert und das erstellte Label wird zum Aktiven
 	 * Label. Die Buttons zum verschieben der Task werden sichtbar
 	 */
@@ -589,7 +717,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Ruft die Informationen eines Task über seine ID auf und schreibt sie
+	 * Ruft die Informationen eines Task ï¿½ber seine ID auf und schreibt sie
 	 * @param id
 	 */
 	void getTaskInfoFromServer(String id) {
