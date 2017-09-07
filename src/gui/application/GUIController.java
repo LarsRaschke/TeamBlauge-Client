@@ -210,7 +210,7 @@ public class GUIController {
 
 	}
 
-	/*
+	/**
 	 * Quasi erweiterter Konstruktor, der in der Main aufgerufen wird, da bspw
 	 * keylistener nicht im Konstruktor angelegt werden koeï¿½nnen
 	 */
@@ -275,26 +275,53 @@ public class GUIController {
 		this.main = main;
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void ColorPickerSelectionChanged(ActionEvent event) {
 
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonCommentsPressed(ActionEvent event) {
 
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonInformationPressed(ActionEvent event) {
 
 	}
 
+	/**
+	 * Logout des Users und Weiterleitung an das Login-Fenster
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonLogOutPressed(ActionEvent event) {
 		main.showLogin();
 	}
 
+	/**
+	 * Methode wird beim drücken des Proceed-Buttons ausgeführt. Es wird überprüft
+	 * in welchem Pane sich der aktuelle Task befindet. Passt die benötigte Höhe der
+	 * Scrollbar an.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonProceedPressed(ActionEvent event) {
 
@@ -311,11 +338,22 @@ public class GUIController {
 		}
 	}
 
+	/**
+	 * Methode wird beim drücken des ProjectSelection-Buttons ausgeführt. Öffnet das
+	 * Fenster mit der Projektübersicht.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonProjectselectionPressed(ActionEvent event) {
 		main.showProjectList();
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonReturnPressed(ActionEvent event) {
 		if (activeLabel.getParent() == mansoryPaneToDo) {
@@ -333,12 +371,21 @@ public class GUIController {
 		}
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonTagsPressed(ActionEvent event) {
 
 	}
 
 	/**
+	 * Methode wird beim drücken des EditTask-Buttons ausgeführt. Der Button
+	 * wechselt zwischen "editieren" und "speichern".
+	 * 
+	 * Wird der der Text geändert, wird der Name des Aktiven Tasks geändert.
 	 * 
 	 * @param event
 	 */
@@ -349,7 +396,6 @@ public class GUIController {
 			saveEnteredTaskname(textFieldTaskname.getText());
 			this.buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
 			textFieldTaskname.setStyle("-fx-background-color: orange;");
-
 
 		} else {
 			this.textFieldTaskname.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -364,12 +410,18 @@ public class GUIController {
 					}
 				}
 			});
+
 			textFieldTaskname.editableProperty().set(true);
 			this.buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
 			textFieldTaskname.setStyle("-fx-background-color: white;");
 		}
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param name
+	 */
 	void saveEnteredTaskname(String name) {
 		// Nur zum Testen:
 		labelActualAuthor.setText(name);

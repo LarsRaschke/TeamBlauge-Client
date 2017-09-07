@@ -25,8 +25,8 @@ public class Main extends Application {
 			this.primaryStage.setTitle("BLAUGE Kanban");
 			initRoot();
 			showLogin();
-//			showGUI();
-			
+			// showGUI();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -97,9 +97,6 @@ public class Main extends Application {
 	/*
 	 * Logfunktion, Ueberladen um mit und ohne Label loggen zu koennen
 	 */
-
-
-
 	public void log(String text) {
 		System.out.print("*** LOG: >No Label<:\t");
 		System.out.print(text + "\n");
@@ -109,7 +106,7 @@ public class Main extends Application {
 		System.out.print("*** LOG: >No Label<:\t");
 		System.out.print(t + "\n");
 	}
-	
+
 	public void log(int t) {
 		System.out.print("*** LOG: >No Label<:\t");
 		System.out.print(t + "\n");
@@ -125,7 +122,7 @@ public class Main extends Application {
 		System.out.print(":\t");
 		System.out.print(t + "\n");
 	}
-	
+
 	public void log(String text, String label) {
 		System.out.print("*** LOG: ");
 		if (label != "") {
