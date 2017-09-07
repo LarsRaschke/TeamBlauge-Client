@@ -175,6 +175,12 @@ public class GUIController {
 
 	@FXML
 	private ScrollPane scrollPaneMansory;
+	
+	@FXML
+	private JFXMasonryPane mansoryPaneComments;
+	
+	@FXML
+	private ImageView TagIcon; 
 
 	private Main main;
 
@@ -261,6 +267,28 @@ public class GUIController {
 				}
 			}
 		});
+		
+		this.textFieldComments.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent ke) {
+				if (ke.getCode().equals(KeyCode.ENTER)) {
+					buttonAddCommentPressed(null);
+				}
+			}
+		});
+
+		this.buttonAddComment.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent ke) {
+				if (ke.getCode().equals(KeyCode.ENTER)) {
+					buttonAddCommentPressed(null);
+				}
+			}
+		});
+		
+		
+		
+		
 
 	}
 
@@ -275,7 +303,13 @@ public class GUIController {
 
 	@FXML
 	void buttonCommentsPressed(ActionEvent event) {
-
+		//createMoreComment(12);
+	}
+	
+	@FXML
+	void buttonTagsPressed(ActionEvent event) {
+		createMoreTags(12);
+		
 	}
 
 	@FXML
@@ -323,10 +357,7 @@ public class GUIController {
 		}
 	}
 
-	@FXML
-	void buttonTagsPressed(ActionEvent event) {
 
-	}
 
 	@FXML
 	void buttonEditTaskNamePressed(ActionEvent event) {
@@ -403,7 +434,7 @@ public class GUIController {
 
 	@FXML
 	private AnchorPane anchorPaneTaskInformation;
-
+	
 	@FXML
 	void buttonAddTagPressed(ActionEvent event) {
 		main.log("Button pressed", "Add Tag");		
@@ -416,6 +447,8 @@ public class GUIController {
 		}
 	}
 	
+	
+	
 	public void createTag(String name) {
 		Label lbl = new Label();
 
@@ -426,12 +459,111 @@ public class GUIController {
 		textFieldTags.setText("");
 		lbl.setAlignment(Pos.CENTER);
 		lbl.setStyle("-fx-background-color: #969696; -fx-background-radius: 15px; display:inline-block");
+		mansoryPaneTags.getChildren().add(lbl);
+		
 		mansoryPaneTags.setStyle("height:wrap-content");
 		
 		mansoryPaneTags.autosize();
 		anchorPaneTaskInformation2.setPrefHeight(mansoryPaneTags.getHeight()+130);//+95
 		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
-		mansoryPaneTags.getChildren().add(lbl);
+		
+
+		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				
+			}
+		});
+	}
+	
+	public void createMoreTags(String[] name) {
+		anchorPaneTaskInformation2.setPrefHeight(100 + name.length * 200);
+		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
+		for( int i = 0; i < name.length; i++) {
+			createTag(name[i]);
+		}
+	}
+	
+	public void createMoreTags(int name) {
+		anchorPaneTaskInformation2.setPrefHeight(100 + name * 200);
+		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
+		for( int i = 0; i < name-2; i++) {
+			String tag = "";
+			for( int a = 0; a < 10; a++) {
+				tag = tag + (char) (97 + Math.random()*26);
+
+			}
+			
+			createTag(tag);
+		}
+		try        
+		{
+		    Thread.sleep(1000);
+		} 
+		catch(InterruptedException ex) 
+		{
+		    Thread.currentThread().interrupt();
+		}
+		
+		//TimeUnit.SECONDS.sleep(1);
+		textFieldTags.setText("sdfsdfs");
+		buttonAddTagPressed(null);
+		textFieldTags.setText("");
+		textFieldTags.setText("nsvjlkv");
+		buttonAddTagPressed(null);
+		textFieldTags.setText("");
+
+		
+	}
+	
+	@FXML
+	void buttonAddCommentPressed(ActionEvent event) {
+		main.log("Button pressed", "Comment");		
+		if(!textFieldComments.getText().equals("")) {
+		
+			createComment(textFieldComments.getText(), "Fiete Schmidt");//main.user.getVorname() + ", " + main.user.getNachname());
+		}
+		else {
+			main.log("Kein Text eingegeben!", "Comment");
+		}
+	}
+	
+	public void createMoreComment(String[] name) {
+		anchorPaneTaskInformation3.setPrefHeight(100 + name.length * 200);
+		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
+		for( int i = 0; i < name.length; i++) {
+			createComment(name[i], "Christian Hopp");
+		}
+	}
+	
+	public void createComment(String name, String author) {
+		Label lbl = new Label();
+
+		this.mansoryPaneComments.setCellHeight(10);
+		this.mansoryPaneComments.setCellWidth(290);
+		this.mansoryPaneComments.setMaxWidth(300);
+		lbl.setMaxWidth(290);
+		
+		lbl.setWrapText(true);
+		
+		name = insertPeriodically(name, "-\n\t", 25);
+		System.out.println(name);
+		
+		lbl.setText(author + ":\n\t"+ name);
+		textFieldComments.setText("");
+		lbl.setAlignment(Pos.TOP_LEFT);
+		lbl.setStyle("display:inline-block; -fx-padding: 0;");
+		mansoryPaneComments.getChildren().add(lbl);
+		mansoryPaneComments.setPrefHeight(mansoryPaneComments.getHeight() + 75);
+		anchorPaneTaskInformation3.setPrefHeight(mansoryPaneComments.getHeight()+100);//+95
+		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight()+80);
+		System.out.println("AnchorPane1: "+anchorPaneTaskInformation1.getHeight());
+		System.out.println("AnchorPane2: "+anchorPaneTaskInformation2.getHeight());
+		System.out.println("AnchorPane3: "+anchorPaneTaskInformation3.getHeight());
+		System.out.println("MasonaryPaneComment: "+mansoryPaneComments.getHeight());
+
+		System.out.println("AnchorPaneRoot: "+anchorPaneTaskInformation.getHeight());
+		
 
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -441,6 +573,28 @@ public class GUIController {
 		});
 	}
 
+	public static String insertPeriodically(
+		    String text, String insert, int period)
+		{
+		    StringBuilder builder = new StringBuilder(
+		         //text.length() + 2 * (text.length()/period)+1);
+		    	 text.length() + insert.length() * (text.length()/period)+1);
+		    
+		    int index = 0;
+		    String prefix = "";
+		    while (index < text.length())
+		    {
+		        // Don't put the insert in the very first iteration.
+		        // This is easier than appending it *after* each substring
+		        builder.append(prefix);
+		        prefix = insert;
+		        builder.append(text.substring(index, 
+		            Math.min(index + period, text.length())));
+		        index += period;
+		    }
+		    return builder.toString();
+		}
+	
 
 	private void createTask() {
 		this.taskCounter++;
