@@ -35,7 +35,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
-import javafx.stage.FileChooser;
 
 public class GUIController {
 	@FXML
@@ -339,6 +338,10 @@ public class GUIController {
 
 	}
 
+	/**
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonEditTaskNamePressed(ActionEvent event) {
 		if (textFieldTaskname.editableProperty().get()) {
@@ -346,6 +349,7 @@ public class GUIController {
 			saveEnteredTaskname(textFieldTaskname.getText());
 			this.buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
 			textFieldTaskname.setStyle("-fx-background-color: orange;");
+
 
 		} else {
 			this.textFieldTaskname.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -356,6 +360,7 @@ public class GUIController {
 						textFieldTaskname.editableProperty().set(false);
 						buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
 						textFieldTaskname.setStyle("-fx-background-color: orange;");
+						activeLabel.setText(textFieldTaskname.getText());
 					}
 				}
 			});
@@ -370,6 +375,16 @@ public class GUIController {
 		labelActualAuthor.setText(name);
 	}
 
+	/**
+	 * Methode wird beim Drücken des EditDescription-Button ausgeführt. Macht das
+	 * Textfeld zur Task-Beschreibung editierbar, sofern es im Moment nicht
+	 * editierbar ist. Ist es editierbar, wird es wieder gelocked.
+	 * 
+	 * Beim Klicken des Buttons wechselt das Icon entspechend seiner aktuellen
+	 * Funktion.
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonEditDescriptionPressed(ActionEvent event) {
 		if (textAreaDescription.editableProperty().get()) {
@@ -386,11 +401,22 @@ public class GUIController {
 		}
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param name
+	 */
 	void saveEnteredDescription(String name) {
 		// Nur zum Testen:
 		labelActualStatus.setText(name);
 	}
 
+	/**
+	 * Methode wird beim Drücken des NewTask-Buttons ausgeführt. Führt die Methode
+	 * createTask() aus und erhöht die benötigte Höhe im ToDo-Pane
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonNewTaskPressed(ActionEvent event) {
 		createTask();
@@ -403,6 +429,12 @@ public class GUIController {
 
 	}
 
+	/**
+	 * Methode wird beim Drücken des AddTag-Buttons ausgeführt. Führt die Methode
+	 * addTag(String name)
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonAddTagPressed(ActionEvent event) {
 		main.log("Button pressed", "Add Tag");
@@ -414,6 +446,12 @@ public class GUIController {
 		}
 	}
 
+	/**
+	 * Methode erstellt einen neuen Tag mit dem übergebenen Namen und fügt ihn an
+	 * passende Stelle im Tag-Pane an. Eine MouseEvent-Handle wird initialisiert
+	 * 
+	 * @param name
+	 */
 	public void createTag(String name) {
 		Label lbl = new Label();
 
@@ -440,6 +478,10 @@ public class GUIController {
 		});
 	}
 
+	/**
+	 * Überprüft, ob noch genug Platz in den Spalten ist. Sollte nicht genug Platz
+	 * sein, wird die Größte der Panes angepasst.
+	 */
 	public void checkScrollBarSpace() {
 		if (mansoryPaneToDo.getPrefHeight() <= usedScrollBarHeight_ToDo) {
 
@@ -458,16 +500,22 @@ public class GUIController {
 		}
 	}
 
+	/**
+	 * Methode erstellt einen neuen Task und fügt ihn am ToDo-Pane an. Eine
+	 * MouseEvent-Handle wird initialisiert und das erstellte Label wird zum Aktiven
+	 * Label. Die Buttons zum verschieben der Task werden sichtbar
+	 */
 	private void createTask() {
 		this.taskCounter++;
 		main.log("Add Task", "Button pressed");
 		Label lbl = new Label();
-		lbl.setId("Task " + taskCounter);
 
+		lbl.setId("Task " + taskCounter);
+		lbl.setText("Task " + taskCounter);
 		lbl.setPrefSize(200, 75);
 		lbl.setMinSize(200, 75);
 		lbl.setAlignment(Pos.CENTER);
-		lbl.setText(textFieldTaskname.getText());
+		// lbl.setText(textFieldTaskname.getText());
 		lbl.setStyle(
 				"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 
@@ -481,6 +529,7 @@ public class GUIController {
 				activeLabel = lbl;
 				main.log(lbl.getId());
 
+				textFieldTaskname.setText(activeLabel.getText());
 			}
 		});
 	}
