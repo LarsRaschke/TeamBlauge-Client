@@ -9,6 +9,8 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTreeTableView;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -55,7 +57,7 @@ public class ProjectListController {
 	private ImageView buttonEditProjectDescriptionIcon;
 
 	@FXML
-	private JFXListView<?> listProjectMember;
+	private JFXListView<String> listProjectMember;
 
 	@FXML
 	private ImageView buttonAddMember;
@@ -82,6 +84,11 @@ public class ProjectListController {
 		textFieldProjectName.editableProperty().set(false);
 		textAreaProjectDescription.editableProperty().set(false);
 		labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
+		
+		ObservableList<String> items = FXCollections.observableArrayList(main.projektliste);
+		listProjectMember = new JFXListView<>();
+		listProjectMember.setItems(items);
+		
 		((Scene) labelProjectList.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent ke) {
@@ -166,11 +173,11 @@ public class ProjectListController {
 	void buttonSaveNewProjectPressed(ActionEvent event) {
 		
 		try {
-			
+
 			Registry registry = LocateRegistry.getRegistry(null);
 			RMI_Projektmanager manager = (RMI_Projektmanager) registry.lookup("manager");
 			manager.erstelleProjekt(main.user, textFieldProjectName.getText(), "");
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
