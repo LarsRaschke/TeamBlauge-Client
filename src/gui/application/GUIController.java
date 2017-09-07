@@ -226,7 +226,7 @@ public class GUIController {
 		mansoryPaneFinished.setAlignment(Pos.TOP_CENTER);
 		mansoryPaneFinished.setSpacing(10);
 
-		// labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
+		labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
 
 		((Scene) labelProjectname.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
