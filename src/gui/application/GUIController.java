@@ -309,7 +309,6 @@ public class GUIController {
 			mansoryPaneFinished.getChildren().add(activeLabel);
 		} else if (activeLabel.getParent() == mansoryPaneFinished) {
 			usedScrollBarHeight_Finished = usedScrollBarHeight_Finished - 90;
-			buttonProceed.setVisible(false);
 		}
 	}
 
@@ -322,7 +321,6 @@ public class GUIController {
 	void buttonReturnPressed(ActionEvent event) {
 		if (activeLabel.getParent() == mansoryPaneToDo) {
 			usedScrollBarHeight_ToDo = usedScrollBarHeight_ToDo - 90;
-			buttonReturn.setVisible(false);
 
 		} else if (activeLabel.getParent() == mansoryPaneDoing) {
 			usedScrollBarHeight_Doing = usedScrollBarHeight_Doing - 90;
