@@ -20,14 +20,12 @@ import com.sun.prism.paint.Color;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
-import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -35,14 +33,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 
 public class GUIController {
-	
+
 	@FXML
 	private Label labelProjectname;
 
@@ -51,7 +46,7 @@ public class GUIController {
 
 	@FXML
 	private Label labelUser;
-	
+
 	@FXML
 	private Label labelBenachrichtigung;
 
@@ -177,16 +172,13 @@ public class GUIController {
 
 	@FXML
 	private AnchorPane anchorPaneTaskInformation3;
-	
-	@FXML
-	private ScrollPane scrollPaneTaskInformation;
 
 	@FXML
 	private ScrollPane scrollPaneMansory;
 
 	@FXML
 	private JFXMasonryPane mansoryPaneTags;
-	
+
 	@FXML
 	private JFXMasonryPane mansoryPaneComments;
 
@@ -197,16 +189,16 @@ public class GUIController {
 
 	private JFXColorPicker colorPicker; // https://github.com/jfoenixadmin/JFoenix/issues/408
 
-	private GuiTask activeLabel = null;
+	private Label activeLabel = null;
 
-	private ArrayList<Label> LabelList;
+	private ArrayList<String[]> labelList;
 
 	private static int usedScrollBarHeight_ToDo;
 	private static int usedScrollBarHeight_Doing;
 	private static int usedScrollBarHeight_Finished;
 
 	private static int taskCounter;
-	
+
 	private String usernameVN = "";
 	private String usernameNV = "";
 
@@ -246,17 +238,16 @@ public class GUIController {
 		mansoryPaneFinished.setAlignment(Pos.TOP_CENTER);
 		mansoryPaneFinished.setSpacing(10);
 
-		if(main.getLDAPConnection()) {
+		if (main.getLDAPConnection()) {
 			usernameVN = main.user.getVorname() + " " + main.user.getNachname();
 			usernameNV = main.user.getNachname() + ", " + main.user.getVorname();
-		}
-		else {
+		} else {
 			guilog("Keine Verbindung zum LDAP Server");
 			usernameVN = "Hans Dampf";
 			usernameNV = "Dampf, Hans";
 		}
-		
-		labelUser.setText("    "+usernameNV);
+
+		labelUser.setText("    " + usernameNV);
 		labelProjectname.setText("    Testprojekt");
 		labelProjectinformation.setText("    Erstelldatum: 07.07.2017, Ersteller: Fiete Schmidt");
 
@@ -295,7 +286,7 @@ public class GUIController {
 				}
 			}
 		});
-		
+
 		this.buttonAddComment.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent ke) {
@@ -304,7 +295,7 @@ public class GUIController {
 				}
 			}
 		});
-		
+
 		this.textFieldComments.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent ke) {
@@ -320,14 +311,14 @@ public class GUIController {
 		this.main = main;
 	}
 
-//�ndert die Farbe eines Post-Its, sobald eine neue Farbe ausgew�hlt wurde
-
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void ColorPickerSelectionChanged(ActionEvent event) {
-		System.out.println("Ich wurde ausgel�st");
-		//javafx.scene.paint.Color selectedColor = colorPicker.getValue();
-		activeLabel.setBackground(new Background(new BackgroundFill(colorPicker.getValue(), null, null)));
-		//activeLabel.setBackground(new Background(new Back));
+
 	}
 
 	/**
@@ -361,9 +352,9 @@ public class GUIController {
 	}
 
 	/**
-	 * Methode wird beim dr�cken des Proceed-Buttons ausgef�hrt. Es wird �berpr�ft
-	 * in welchem Pane sich der aktuelle Task befindet. Passt die ben�tigte H�he der
-	 * Scrollbar an.
+	 * Methode wird beim dr�cken des Proceed-Buttons ausgef�hrt. Es wird
+	 * �berpr�ft in welchem Pane sich der aktuelle Task befindet. Passt die
+	 * ben�tigte H�he der Scrollbar an.
 	 * 
 	 * @param event
 	 */
@@ -384,8 +375,8 @@ public class GUIController {
 	}
 
 	/**
-	 * Methode wird beim dr�cken des ProjectSelection-Buttons ausgef�hrt. �ffnet das
-	 * Fenster mit der Projekt�bersicht.
+	 * Methode wird beim dr�cken des ProjectSelection-Buttons ausgef�hrt.
+	 * �ffnet das Fenster mit der Projekt�bersicht.
 	 * 
 	 * @param event
 	 */
@@ -414,7 +405,6 @@ public class GUIController {
 			mansoryPaneFinished.getChildren().remove(activeLabel);
 			mansoryPaneDoing.getChildren().add(activeLabel);
 		}
-		showTaskInfo();
 	}
 
 	/**
@@ -452,6 +442,8 @@ public class GUIController {
 						textFieldTaskname.editableProperty().set(false);
 						buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
 						textFieldTaskname.setStyle("-fx-background-color: orange;");
+						activeLabel.setText(textFieldTaskname.getText());
+						activeLabel.setId(textFieldTaskname.getText());
 					}
 				}
 			});
@@ -469,14 +461,13 @@ public class GUIController {
 	 * @param name
 	 */
 	void saveEnteredTaskname(String name) {
-		
-		activeLabel.setName(textFieldTaskname.getText());
-		activeLabel.showText();
+		// Nur zum Testen:
+		labelActualAuthor.setText(name);
 	}
 
 	/**
-	 * Methode wird beim Dr�cken des EditDescription-Button ausgef�hrt. Macht das
-	 * Textfeld zur Task-Beschreibung editierbar, sofern es im Moment nicht
+	 * Methode wird beim Dr�cken des EditDescription-Button ausgef�hrt. Macht
+	 * das Textfeld zur Task-Beschreibung editierbar, sofern es im Moment nicht
 	 * editierbar ist. Ist es editierbar, wird es wieder gelocked.
 	 * 
 	 * Beim Klicken des Buttons wechselt das Icon entspechend seiner aktuellen
@@ -506,14 +497,13 @@ public class GUIController {
 	 * @param name
 	 */
 	void saveEnteredDescription(String name) {
-		
-		activeLabel.setDescription(textAreaDescription.getText());
-		activeLabel.showText();
+		// Nur zum Testen:
+		labelActualStatus.setText(name);
 	}
 
 	/**
-	 * Methode wird beim Dr�cken des NewTask-Buttons ausgef�hrt. F�hrt die Methode
-	 * createTask() aus und erh�ht die ben�tigte H�he im ToDo-Pane
+	 * Methode wird beim Dr�cken des NewTask-Buttons ausgef�hrt. F�hrt die
+	 * Methode createTask() aus und erh�ht die ben�tigte H�he im ToDo-Pane
 	 * 
 	 * @param event
 	 */
@@ -526,14 +516,12 @@ public class GUIController {
 		main.log(mansoryPaneToDo.getPrefHeight(), "mansoryPaneToDo");
 
 		checkScrollBarSpace();
-		
-		scrollPaneMansory.setVvalue(1.0);
 
 	}
 
 	/**
-	 * Methode wird beim Dr�cken des AddTag-Buttons ausgef�hrt. F�hrt die Methode
-	 * addTag(String name)
+	 * Methode wird beim Dr�cken des AddTag-Buttons ausgef�hrt. F�hrt die
+	 * Methode addTag(String name)
 	 * 
 	 * @param event
 	 */
@@ -549,8 +537,8 @@ public class GUIController {
 	}
 
 	/**
-	 * Methode erstellt einen neuen Tag mit dem �bergebenen Namen und f�gt ihn an
-	 * passende Stelle im Tag-Pane an. Eine MouseEvent-Handle wird initialisiert
+	 * Methode erstellt einen neuen Tag mit dem �bergebenen Namen und f�gt ihn
+	 * an passende Stelle im Tag-Pane an. Eine MouseEvent-Handle wird initialisiert
 	 * 
 	 * @param name
 	 */
@@ -571,8 +559,9 @@ public class GUIController {
 		anchorPaneTaskInformation
 				.setPrefHeight(400 + anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
 		mansoryPaneTags.getChildren().add(lbl);
-		
-		anchorPaneTaskInformation3.setLayoutY(anchorPaneTaskInformation1.getHeight()+anchorPaneTaskInformation2.getHeight());
+
+		anchorPaneTaskInformation3
+				.setLayoutY(anchorPaneTaskInformation1.getHeight() + anchorPaneTaskInformation2.getHeight());
 
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -581,74 +570,70 @@ public class GUIController {
 			}
 		});
 	}
-	
-	
+
 	public void createMoreTags(String[] name) {
 		anchorPaneTaskInformation2.setPrefHeight(100 + name.length * 200);
-		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
-		for( int i = 0; i < name.length; i++) {
+		anchorPaneTaskInformation
+				.setPrefHeight(400 + anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
+		for (int i = 0; i < name.length; i++) {
 			createTag(name[i]);
 		}
 	}
-	
+
 	public void createMoreTags(int name) {
 		anchorPaneTaskInformation2.setPrefHeight(100 + name * 200);
-		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
-		for( int i = 0; i < name-2; i++) {
+		anchorPaneTaskInformation
+				.setPrefHeight(400 + anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
+		for (int i = 0; i < name - 2; i++) {
 			String tag = "";
-			int b = (int) (2 + Math.random()*10);
-			for( int a = 0; a < b; a++) {
-				tag = tag + (char) (97 + Math.random()*26);
+			int b = (int) (2 + Math.random() * 10);
+			for (int a = 0; a < b; a++) {
+				tag = tag + (char) (97 + Math.random() * 26);
 
 			}
-			
+
 			createTag(tag);
 		}
-		try        
-		{
-		    Thread.sleep(1000);
-		} 
-		catch(InterruptedException ex) 
-		{
-		    Thread.currentThread().interrupt();
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException ex) {
+			Thread.currentThread().interrupt();
 		}
-		
-		
-		
-		//TimeUnit.SECONDS.sleep(1);
+
+		// TimeUnit.SECONDS.sleep(1);
 		textFieldTags.setText("sdfsdfs");
 		buttonAddTagPressed(null);
 		textFieldTags.setText("");
 		textFieldTags.setText("nsvjlkv");
 		buttonAddTagPressed(null);
 		textFieldTags.setText("");
-		
-		anchorPaneTaskInformation3.setLayoutY(anchorPaneTaskInformation1.getHeight()+anchorPaneTaskInformation2.getHeight()+200);
-		anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getPrefHeight()+200);
 
-		
+		anchorPaneTaskInformation3
+				.setLayoutY(anchorPaneTaskInformation1.getHeight() + anchorPaneTaskInformation2.getHeight() + 200);
+		anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getPrefHeight() + 200);
+
 	}
-	
+
 	@FXML
 	void buttonAddCommentPressed(ActionEvent event) {
-		main.log("Button pressed", "Comment");		
-		if(!textFieldComments.getText().equals("")) {
-		
+		main.log("Button pressed", "Comment");
+		if (!textFieldComments.getText().equals("")) {
+
 			createComment(textFieldComments.getText(), usernameVN);
-		}
-		else {
+		} else {
 			main.log("Kein Text eingegeben!", "Comment");
 		}
 	}
-	
+
 	public void createMoreComment(String[] name) {
 		anchorPaneTaskInformation3.setPrefHeight(100 + name.length * 200);
-		anchorPaneTaskInformation.setPrefHeight(400+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
-		for( int i = 0; i < name.length; i++) {
+		anchorPaneTaskInformation
+				.setPrefHeight(400 + anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
+		for (int i = 0; i < name.length; i++) {
 			createComment(name[i], "Christian Hopp");
 		}
 	}
-	
+
 	public void createComment(String name, String author) {
 		Label lbl = new Label();
 
@@ -656,69 +641,65 @@ public class GUIController {
 		this.mansoryPaneComments.setCellWidth(290);
 		this.mansoryPaneComments.setMaxWidth(300);
 		lbl.setMaxWidth(290);
-		
+
 		lbl.setWrapText(true);
-		
+
 		name = insertPeriodically(name, "-\n\t", 25);
 		System.out.println(name);
-		
-		int additionalLength = (name.length()/25+2)*20;
-		
-		lbl.setText(author + ":\n\n\t"+ name);
+
+		int additionalLength = (name.length() / 25 + 2) * 20;
+
+		lbl.setText(author + ":\n\n\t" + name);
 		textFieldComments.setText("");
 		lbl.setAlignment(Pos.TOP_LEFT);
 		lbl.setStyle("display:inline-block; -fx-padding: 0; -fx-background-color: orange;");
 		mansoryPaneComments.getChildren().add(lbl);
-		
-		mansoryPaneComments.setPrefHeight(mansoryPaneComments.getHeight() + additionalLength);
-		anchorPaneTaskInformation3.setPrefHeight(mansoryPaneComments.getPrefHeight()+220);//+95
 
-		anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation1.getHeight()+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
-/*
-		System.out.println("AnchorPane1: "+anchorPaneTaskInformation1.getHeight());
-		System.out.println("AnchorPane2: "+anchorPaneTaskInformation2.getHeight());
-		System.out.println("AnchorPane3: "+anchorPaneTaskInformation3.getHeight());
-		System.out.println("MasonaryPaneComment: "+mansoryPaneComments.getHeight());
-		System.out.println("AnchorPaneRoot: "+anchorPaneTaskInformation.getHeight());
-*/	
-		
+		mansoryPaneComments.setPrefHeight(mansoryPaneComments.getHeight() + additionalLength);
+		anchorPaneTaskInformation3.setPrefHeight(mansoryPaneComments.getPrefHeight() + 220);// +95
+
+		anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation1.getHeight()
+				+ anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
+		/*
+		 * System.out.println("AnchorPane1: "+anchorPaneTaskInformation1.getHeight());
+		 * System.out.println("AnchorPane2: "+anchorPaneTaskInformation2.getHeight());
+		 * System.out.println("AnchorPane3: "+anchorPaneTaskInformation3.getHeight());
+		 * System.out.println("MasonaryPaneComment: "+mansoryPaneComments.getHeight());
+		 * System.out.println("AnchorPaneRoot: "+anchorPaneTaskInformation.getHeight());
+		 */
 
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				anchorPaneTaskInformation3.setPrefHeight(mansoryPaneComments.getPrefHeight()+220);
-				anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation1.getHeight()+anchorPaneTaskInformation2.getHeight()+anchorPaneTaskInformation3.getHeight());
+				anchorPaneTaskInformation3.setPrefHeight(mansoryPaneComments.getPrefHeight() + 220);
+				anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation1.getHeight()
+						+ anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
 			}
 		});
 
 	}
 
-	public static String insertPeriodically(
-		    String text, String insert, int period)
-		{
-		    StringBuilder builder = new StringBuilder(
-		         //text.length() + 2 * (text.length()/period)+1);
-		    	 text.length() + insert.length() * (text.length()/period)+1);
-		    
-		    int index = 0;
-		    String prefix = "";
-		    while (index < text.length())
-		    {
-		        // Don't put the insert in the very first iteration.
-		        // This is easier than appending it *after* each substring
-		        builder.append(prefix);
-		        prefix = insert;
-		        builder.append(text.substring(index, 
-		            Math.min(index + period, text.length())));
-		        index += period;
-		    }
-		    return builder.toString();
+	public static String insertPeriodically(String text, String insert, int period) {
+		StringBuilder builder = new StringBuilder(
+				// text.length() + 2 * (text.length()/period)+1);
+				text.length() + insert.length() * (text.length() / period) + 1);
+
+		int index = 0;
+		String prefix = "";
+		while (index < text.length()) {
+			// Don't put the insert in the very first iteration.
+			// This is easier than appending it *after* each substring
+			builder.append(prefix);
+			prefix = insert;
+			builder.append(text.substring(index, Math.min(index + period, text.length())));
+			index += period;
 		}
-	
+		return builder.toString();
+	}
 
 	/**
-	 * �berpr�ft, ob noch genug Platz in den Spalten ist. Sollte nicht genug Platz
-	 * sein, wird die Gr��te der Panes angepasst.
+	 * �berpr�ft, ob noch genug Platz in den Spalten ist. Sollte nicht genug
+	 * Platz sein, wird die Gr��te der Panes angepasst.
 	 */
 	public void checkScrollBarSpace() {
 		if (mansoryPaneToDo.getPrefHeight() <= usedScrollBarHeight_ToDo) {
@@ -743,7 +724,7 @@ public class GUIController {
 	 * MouseEvent-Handle wird initialisiert und das erstellte Label wird zum Aktiven
 	 * Label. Die Buttons zum verschieben der Task werden sichtbar
 	 */
-	private void createTask2() {
+	private void createTask() {
 		this.taskCounter++;
 		main.log("Add Task", "Button pressed");
 		Label lbl = new Label();
@@ -754,105 +735,41 @@ public class GUIController {
 		lbl.setMinSize(200, 75);
 		lbl.setAlignment(Pos.CENTER);
 		// lbl.setText(textFieldTaskname.getText());
-		lbl.setStyle("-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+		lbl.setStyle(
+				"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 		
 		mansoryPaneToDo.getChildren().add(lbl);
-
+		
+		String[] labelInfo = new String[2];
+		labelInfo[0] = lbl.getId();
+		labelInfo[1] = lbl.getParent().toString();
+		
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				
-				if(activeLabel != null) {
-					activeLabel.setStyle("-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-				}
-				
-				if(activeLabel != lbl) {
-					buttonReturn.setVisible(true);
-					buttonProceed.setVisible(true);
-					//activeLabel = lbl;
-					main.log(lbl.getId());
-	
-					textFieldTaskname.setText(activeLabel.getText());
-							
-					lbl.setStyle("-fx-border-width: 2; -fx-border-color: red; -fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-				}
-				
-				else if(activeLabel == lbl) {
-					activeLabel = null;
-					lbl.setStyle("-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 
+				if (activeLabel != null) {
+					activeLabel.setStyle(
+							"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 				}
-				
+
+				buttonReturn.setVisible(true);
+				buttonProceed.setVisible(true);
+				activeLabel = lbl;
+				main.log(lbl.getId());
+
+				textFieldTaskname.setText(activeLabel.getText());
+
+				lbl.setStyle(
+						"-fx-border-width: 2; -fx-border-color: red; -fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+
 			}
 		});
-	}
-		
-		private void createTask() {
-			taskCounter++;
-			main.log("Add Task", "Button pressed");
-			GuiTask lbl = new GuiTask();
-
-			lbl.setId("Task " + taskCounter);
-			lbl.setText("Task " + taskCounter);
-			lbl.setName("Task " + taskCounter);
-			lbl.setAuthor(usernameVN);
-			lbl.setDescription("Dies ist eine Beschreibung");
-			lbl.showText();
-			lbl.setPrefSize(200, 75);
-			lbl.setMinSize(200, 75);
-			lbl.setAlignment(Pos.CENTER);
-			// lbl.setText(textFieldTaskname.getText());
-			lbl.setStyle("-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-			
-			mansoryPaneToDo.getChildren().add(lbl);
-
-			lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
-				@Override
-				public void handle(MouseEvent e) {
-					
-					if(activeLabel != null) {
-						activeLabel.setStyle("-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-					}
-					
-					if(activeLabel != lbl) {
-						buttonReturn.setVisible(true);
-						buttonProceed.setVisible(true);
-						activeLabel = lbl;
-						main.log(lbl.getId());
-						lbl.setStyle("-fx-border-width: 2; -fx-border-color: red; -fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-						showTaskInfo();
-					}
-					
-					else if(activeLabel == lbl) {
-						activeLabel = null;
-						lbl.setStyle("-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-
-					}
-					
-				}
-			});
-			showTaskInfo();
-
-		
-		
-		
-	}
-		
-	public void showTaskInfo() {
-		textFieldTaskname.setText(activeLabel.getName());
-		labelActualAuthor.setText(activeLabel.getAuthor());
-		textAreaDescription.setText(activeLabel.getDescription());
-		if (activeLabel.getParent() == mansoryPaneToDo) {
-			labelActualStatus.setText("To Do");
-		} else if (activeLabel.getParent() == mansoryPaneDoing) {
-			labelActualStatus.setText("Doing");
-		} else if (activeLabel.getParent() == mansoryPaneFinished) {
-			labelActualStatus.setText("Finished");
-		}
 	}
 
 	/**
 	 * Ruft die Informationen eines Task �ber seine ID auf und schreibt sie
+	 * 
 	 * @param id
 	 */
 	void getTaskInfoFromServer(String id) {
@@ -862,12 +779,12 @@ public class GUIController {
 		 * textAreaDescription.setText(String value)
 		 */
 	}
-	
+
 	void guilog(String text) {
 		labelBenachrichtigung.setText(text);
 	}
-	
+
 	void guilog(int text) {
-		labelBenachrichtigung.setText(""+text);
+		labelBenachrichtigung.setText("" + text);
 	}
 }
