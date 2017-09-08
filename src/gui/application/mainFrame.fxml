@@ -41,7 +41,7 @@
             <Font name="Roboto Light" size="15.0" />
          </font>
       </MenuButton>
-      <ScrollPane hbarPolicy="NEVER" layoutX="876.0" layoutY="100.0" prefHeight="620.0" prefWidth="364.0">
+      <ScrollPane fx:id="scrollPaneTaskInformation" hbarPolicy="NEVER" layoutX="876.0" layoutY="100.0" prefHeight="620.0" prefWidth="364.0">
         <content>
         
         
