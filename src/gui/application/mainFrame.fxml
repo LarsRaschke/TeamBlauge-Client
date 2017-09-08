@@ -107,7 +107,7 @@
                         <Font name="Roboto Light" size="15.0" />
                      </font>
                   </JFXTextArea>
-                        <JFXButton fx:id="buttonEditComments" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="305.0" layoutY="200.0" onAction="#buttonEditDescriptionPressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373" text="SaveDescription">
+                        <JFXButton fx:id="buttonEditDescription" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="305.0" layoutY="200.0" onAction="#buttonEditDescriptionPressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373" text="SaveDescription">
                            <graphic>
                               <ImageView fx:id="buttonEditDescriptionIcon" fitHeight="25.0" fitWidth="25.0">
                                  <image>

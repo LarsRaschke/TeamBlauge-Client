@@ -17,7 +17,10 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.sun.prism.paint.Color;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -229,6 +232,9 @@ public class GUIController {
 		// Button Init
 		buttonReturn.setVisible(false);
 		buttonProceed.setVisible(false);
+		buttonEditTaskName.setVisible(false);
+		buttonEditDescription.setVisible(false);
+		
 
 		// Kanban columns Init
 		mansoryPaneToDo.setAlignment(Pos.TOP_CENTER);
@@ -448,7 +454,22 @@ public class GUIController {
 					}
 				}
 			});
-
+			
+			this.textFieldTaskname.focusedProperty().addListener(new ChangeListener<Boolean>()
+			{
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if(!newValue) {
+					textFieldTaskname.editableProperty().set(false);
+					buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
+					textFieldTaskname.setStyle("-fx-background-color: orange;");
+					if(activeLabel != null) {
+						textFieldTaskname.setText(activeLabel.getName());
+					}
+				}
+			}
+			});
+			
 			textFieldTaskname.editableProperty().set(true);
 			textFieldTaskname.requestFocus();
 			this.buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
@@ -478,6 +499,7 @@ public class GUIController {
 	 */
 	@FXML
 	void buttonEditDescriptionPressed(ActionEvent event) {
+		
 		if (textAreaDescription.editableProperty().get()) {
 			textAreaDescription.editableProperty().set(false);
 			saveEnteredDescription(textAreaDescription.getText());
@@ -485,11 +507,34 @@ public class GUIController {
 			textAreaDescription.setStyle("text-area-background: orange;");
 
 		} else {
+			/* Changelistener der aktiv wird wenn textarea den fokus verliert
+			 * funktioniert nicht, obwohl genau so wie bei editTaskname......
+			 * 
+			this.textAreaDescription.focusedProperty().addListener(new ChangeListener<Boolean>()
+			{
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+				if(!newValue) {
+					textAreaDescription.editableProperty().set(false);
+					buttonEditDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
+					textAreaDescription.setStyle("-fx-background-color: orange;");
+					if(activeLabel != null) {
+						textAreaDescription.setText(activeLabel.getDescription());
+					}
+				}
+			}
+			});
+			*/
 
 			textAreaDescription.editableProperty().set(true);
+			textAreaDescription.requestFocus();
 			this.buttonEditDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
 			textAreaDescription.setStyle("text-area-background: white;");
+
+			
+			
 		}
+
 	}
 
 	/**
@@ -806,10 +851,13 @@ public class GUIController {
 				if (activeLabel != lbl) {
 					buttonReturn.setVisible(true);
 					buttonProceed.setVisible(true);
+					buttonEditTaskName.setVisible(true);
+					buttonEditDescription.setVisible(true);
 					activeLabel = lbl;
 					main.log(lbl.getId());
 					lbl.setStyle(
 							"-fx-border-width: 2; -fx-border-color: orange; -fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+					
 				}
 
 				else if (activeLabel == lbl) {
@@ -818,6 +866,9 @@ public class GUIController {
 							"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 					buttonProceed.setVisible(false);
 					buttonReturn.setVisible(false);
+					buttonEditTaskName.setVisible(false);
+					buttonEditDescription.setVisible(false);
+					
 				}
 				showTaskInfo();
 			}
