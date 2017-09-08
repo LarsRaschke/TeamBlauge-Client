@@ -37,7 +37,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 
 public class GUIController {
-	private boolean LDAPConnection = false;
 	
 	@FXML
 	private Label labelProjectname;
@@ -239,7 +238,7 @@ public class GUIController {
 		mansoryPaneFinished.setAlignment(Pos.TOP_CENTER);
 		mansoryPaneFinished.setSpacing(10);
 
-		if(LDAPConnection) {
+		if(main.getLDAPConnection()) {
 			usernameVN = main.user.getVorname() + " " + main.user.getNachname();
 			usernameNV = main.user.getNachname() + ", " + main.user.getVorname();
 		}
@@ -758,13 +757,12 @@ public class GUIController {
 				main.log(lbl.getId());
 
 				textFieldTaskname.setText(activeLabel.getText());
-				
-				 //lbl.setStyle("-fx-border-width: 2; -fx-border-color: red;");
-				
+								
 				 lbl.setStyle("-fx-border-width: 2; -fx-border-color: red; -fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-
+				 
 			}
 		});
+		
 	}
 
 	/**

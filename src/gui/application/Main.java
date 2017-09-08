@@ -15,7 +15,9 @@ public class Main extends Application {
 
 	BorderPane root = new BorderPane();
 	Stage primaryStage = new Stage();
-
+	
+	private boolean LDAPConnection = true;
+	
 	public User user;
 
 	@Override
@@ -24,8 +26,12 @@ public class Main extends Application {
 			this.primaryStage = primaryStage;
 			this.primaryStage.setTitle("BLAUGE Kanban");
 			initRoot();
-			//showLogin();
-			showGUI();
+			if(LDAPConnection) {
+				showLogin();
+			}
+			else {
+				showGUI();
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -132,5 +138,9 @@ public class Main extends Application {
 		}
 		System.out.print(":\t");
 		System.out.print(text + "\n");
+	}
+	
+	public boolean getLDAPConnection() {
+		return this.LDAPConnection;
 	}
 }
