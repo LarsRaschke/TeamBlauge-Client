@@ -20,12 +20,14 @@ import com.sun.prism.paint.Color;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
+import javafx.scene.control.RadioMenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -33,6 +35,9 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
@@ -276,9 +281,13 @@ public class GUIController {
 		this.main = main;
 	}
 
+	//Ändert die Farbe eines Post-Its, sobald eine neue Farbe ausgewählt wurde
 	@FXML
 	void ColorPickerSelectionChanged(ActionEvent event) {
-
+		System.out.println("Ich wurde ausgelöst");
+		//javafx.scene.paint.Color selectedColor = colorPicker.getValue();
+		activeLabel.setBackground(new Background(new BackgroundFill(colorPicker.getValue(), null, null)));
+		//activeLabel.setBackground(new Background(new Back));
 	}
 
 	@FXML
