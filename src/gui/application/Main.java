@@ -15,10 +15,11 @@ public class Main extends Application {
 
 	BorderPane root = new BorderPane();
 	Stage primaryStage = new Stage();
-	
-	//Setze auf false wenn nicht in der Schule gearbeitet wird, sodass keine LDAP verbindung benoetigt wird
+
+	// Setze auf false wenn nicht in der Schule gearbeitet wird, sodass keine LDAP
+	// verbindung benoetigt wird
 	private boolean LDAPConnection = false;
-	
+
 	public User user;
 
 	@Override
@@ -27,10 +28,9 @@ public class Main extends Application {
 			this.primaryStage = primaryStage;
 			this.primaryStage.setTitle("BLAUGE Kanban");
 			initRoot();
-			if(LDAPConnection) {
+			if (LDAPConnection) {
 				showLogin();
-			}
-			else {
+			} else {
 				showGUI();
 			}
 
@@ -140,8 +140,12 @@ public class Main extends Application {
 		System.out.print(":\t");
 		System.out.print(text + "\n");
 	}
-	
+
 	public boolean getLDAPConnection() {
 		return this.LDAPConnection;
+	}
+
+	public static void main(String[] args) {
+		launch(args);
 	}
 }
