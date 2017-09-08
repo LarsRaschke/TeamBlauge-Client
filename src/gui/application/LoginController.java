@@ -78,7 +78,7 @@ public class LoginController {
 	public void setMainApp(Main main) {
 		this.main = main;
 	}
-
+	
 	@FXML
 	void buttonLogInScreenLogInPressed(ActionEvent event) {
 		checkLoginData();
