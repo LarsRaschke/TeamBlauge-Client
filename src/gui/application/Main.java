@@ -16,7 +16,8 @@ public class Main extends Application {
 	BorderPane root = new BorderPane();
 	Stage primaryStage = new Stage();
 	
-	private boolean LDAPConnection = true;
+	//Setze auf false wenn nicht in der Schule gearbeitet wird, sodass keine LDAP verbindung benoetigt wird
+	private boolean LDAPConnection = false;
 	
 	public User user;
 
