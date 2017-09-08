@@ -744,7 +744,7 @@ public class GUIController {
 		lbl.setAlignment(Pos.CENTER);
 		// lbl.setText(textFieldTaskname.getText());
 		lbl.setStyle("-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-
+		
 		mansoryPaneToDo.getChildren().add(lbl);
 
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -755,17 +755,27 @@ public class GUIController {
 					activeLabel.setStyle("-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 				}
 				
-				buttonReturn.setVisible(true);
-				buttonProceed.setVisible(true);
-				activeLabel = lbl;
-				main.log(lbl.getId());
+				if(activeLabel != lbl) {
+					buttonReturn.setVisible(true);
+					buttonProceed.setVisible(true);
+					activeLabel = lbl;
+					main.log(lbl.getId());
+	
+					textFieldTaskname.setText(activeLabel.getText());
+							
+					lbl.setStyle("-fx-border-width: 2; -fx-border-color: red; -fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+				}
+				
+				else if(activeLabel == lbl) {
+					activeLabel = null;
+					lbl.setStyle("-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 
-				textFieldTaskname.setText(activeLabel.getText());
-						
-				lbl.setStyle("-fx-border-width: 2; -fx-border-color: red; -fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-		
+				}
+				
 			}
 		});
+		
+		
 		
 	}
 
