@@ -189,7 +189,7 @@ public class GUIController {
 
 	private JFXColorPicker colorPicker; // https://github.com/jfoenixadmin/JFoenix/issues/408
 
-	private Label activeLabel;
+	private Label activeLabel = null;
 
 	private ArrayList<Label> LabelList;
 
@@ -743,23 +743,27 @@ public class GUIController {
 		lbl.setMinSize(200, 75);
 		lbl.setAlignment(Pos.CENTER);
 		// lbl.setText(textFieldTaskname.getText());
-		lbl.setStyle(
-				"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+		lbl.setStyle("-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 
 		mansoryPaneToDo.getChildren().add(lbl);
 
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
+				
+				if(activeLabel != null) {
+					activeLabel.setStyle("-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+				}
+				
 				buttonReturn.setVisible(true);
 				buttonProceed.setVisible(true);
 				activeLabel = lbl;
 				main.log(lbl.getId());
 
 				textFieldTaskname.setText(activeLabel.getText());
-								
-				 lbl.setStyle("-fx-border-width: 2; -fx-border-color: red; -fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-				 
+						
+				lbl.setStyle("-fx-border-width: 2; -fx-border-color: red; -fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+		
 			}
 		});
 		
