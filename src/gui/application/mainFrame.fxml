@@ -77,17 +77,17 @@
                      </font>
                   </Label>
                   
-                  <Label fx:id="labelActualAuthor" layoutX="85.0" layoutY="55.0" prefHeight="25.0" prefWidth="260.0" text="Autor einfügen">
+                  <Label fx:id="labelActualAuthor" layoutX="85.0" layoutY="55.0" prefHeight="25.0" prefWidth="260.0" text="">
                      <font>
                         <Font name="Roboto Light" size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelActualStatus" layoutX="85.0" layoutY="105.0" prefHeight="25.0" prefWidth="260.0" text="Status Einfügen">
+                  <Label fx:id="labelActualStatus" layoutX="85.0" layoutY="105.0" prefHeight="25.0" prefWidth="260.0" text="">
                      <font>
                         <Font name="Roboto Light" size="15.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="textFieldTaskname" focusColor="#b71c1c" layoutX="85.0" layoutY="5.0" prefHeight="27.0" prefWidth="219.0" style="-fx-background-color: orange;" text="TaskName">
+                  <JFXTextField fx:id="textFieldTaskname" focusColor="#b71c1c" layoutX="85.0" layoutY="5.0" prefHeight="27.0" prefWidth="219.0" style="-fx-background-color: orange;" text="">
                      <font>
                         <Font name="Roboto Light" size="15.0" />
                      </font>
@@ -102,7 +102,7 @@
                      </graphic>
                   </JFXButton>
                   <JFXColorPicker fx:id="ColorPicker" layoutX="85.0" layoutY="155.0" onAction="#ColorPickerSelectionChanged" prefHeight="25.0" />
-                  <JFXTextArea fx:id="textAreaDescription" focusColor="#b71c1c" layoutX="5.0" layoutY="236.0" prefHeight="150.0" prefWidth="339.0" stylesheets="@application.css" text="Description">
+                  <JFXTextArea fx:id="textAreaDescription" focusColor="#b71c1c" layoutX="5.0" layoutY="236.0" prefHeight="150.0" prefWidth="339.0" stylesheets="@application.css" text="">
                      <font>
                         <Font name="Roboto Light" size="15.0" />
                      </font>

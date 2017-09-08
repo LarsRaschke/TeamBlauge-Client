@@ -372,11 +372,12 @@ public class GUIController {
 		} else if (activeLabel.getParent() == mansoryPaneFinished) {
 			usedScrollBarHeight_Finished = usedScrollBarHeight_Finished - 90;
 		}
+		showTaskInfo();
 	}
 
 	/**
-	 * Methode wird beim dr�cken des ProjectSelection-Buttons ausgef�hrt.
-	 * �ffnet das Fenster mit der Projekt�bersicht.
+	 * Methode wird beim dr�cken des ProjectSelection-Buttons ausgef�hrt. �ffnet
+	 * das Fenster mit der Projekt�bersicht.
 	 * 
 	 * @param event
 	 */
@@ -405,6 +406,7 @@ public class GUIController {
 			mansoryPaneFinished.getChildren().remove(activeLabel);
 			mansoryPaneDoing.getChildren().add(activeLabel);
 		}
+		showTaskInfo();
 	}
 
 	/**
@@ -442,8 +444,7 @@ public class GUIController {
 						textFieldTaskname.editableProperty().set(false);
 						buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
 						textFieldTaskname.setStyle("-fx-background-color: orange;");
-						activeLabel.setText(textFieldTaskname.getText());
-						activeLabel.setId(textFieldTaskname.getText());
+
 					}
 				}
 			});
@@ -461,8 +462,8 @@ public class GUIController {
 	 * @param name
 	 */
 	void saveEnteredTaskname(String name) {
-		// Nur zum Testen:
-		labelActualAuthor.setText(name);
+		activeLabel.setName(textFieldTaskname.getText());
+		showTaskInfo();
 	}
 
 	/**
@@ -497,8 +498,8 @@ public class GUIController {
 	 * @param name
 	 */
 	void saveEnteredDescription(String name) {
-		// Nur zum Testen:
-		labelActualStatus.setText(name);
+		activeLabel.setDescription(textAreaDescription.getText());
+		showTaskInfo();
 	}
 
 	/**
@@ -538,7 +539,8 @@ public class GUIController {
 
 	/**
 	 * Methode erstellt einen neuen Tag mit dem �bergebenen Namen und f�gt ihn
-	 * an passende Stelle im Tag-Pane an. Eine MouseEvent-Handle wird initialisiert
+	 * an passende Stelle im Tag-Pane an. Eine MouseEvent-Handle wird
+	 * initialisiert
 	 * 
 	 * @param name
 	 */
@@ -661,11 +663,16 @@ public class GUIController {
 		anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation1.getHeight()
 				+ anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
 		/*
-		 * System.out.println("AnchorPane1: "+anchorPaneTaskInformation1.getHeight());
-		 * System.out.println("AnchorPane2: "+anchorPaneTaskInformation2.getHeight());
-		 * System.out.println("AnchorPane3: "+anchorPaneTaskInformation3.getHeight());
-		 * System.out.println("MasonaryPaneComment: "+mansoryPaneComments.getHeight());
-		 * System.out.println("AnchorPaneRoot: "+anchorPaneTaskInformation.getHeight());
+		 * System.out.println("AnchorPane1: "+anchorPaneTaskInformation1.
+		 * getHeight());
+		 * System.out.println("AnchorPane2: "+anchorPaneTaskInformation2.
+		 * getHeight());
+		 * System.out.println("AnchorPane3: "+anchorPaneTaskInformation3.
+		 * getHeight());
+		 * System.out.println("MasonaryPaneComment: "+mansoryPaneComments.
+		 * getHeight());
+		 * System.out.println("AnchorPaneRoot: "+anchorPaneTaskInformation.
+		 * getHeight());
 		 */
 
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -721,8 +728,8 @@ public class GUIController {
 
 	/**
 	 * Methode erstellt einen neuen Task und f�gt ihn am ToDo-Pane an. Eine
-	 * MouseEvent-Handle wird initialisiert und das erstellte Label wird zum Aktiven
-	 * Label. Die Buttons zum verschieben der Task werden sichtbar
+	 * MouseEvent-Handle wird initialisiert und das erstellte Label wird zum
+	 * Aktiven Label. Die Buttons zum verschieben der Task werden sichtbar
 	 */
 	private void createTask2() {
 		this.taskCounter++;
@@ -737,13 +744,13 @@ public class GUIController {
 		// lbl.setText(textFieldTaskname.getText());
 		lbl.setStyle(
 				"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-		
+
 		mansoryPaneToDo.getChildren().add(lbl);
-		
+
 		String[] labelInfo = new String[2];
 		labelInfo[0] = lbl.getId();
 		labelInfo[1] = lbl.getParent().toString();
-		
+
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
@@ -755,7 +762,7 @@ public class GUIController {
 
 				buttonReturn.setVisible(true);
 				buttonProceed.setVisible(true);
-				//activeLabel = lbl;
+				// activeLabel = lbl;
 				main.log(lbl.getId());
 
 				textFieldTaskname.setText(activeLabel.getText());
@@ -766,14 +773,14 @@ public class GUIController {
 			}
 		});
 	}
-	
+
 	private void createTask() {
 		taskCounter++;
 		main.log("Add Task", "Button pressed");
 		GuiTask lbl = new GuiTask();
 
 		lbl.setId("Task " + taskCounter);
-		lbl.setText("Task " + taskCounter);
+		// lbl.setText("Task " + taskCounter);
 		lbl.setName("Task " + taskCounter);
 		lbl.setAuthor(usernameVN);
 		lbl.setDescription("Dies ist eine Beschreibung");
@@ -782,49 +789,60 @@ public class GUIController {
 		lbl.setMinSize(200, 75);
 		lbl.setAlignment(Pos.CENTER);
 		// lbl.setText(textFieldTaskname.getText());
-		lbl.setStyle("-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-		
+		lbl.setStyle(
+				"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+
 		mansoryPaneToDo.getChildren().add(lbl);
 
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
-				
-				if(activeLabel != null) {
-					activeLabel.setStyle("-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+
+				if (activeLabel != null) {
+					activeLabel.setStyle(
+							"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 				}
-				
-				if(activeLabel != lbl) {
+
+				if (activeLabel != lbl) {
 					buttonReturn.setVisible(true);
 					buttonProceed.setVisible(true);
 					activeLabel = lbl;
 					main.log(lbl.getId());
-					lbl.setStyle("-fx-border-width: 2; -fx-border-color: red; -fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-					showTaskInfo();
+					lbl.setStyle(
+							"-fx-border-width: 2; -fx-border-color: orange; -fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 				}
-				
-				else if(activeLabel == lbl) {
-					activeLabel = null;
-					lbl.setStyle("-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 
+				else if (activeLabel == lbl) {
+					activeLabel = null;
+					lbl.setStyle(
+							"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+					buttonProceed.setVisible(false);
+					buttonReturn.setVisible(false);
 				}
-				
+				showTaskInfo();
 			}
 		});
 		showTaskInfo();
-}
+	}
 
-	
 	public void showTaskInfo() {
-		textFieldTaskname.setText(activeLabel.getName());
-		labelActualAuthor.setText(activeLabel.getAuthor());
-		textAreaDescription.setText(activeLabel.getDescription());
-		if (activeLabel.getParent() == mansoryPaneToDo) {
-			labelActualStatus.setText("To Do");
-		} else if (activeLabel.getParent() == mansoryPaneDoing) {
-			labelActualStatus.setText("Doing");
-		} else if (activeLabel.getParent() == mansoryPaneFinished) {
-			labelActualStatus.setText("Finished");
+		if (activeLabel != null) {
+			textFieldTaskname.setText(activeLabel.getName());
+			labelActualAuthor.setText(activeLabel.getAuthor());
+			textAreaDescription.setText(activeLabel.getDescription());
+			if (activeLabel.getParent() == mansoryPaneToDo) {
+				labelActualStatus.setText("To Do");
+			} else if (activeLabel.getParent() == mansoryPaneDoing) {
+				labelActualStatus.setText("Doing");
+			} else if (activeLabel.getParent() == mansoryPaneFinished) {
+				labelActualStatus.setText("Finished");
+			}
+			activeLabel.showText();
+		} else {
+			textFieldTaskname.setText(" ");
+			labelActualAuthor.setText(" ");
+			textAreaDescription.setText(" ");
+			labelActualStatus.setText(" ");
 		}
 	}
 
@@ -835,8 +853,9 @@ public class GUIController {
 	 */
 	void getTaskInfoFromServer(String id) {
 		/*
-		 * textFieldTaskname.setText(String value); labelActualAuthor.setText(String
-		 * value); labelActualStatus.setText(String value);
+		 * textFieldTaskname.setText(String value);
+		 * labelActualAuthor.setText(String value);
+		 * labelActualStatus.setText(String value);
 		 * textAreaDescription.setText(String value)
 		 */
 	}
