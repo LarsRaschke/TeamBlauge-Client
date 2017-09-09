@@ -1,13 +1,5 @@
 package gui.application;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.function.DoubleToIntFunction;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXColorPicker;
@@ -15,16 +7,14 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXMasonryPane;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-import com.sun.prism.paint.Color;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
@@ -36,8 +26,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 public class GUIController {
 
@@ -85,9 +79,6 @@ public class GUIController {
 
 	@FXML
 	private JFXTextField textFieldTaskname;
-
-	@FXML
-	private JFXColorPicker ColorPicker;
 
 	@FXML
 	private JFXTextArea textAreaDescription;
@@ -190,11 +181,12 @@ public class GUIController {
 
 	private Main main;
 
+	@FXML
 	private JFXColorPicker colorPicker; // https://github.com/jfoenixadmin/JFoenix/issues/408
 
 	private GuiTask activeLabel = null;
 
-	private ArrayList<String[]> labelList;
+	// private ArrayList<String[]> labelList;
 
 	private static int usedScrollBarHeight_ToDo;
 	private static int usedScrollBarHeight_Doing;
@@ -204,20 +196,10 @@ public class GUIController {
 
 	private String usernameVN = "";
 	private String usernameNV = "";
+	
+	private Color selectedColor = new Color(0, 0, 1, 0);
 
 	public GUIController() {
-		this.colorPicker = new JFXColorPicker();
-		// this.colorPicker.editableProperty().bind(column.editableProperty());
-		// this.colorPicker.disableProperty().bind(column.editableProperty().not());
-		this.colorPicker.setOnShowing(event -> {
-			// nothing yet
-		});
-		this.colorPicker.valueProperty().addListener((observable, oldValue, newValue) -> {
-
-			// newValue is selected color
-
-		});
-
 	}
 
 	/**
@@ -234,7 +216,6 @@ public class GUIController {
 		buttonProceed.setVisible(false);
 		buttonEditTaskName.setVisible(false);
 		buttonEditDescription.setVisible(false);
-		
 
 		// Kanban columns Init
 		mansoryPaneToDo.setAlignment(Pos.TOP_CENTER);
@@ -310,6 +291,8 @@ public class GUIController {
 				}
 			}
 		});
+		
+		
 
 	}
 
@@ -324,6 +307,16 @@ public class GUIController {
 	 */
 	@FXML
 	void ColorPickerSelectionChanged(ActionEvent event) {
+		
+		if (colorPicker != null) {
+			selectedColor = colorPicker.getValue();
+		}
+		if (activeLabel != null) {
+			activeLabel.setBackground(new Background(
+					new BackgroundFill(Paint.valueOf(selectedColor.toString()), CornerRadii.EMPTY, Insets.EMPTY)));
+			activeLabel.setColor(selectedColor);
+
+		}
 
 	}
 
@@ -454,22 +447,21 @@ public class GUIController {
 					}
 				}
 			});
-			
-			this.textFieldTaskname.focusedProperty().addListener(new ChangeListener<Boolean>()
-			{
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if(!newValue) {
-					textFieldTaskname.editableProperty().set(false);
-					buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
-					textFieldTaskname.setStyle("-fx-background-color: orange;");
-					if(activeLabel != null) {
-						textFieldTaskname.setText(activeLabel.getName());
+
+			this.textFieldTaskname.focusedProperty().addListener(new ChangeListener<Boolean>() {
+				@Override
+				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					if (!newValue) {
+						textFieldTaskname.editableProperty().set(false);
+						buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
+						textFieldTaskname.setStyle("-fx-background-color: orange;");
+						if (activeLabel != null) {
+							textFieldTaskname.setText(activeLabel.getName());
+						}
 					}
 				}
-			}
 			});
-			
+
 			textFieldTaskname.editableProperty().set(true);
 			textFieldTaskname.requestFocus();
 			this.buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
@@ -499,7 +491,7 @@ public class GUIController {
 	 */
 	@FXML
 	void buttonEditDescriptionPressed(ActionEvent event) {
-		
+
 		if (textAreaDescription.editableProperty().get()) {
 			textAreaDescription.editableProperty().set(false);
 			saveEnteredDescription(textAreaDescription.getText());
@@ -507,32 +499,29 @@ public class GUIController {
 			textAreaDescription.setStyle("text-area-background: orange;");
 
 		} else {
-			/* Changelistener der aktiv wird wenn textarea den fokus verliert
+			/*
+			 * Changelistener der aktiv wird wenn textarea den fokus verliert
 			 * funktioniert nicht, obwohl genau so wie bei editTaskname......
 			 * 
-			this.textAreaDescription.focusedProperty().addListener(new ChangeListener<Boolean>()
-			{
-			@Override
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-				if(!newValue) {
-					textAreaDescription.editableProperty().set(false);
-					buttonEditDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
-					textAreaDescription.setStyle("-fx-background-color: orange;");
-					if(activeLabel != null) {
-						textAreaDescription.setText(activeLabel.getDescription());
-					}
-				}
-			}
-			});
-			*/
+			 * this.textAreaDescription.focusedProperty().addListener(new
+			 * ChangeListener<Boolean>() {
+			 * 
+			 * @Override public void changed(ObservableValue<? extends Boolean>
+			 * observable, Boolean oldValue, Boolean newValue) { if(!newValue) {
+			 * textAreaDescription.editableProperty().set(false);
+			 * buttonEditDescriptionIcon.setImage(new
+			 * Image(getClass().getResourceAsStream("compose.png")));
+			 * textAreaDescription.setStyle("-fx-background-color: orange;");
+			 * if(activeLabel != null) {
+			 * textAreaDescription.setText(activeLabel.getDescription()); } } }
+			 * });
+			 */
 
 			textAreaDescription.editableProperty().set(true);
 			textAreaDescription.requestFocus();
 			this.buttonEditDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
 			textAreaDescription.setStyle("text-area-background: white;");
 
-			
-			
 		}
 
 	}
@@ -777,7 +766,7 @@ public class GUIController {
 	 * Aktiven Label. Die Buttons zum verschieben der Task werden sichtbar
 	 */
 	private void createTask2() {
-		this.taskCounter++;
+		taskCounter++;
 		main.log("Add Task", "Button pressed");
 		Label lbl = new Label();
 
@@ -835,7 +824,7 @@ public class GUIController {
 		lbl.setAlignment(Pos.CENTER);
 		// lbl.setText(textFieldTaskname.getText());
 		lbl.setStyle(
-				"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+				"-fx-background-color:"+lbl.getColorString()+"; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 
 		mansoryPaneToDo.getChildren().add(lbl);
 
@@ -845,7 +834,7 @@ public class GUIController {
 
 				if (activeLabel != null) {
 					activeLabel.setStyle(
-							"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+							"-fx-background-color:"+activeLabel.getColorString()+"; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 				}
 
 				if (activeLabel != lbl) {
@@ -856,19 +845,19 @@ public class GUIController {
 					activeLabel = lbl;
 					main.log(lbl.getId());
 					lbl.setStyle(
-							"-fx-border-width: 2; -fx-border-color: orange; -fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-					
+							"-fx-background-color:"+lbl.getColorString()+"; -fx-border-width: 2; -fx-border-color: orange; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+
 				}
 
 				else if (activeLabel == lbl) {
 					activeLabel = null;
 					lbl.setStyle(
-							"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+							" -fx-background-color:"+lbl.getColorString()+"; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 					buttonProceed.setVisible(false);
 					buttonReturn.setVisible(false);
 					buttonEditTaskName.setVisible(false);
 					buttonEditDescription.setVisible(false);
-					
+
 				}
 				showTaskInfo();
 			}

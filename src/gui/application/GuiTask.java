@@ -2,13 +2,15 @@ package gui.application;
 
 import java.util.ArrayList;
 
+import javafx.scene.paint.Color;
+
 public class GuiTask extends javafx.scene.control.Label{
 	
 	private String name;
 	private String author;
 	private String description;
 	private short status;
-	private int color;
+	private long color;
 	private ArrayList<String> tagList;
 	private ArrayList<String> commentList;
 	
@@ -18,6 +20,7 @@ public class GuiTask extends javafx.scene.control.Label{
 		this.author = "";
 		this.description = "";
 		this.status = 0;
+		this.color = 0xFFFFFF;
 		
 	}
 	
@@ -51,11 +54,19 @@ public class GuiTask extends javafx.scene.control.Label{
 	public void setStatus(short status) {
 		this.status = status;
 	}
-	public int getColor() {
+	public long getColor() {
 		return color;
 	}
-	public void setColor(int color) {
+	
+	public String getColorString() {
+		return "#"+Long.toHexString(color).substring(2);
+	}
+	public void setColor(long color) {
 		this.color = color;
+	}
+	public void setColor(Color color) {
+		System.out.println(color.toString());
+		this.color = Long.parseLong(color.toString().substring(2), 16);
 	}
 	public ArrayList<String> getTagList() {
 		return tagList;

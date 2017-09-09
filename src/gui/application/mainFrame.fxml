@@ -101,7 +101,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXColorPicker fx:id="ColorPicker" layoutX="85.0" layoutY="155.0" onAction="#ColorPickerSelectionChanged" prefHeight="25.0" />
+                  <JFXColorPicker fx:id="colorPicker" layoutX="85.0" layoutY="155.0" onAction="#ColorPickerSelectionChanged" prefHeight="25.0" />
                   <JFXTextArea fx:id="textAreaDescription" focusColor="#b71c1c" layoutX="5.0" layoutY="236.0" prefHeight="150.0" prefWidth="339.0" stylesheets="@application.css" text="">
                      <font>
                         <Font name="Roboto Light" size="15.0" />
