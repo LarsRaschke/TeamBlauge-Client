@@ -318,7 +318,12 @@ public class GUIController {
 	 */
 	@FXML
 	void ColorPickerSelectionChanged(ActionEvent event) {
-
+		javafx.scene.paint.Color selectedColor = colorPicker.getValue();
+		//int hex = 
+		main.log(selectedColor.toString());
+		String hex1 = Integer.toHexString(colorPicker.getValue().hashCode());
+		main.log(hex1);
+		activeLabel.setStyle("-fx-background-color: 0xffffffff");
 	}
 
 	/**
