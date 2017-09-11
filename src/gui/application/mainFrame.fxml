@@ -41,7 +41,7 @@
             <Font name="Roboto Light" size="15.0" />
          </font>
       </MenuButton>
-      <ScrollPane hbarPolicy="NEVER" layoutX="876.0" layoutY="100.0" prefHeight="620.0" prefWidth="364.0">
+      <ScrollPane fx:id="scrollPaneTaskInformation" hbarPolicy="NEVER" layoutX="876.0" layoutY="100.0" prefHeight="620.0" prefWidth="364.0">
         <content>
         
         
@@ -77,17 +77,17 @@
                      </font>
                   </Label>
                   
-                  <Label fx:id="labelActualAuthor" layoutX="85.0" layoutY="55.0" prefHeight="25.0" prefWidth="260.0" text="Autor einfügen">
+                  <Label fx:id="labelActualAuthor" layoutX="85.0" layoutY="55.0" prefHeight="25.0" prefWidth="260.0" text="">
                      <font>
                         <Font name="Roboto Light" size="15.0" />
                      </font>
                   </Label>
-                  <Label fx:id="labelActualStatus" layoutX="85.0" layoutY="105.0" prefHeight="25.0" prefWidth="260.0" text="Status Einfügen">
+                  <Label fx:id="labelActualStatus" layoutX="85.0" layoutY="105.0" prefHeight="25.0" prefWidth="260.0" text="">
                      <font>
                         <Font name="Roboto Light" size="15.0" />
                      </font>
                   </Label>
-                  <JFXTextField fx:id="textFieldTaskname" focusColor="#b71c1c" layoutX="85.0" layoutY="5.0" prefHeight="27.0" prefWidth="219.0" style="-fx-background-color: orange;" text="TaskName">
+                  <JFXTextField fx:id="textFieldTaskname" focusColor="#b71c1c" layoutX="85.0" layoutY="5.0" prefHeight="27.0" prefWidth="219.0" style="-fx-background-color: orange;" text="">
                      <font>
                         <Font name="Roboto Light" size="15.0" />
                      </font>
@@ -101,13 +101,13 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXColorPicker fx:id="ColorPicker" layoutX="85.0" layoutY="155.0" onAction="#ColorPickerSelectionChanged" prefHeight="25.0" />
-                  <JFXTextArea fx:id="textAreaDescription" focusColor="#b71c1c" layoutX="5.0" layoutY="236.0" prefHeight="150.0" prefWidth="339.0" stylesheets="@application.css" text="Description">
+                  <JFXColorPicker fx:id="colorPicker" layoutX="85.0" layoutY="155.0" onAction="#ColorPickerSelectionChanged" prefHeight="25.0" />
+                  <JFXTextArea fx:id="textAreaDescription" focusColor="#b71c1c" layoutX="5.0" layoutY="236.0" prefHeight="150.0" prefWidth="339.0" stylesheets="@application.css" text="">
                      <font>
                         <Font name="Roboto Light" size="15.0" />
                      </font>
                   </JFXTextArea>
-                        <JFXButton fx:id="buttonEditComments" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="305.0" layoutY="200.0" onAction="#buttonEditDescriptionPressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373" text="SaveDescription">
+                        <JFXButton fx:id="buttonEditDescription" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="305.0" layoutY="200.0" onAction="#buttonEditDescriptionPressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373" text="SaveDescription">
                            <graphic>
                               <ImageView fx:id="buttonEditDescriptionIcon" fitHeight="25.0" fitWidth="25.0">
                                  <image>
