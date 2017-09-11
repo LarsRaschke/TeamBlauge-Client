@@ -2,13 +2,22 @@ package gui.application;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -16,10 +25,15 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableColumn.CellDataFeatures;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.util.Callback;
+import model.User;
 import model.interfaces.RMI_Projektmanager;
 
 /*
@@ -57,7 +71,7 @@ public class ProjectListController {
 	private ImageView buttonEditProjectDescriptionIcon;
 
 	@FXML
-	private JFXListView<String> listProjectMember;
+	private JFXListView<?> listProjectMember;
 
 	@FXML
 	private ImageView buttonAddMember;
@@ -84,11 +98,6 @@ public class ProjectListController {
 		textFieldProjectName.editableProperty().set(false);
 		textAreaProjectDescription.editableProperty().set(false);
 		labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
-		
-		ObservableList<String> items = FXCollections.observableArrayList(main.projektliste);
-		listProjectMember = new JFXListView<>();
-		listProjectMember.setItems(items);
-		
 		((Scene) labelProjectList.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent ke) {
@@ -182,4 +191,5 @@ public class ProjectListController {
 			e.printStackTrace();
 		}
 	}
+
 }
