@@ -67,7 +67,7 @@ public class ProjectListController {
 
 	@FXML
 	private JFXButton buttonSaveNewProject;
-	
+
 	private String usernameVN = "";
 	private String usernameNV = "";
 
@@ -80,18 +80,17 @@ public class ProjectListController {
 	public void init() {
 		textFieldProjectName.editableProperty().set(false);
 		textAreaProjectDescription.editableProperty().set(false);
-		
-		if(main.getLDAPConnection()) {
+
+		if (main.getLDAPConnection()) {
 			usernameVN = main.user.getVorname() + " " + main.user.getNachname();
 			usernameNV = main.user.getNachname() + ", " + main.user.getVorname();
-		}
-		else {
-			//guilog("Keine Verbindung zum LDAP Server");
+		} else {
+			// guilog("Keine Verbindung zum LDAP Server");
 			usernameVN = "Hans Dampf";
 			usernameNV = "Dampf, Hans";
 		}
-		
-		labelUser.setText("    "+usernameNV);
+
+		labelUser.setText("    " + usernameNV);
 		((Scene) labelProjectList.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent ke) {
@@ -106,21 +105,41 @@ public class ProjectListController {
 		this.main = main;
 	}
 
+	/**
+	 * Logt den Benutzer aus Öffnet den LoginScreen
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonLogOutPressed(ActionEvent event) {
 		main.showLogin();
 	}
 
+	/**
+	 * Öffnet das Hauptfenster
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonBackPressed(ActionEvent event) {
 		main.showGUI();
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonAddProjectPressed(ActionEvent event) {
 
 	}
 
+	/**
+	 * Enabled das TextFieldProjectName
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonEditProjectNamePressed(ActionEvent event) {
 		if (textFieldProjectName.editableProperty().get()) {
@@ -147,10 +166,20 @@ public class ProjectListController {
 		}
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param name
+	 */
 	void saveEnteredProjectName(String name) {
 
 	}
 
+	/**
+	 * Enabled die TextAreaProjectDescription
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonEditProjectDescriptionPressed(ActionEvent event) {
 		if (textAreaProjectDescription.editableProperty().get()) {
@@ -168,10 +197,20 @@ public class ProjectListController {
 		}
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param name
+	 */
 	void saveEnteredProjectDescription(String name) {
 
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonSaveNewProjectPressed(ActionEvent event) {
 

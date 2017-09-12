@@ -1,6 +1,5 @@
 package gui.application;
 
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXColorPicker;
 import com.jfoenix.controls.JFXListView;
@@ -196,7 +195,7 @@ public class GUIController {
 
 	private String usernameVN = "";
 	private String usernameNV = "";
-	
+
 	private Color selectedColor = new Color(0, 0, 1, 0);
 
 	public GUIController() {
@@ -291,8 +290,6 @@ public class GUIController {
 				}
 			}
 		});
-		
-		
 
 	}
 
@@ -301,13 +298,14 @@ public class GUIController {
 	}
 
 	/**
-	 * TBD
+	 * Wenn eine Farbe ausgewählt wurde und ein Label aktiv ist wird die
+	 * Hintergrundfarbe des Labels dementspreched geändert
 	 * 
 	 * @param event
 	 */
 	@FXML
 	void ColorPickerSelectionChanged(ActionEvent event) {
-		
+
 		if (colorPicker != null) {
 			selectedColor = colorPicker.getValue();
 		}
@@ -375,8 +373,8 @@ public class GUIController {
 	}
 
 	/**
-	 * Methode wird beim drï¿½cken des ProjectSelection-Buttons ausgefï¿½hrt. ï¿½ffnet
-	 * das Fenster mit der Projektï¿½bersicht.
+	 * Methode wird beim drï¿½cken des ProjectSelection-Buttons ausgefï¿½hrt.
+	 * ï¿½ffnet das Fenster mit der Projektï¿½bersicht.
 	 * 
 	 * @param event
 	 */
@@ -386,7 +384,8 @@ public class GUIController {
 	}
 
 	/**
-	 * TBD
+	 * Je nach dem wo sich das aktive Label befindet wir es nach "links"/ entgegen
+	 * der Richtung verschoben
 	 * 
 	 * @param event
 	 */
@@ -409,7 +408,7 @@ public class GUIController {
 	}
 
 	/**
-	 * TBD
+	 * Ruft die Methode createMoreTags auf
 	 * 
 	 * @param event
 	 */
@@ -470,7 +469,7 @@ public class GUIController {
 	}
 
 	/**
-	 * TBD
+	 * Ändert den Text des aktiven Labels
 	 * 
 	 * @param name
 	 */
@@ -500,20 +499,19 @@ public class GUIController {
 
 		} else {
 			/*
-			 * Changelistener der aktiv wird wenn textarea den fokus verliert
-			 * funktioniert nicht, obwohl genau so wie bei editTaskname......
+			 * Changelistener der aktiv wird wenn textarea den fokus verliert funktioniert
+			 * nicht, obwohl genau so wie bei editTaskname......
 			 * 
 			 * this.textAreaDescription.focusedProperty().addListener(new
 			 * ChangeListener<Boolean>() {
 			 * 
-			 * @Override public void changed(ObservableValue<? extends Boolean>
-			 * observable, Boolean oldValue, Boolean newValue) { if(!newValue) {
+			 * @Override public void changed(ObservableValue<? extends Boolean> observable,
+			 * Boolean oldValue, Boolean newValue) { if(!newValue) {
 			 * textAreaDescription.editableProperty().set(false);
 			 * buttonEditDescriptionIcon.setImage(new
 			 * Image(getClass().getResourceAsStream("compose.png")));
-			 * textAreaDescription.setStyle("-fx-background-color: orange;");
-			 * if(activeLabel != null) {
-			 * textAreaDescription.setText(activeLabel.getDescription()); } } }
+			 * textAreaDescription.setStyle("-fx-background-color: orange;"); if(activeLabel
+			 * != null) { textAreaDescription.setText(activeLabel.getDescription()); } } }
 			 * });
 			 */
 
@@ -527,7 +525,7 @@ public class GUIController {
 	}
 
 	/**
-	 * TBD
+	 * Ändert den Text der textArea auf dem aktivel Label
 	 * 
 	 * @param name
 	 */
@@ -573,8 +571,7 @@ public class GUIController {
 
 	/**
 	 * Methode erstellt einen neuen Tag mit dem ï¿½bergebenen Namen und fï¿½gt ihn
-	 * an passende Stelle im Tag-Pane an. Eine MouseEvent-Handle wird
-	 * initialisiert
+	 * an passende Stelle im Tag-Pane an. Eine MouseEvent-Handle wird initialisiert
 	 * 
 	 * @param name
 	 */
@@ -607,6 +604,11 @@ public class GUIController {
 		});
 	}
 
+	/**
+	 * Testmethode von Fiete
+	 * 
+	 * @param name
+	 */
 	public void createMoreTags(String[] name) {
 		anchorPaneTaskInformation2.setPrefHeight(100 + name.length * 200);
 		anchorPaneTaskInformation
@@ -616,6 +618,11 @@ public class GUIController {
 		}
 	}
 
+	/**
+	 * Erzeugt Zufällige Tags und zeigt diese an Testmethode
+	 * 
+	 * @param name
+	 */
 	public void createMoreTags(int name) {
 		anchorPaneTaskInformation2.setPrefHeight(100 + name * 200);
 		anchorPaneTaskInformation
@@ -650,6 +657,11 @@ public class GUIController {
 
 	}
 
+	/**
+	 * Ruft die Funktion createComment auf wenn das Textfeld nicht leer ist
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonAddCommentPressed(ActionEvent event) {
 		main.log("Button pressed", "Comment");
@@ -661,6 +673,11 @@ public class GUIController {
 		}
 	}
 
+	/**
+	 * Testmethode von Fiete
+	 * 
+	 * @param name
+	 */
 	public void createMoreComment(String[] name) {
 		anchorPaneTaskInformation3.setPrefHeight(100 + name.length * 200);
 		anchorPaneTaskInformation
@@ -670,6 +687,12 @@ public class GUIController {
 		}
 	}
 
+	/**
+	 * Fügt einen Kommentar in der Liste hinzu, wenn der Button gedrückt wird
+	 * 
+	 * @param name
+	 * @param author
+	 */
 	public void createComment(String name, String author) {
 		Label lbl = new Label();
 
@@ -697,14 +720,10 @@ public class GUIController {
 		anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation1.getHeight()
 				+ anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
 		/*
-		 * System.out.println("AnchorPane1: "+anchorPaneTaskInformation1.
-		 * getHeight());
-		 * System.out.println("AnchorPane2: "+anchorPaneTaskInformation2.
-		 * getHeight());
-		 * System.out.println("AnchorPane3: "+anchorPaneTaskInformation3.
-		 * getHeight());
-		 * System.out.println("MasonaryPaneComment: "+mansoryPaneComments.
-		 * getHeight());
+		 * System.out.println("AnchorPane1: "+anchorPaneTaskInformation1. getHeight());
+		 * System.out.println("AnchorPane2: "+anchorPaneTaskInformation2. getHeight());
+		 * System.out.println("AnchorPane3: "+anchorPaneTaskInformation3. getHeight());
+		 * System.out.println("MasonaryPaneComment: "+mansoryPaneComments. getHeight());
 		 * System.out.println("AnchorPaneRoot: "+anchorPaneTaskInformation.
 		 * getHeight());
 		 */
@@ -720,6 +739,14 @@ public class GUIController {
 
 	}
 
+	/**
+	 * Formatierung des Kommentars
+	 * 
+	 * @param text
+	 * @param insert
+	 * @param period
+	 * @return
+	 */
 	public static String insertPeriodically(String text, String insert, int period) {
 		StringBuilder builder = new StringBuilder(
 				// text.length() + 2 * (text.length()/period)+1);
@@ -762,8 +789,8 @@ public class GUIController {
 
 	/**
 	 * Methode erstellt einen neuen Task und fï¿½gt ihn am ToDo-Pane an. Eine
-	 * MouseEvent-Handle wird initialisiert und das erstellte Label wird zum
-	 * Aktiven Label. Die Buttons zum verschieben der Task werden sichtbar
+	 * MouseEvent-Handle wird initialisiert und das erstellte Label wird zum Aktiven
+	 * Label. Die Buttons zum verschieben der Task werden sichtbar
 	 */
 	private void createTask2() {
 		taskCounter++;
@@ -823,8 +850,8 @@ public class GUIController {
 		lbl.setMinSize(200, 75);
 		lbl.setAlignment(Pos.CENTER);
 		// lbl.setText(textFieldTaskname.getText());
-		lbl.setStyle(
-				"-fx-background-color:"+lbl.getColorString()+"; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+		lbl.setStyle("-fx-background-color:" + lbl.getColorString()
+				+ "; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 
 		mansoryPaneToDo.getChildren().add(lbl);
 
@@ -833,8 +860,8 @@ public class GUIController {
 			public void handle(MouseEvent e) {
 
 				if (activeLabel != null) {
-					activeLabel.setStyle(
-							"-fx-background-color:"+activeLabel.getColorString()+"; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+					activeLabel.setStyle("-fx-background-color:" + activeLabel.getColorString()
+							+ "; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 				}
 
 				if (activeLabel != lbl) {
@@ -844,15 +871,15 @@ public class GUIController {
 					buttonEditDescription.setVisible(true);
 					activeLabel = lbl;
 					main.log(lbl.getId());
-					lbl.setStyle(
-							"-fx-background-color:"+lbl.getColorString()+"; -fx-border-width: 2; -fx-border-color: orange; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+					lbl.setStyle("-fx-background-color:" + lbl.getColorString()
+							+ "; -fx-border-width: 2; -fx-border-color: orange; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 
 				}
 
 				else if (activeLabel == lbl) {
 					activeLabel = null;
-					lbl.setStyle(
-							" -fx-background-color:"+lbl.getColorString()+"; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+					lbl.setStyle(" -fx-background-color:" + lbl.getColorString()
+							+ "; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 					buttonProceed.setVisible(false);
 					buttonReturn.setVisible(false);
 					buttonEditTaskName.setVisible(false);
@@ -893,9 +920,8 @@ public class GUIController {
 	 */
 	void getTaskInfoFromServer(String id) {
 		/*
-		 * textFieldTaskname.setText(String value);
-		 * labelActualAuthor.setText(String value);
-		 * labelActualStatus.setText(String value);
+		 * textFieldTaskname.setText(String value); labelActualAuthor.setText(String
+		 * value); labelActualStatus.setText(String value);
 		 * textAreaDescription.setText(String value)
 		 */
 	}

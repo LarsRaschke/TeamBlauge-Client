@@ -51,9 +51,12 @@ public class LoginController {
 
 	}
 
+	/**
+	 * Initialisierung des LoginScreen
+	 */
 	public void initnshit() {
 		textFieldLogInScreenUsername.setText("schmidfi");
-		
+
 		this.textFieldLogInScreenPassword.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent ke) {
@@ -111,16 +114,31 @@ public class LoginController {
 
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonLogInScreenSettingsPressed(ActionEvent event) {
 
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonSaveNewProjectPressed(ActionEvent event) {
 
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonNewProjectPressed(ActionEvent event) {
 
