@@ -1,5 +1,7 @@
 package gui.application;
 
+import java.util.ArrayList;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXColorPicker;
 import com.jfoenix.controls.JFXListView;
@@ -187,6 +189,8 @@ public class GUIController {
 
 	// private ArrayList<String[]> labelList;
 
+	private ArrayList<Label> taskList;
+
 	private static int usedScrollBarHeight_ToDo;
 	private static int usedScrollBarHeight_Doing;
 	private static int usedScrollBarHeight_Finished;
@@ -298,8 +302,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Wenn eine Farbe ausgewählt wurde und ein Label aktiv ist wird die
-	 * Hintergrundfarbe des Labels dementspreched geändert
+	 * TBD
 	 * 
 	 * @param event
 	 */
@@ -384,8 +387,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Je nach dem wo sich das aktive Label befindet wir es nach "links"/ entgegen
-	 * der Richtung verschoben
+	 * TBD
 	 * 
 	 * @param event
 	 */
@@ -408,7 +410,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Ruft die Methode createMoreTags auf
+	 * TBD
 	 * 
 	 * @param event
 	 */
@@ -469,7 +471,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Ändert den Text des aktiven Labels
+	 * TBD
 	 * 
 	 * @param name
 	 */
@@ -525,7 +527,7 @@ public class GUIController {
 	}
 
 	/**
-	 * Ändert den Text der textArea auf dem aktivel Label
+	 * TBD
 	 * 
 	 * @param name
 	 */
@@ -604,11 +606,6 @@ public class GUIController {
 		});
 	}
 
-	/**
-	 * Testmethode von Fiete
-	 * 
-	 * @param name
-	 */
 	public void createMoreTags(String[] name) {
 		anchorPaneTaskInformation2.setPrefHeight(100 + name.length * 200);
 		anchorPaneTaskInformation
@@ -618,11 +615,6 @@ public class GUIController {
 		}
 	}
 
-	/**
-	 * Erzeugt Zufällige Tags und zeigt diese an Testmethode
-	 * 
-	 * @param name
-	 */
 	public void createMoreTags(int name) {
 		anchorPaneTaskInformation2.setPrefHeight(100 + name * 200);
 		anchorPaneTaskInformation
@@ -657,11 +649,6 @@ public class GUIController {
 
 	}
 
-	/**
-	 * Ruft die Funktion createComment auf wenn das Textfeld nicht leer ist
-	 * 
-	 * @param event
-	 */
 	@FXML
 	void buttonAddCommentPressed(ActionEvent event) {
 		main.log("Button pressed", "Comment");
@@ -673,11 +660,6 @@ public class GUIController {
 		}
 	}
 
-	/**
-	 * Testmethode von Fiete
-	 * 
-	 * @param name
-	 */
 	public void createMoreComment(String[] name) {
 		anchorPaneTaskInformation3.setPrefHeight(100 + name.length * 200);
 		anchorPaneTaskInformation
@@ -687,12 +669,6 @@ public class GUIController {
 		}
 	}
 
-	/**
-	 * Fügt einen Kommentar in der Liste hinzu, wenn der Button gedrückt wird
-	 * 
-	 * @param name
-	 * @param author
-	 */
 	public void createComment(String name, String author) {
 		Label lbl = new Label();
 
@@ -739,14 +715,6 @@ public class GUIController {
 
 	}
 
-	/**
-	 * Formatierung des Kommentars
-	 * 
-	 * @param text
-	 * @param insert
-	 * @param period
-	 * @return
-	 */
 	public static String insertPeriodically(String text, String insert, int period) {
 		StringBuilder builder = new StringBuilder(
 				// text.length() + 2 * (text.length()/period)+1);
@@ -792,27 +760,31 @@ public class GUIController {
 	 * MouseEvent-Handle wird initialisiert und das erstellte Label wird zum Aktiven
 	 * Label. Die Buttons zum verschieben der Task werden sichtbar
 	 */
-	private void createTask2() {
+	private void createTask(String name) {
 		taskCounter++;
 		main.log("Add Task", "Button pressed");
-		Label lbl = new Label();
 
-		lbl.setId("Task " + taskCounter);
-		lbl.setText("Task " + taskCounter);
+		// Neues Label wird erzeugt und konfiguriert
+		Label lbl = new Label();
+		lbl.setId(name);
+		lbl.setText(name);
 		lbl.setPrefSize(200, 75);
 		lbl.setMinSize(200, 75);
 		lbl.setAlignment(Pos.CENTER);
-		// lbl.setText(textFieldTaskname.getText());
 		lbl.setStyle(
 				"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 
 		mansoryPaneToDo.getChildren().add(lbl);
 
-		String[] labelInfo = new String[2];
-		labelInfo[0] = lbl.getId();
-		labelInfo[1] = lbl.getParent().toString();
-
+		// Erzeugt Eventhandler für das erzeugte Label
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			/**
+			 * Eventhandler für das Label.
+			 * Wenn kein Label ausgewählt ist wird das ausgeählte Label aktiv. Ist ein Label
+			 * und ein andere Label wird geklickt, wird das geklickte Label aktiv. Wird das
+			 * ausgewählte Label angeklickt, ist danach kein Label aktiv.
+			 * 
+			 */
 			@Override
 			public void handle(MouseEvent e) {
 
@@ -833,8 +805,12 @@ public class GUIController {
 
 			}
 		});
+		taskList.add(lbl);
 	}
 
+	/**
+	 * Überladene Methode, ohne einen Namen angeben zu müssen
+	 */
 	private void createTask() {
 		taskCounter++;
 		main.log("Add Task", "Button pressed");
