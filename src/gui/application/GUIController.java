@@ -302,7 +302,8 @@ public class GUIController {
 	}
 
 	/**
-	 * TBD
+	 * Wenn eine Farbe ausgewählt wurde und ein Label aktiv ist wird die
+	 * Hintergrundfarbe des Labels dementspreched geändert
 	 * 
 	 * @param event
 	 */
@@ -387,7 +388,8 @@ public class GUIController {
 	}
 
 	/**
-	 * TBD
+	 * Je nach dem wo sich das aktive Label befindet wir es nach "links"/ entgegen
+	 * der Richtung verschoben
 	 * 
 	 * @param event
 	 */
@@ -410,7 +412,7 @@ public class GUIController {
 	}
 
 	/**
-	 * TBD
+	 * Ruft die Methode createMoreTags auf
 	 * 
 	 * @param event
 	 */
@@ -471,7 +473,7 @@ public class GUIController {
 	}
 
 	/**
-	 * TBD
+	 * Ändert den Text des aktiven Labels
 	 * 
 	 * @param name
 	 */
@@ -527,7 +529,7 @@ public class GUIController {
 	}
 
 	/**
-	 * TBD
+	 * Ändert den Text der textArea auf dem aktivel Label
 	 * 
 	 * @param name
 	 */
@@ -606,6 +608,11 @@ public class GUIController {
 		});
 	}
 
+	/**
+	 * Testmethode von Fiete
+	 * 
+	 * @param name
+	 */
 	public void createMoreTags(String[] name) {
 		anchorPaneTaskInformation2.setPrefHeight(100 + name.length * 200);
 		anchorPaneTaskInformation
@@ -615,6 +622,11 @@ public class GUIController {
 		}
 	}
 
+	/**
+	 * Erzeugt Zufällige Tags und zeigt diese an Testmethode
+	 * 
+	 * @param name
+	 */
 	public void createMoreTags(int name) {
 		anchorPaneTaskInformation2.setPrefHeight(100 + name * 200);
 		anchorPaneTaskInformation
@@ -649,6 +661,11 @@ public class GUIController {
 
 	}
 
+	/**
+	 * Ruft die Funktion createComment auf wenn das Textfeld nicht leer ist
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonAddCommentPressed(ActionEvent event) {
 		main.log("Button pressed", "Comment");
@@ -660,6 +677,11 @@ public class GUIController {
 		}
 	}
 
+	/**
+	 * Testmethode von Fiete
+	 * 
+	 * @param name
+	 */
 	public void createMoreComment(String[] name) {
 		anchorPaneTaskInformation3.setPrefHeight(100 + name.length * 200);
 		anchorPaneTaskInformation
@@ -669,6 +691,12 @@ public class GUIController {
 		}
 	}
 
+	/**
+	 * Fügt einen Kommentar in der Liste hinzu, wenn der Button gedrückt wird
+	 * 
+	 * @param name
+	 * @param author
+	 */
 	public void createComment(String name, String author) {
 		Label lbl = new Label();
 
@@ -715,6 +743,14 @@ public class GUIController {
 
 	}
 
+	/**
+	 * Formatierung des Kommentars
+	 * 
+	 * @param text
+	 * @param insert
+	 * @param period
+	 * @return
+	 */
 	public static String insertPeriodically(String text, String insert, int period) {
 		StringBuilder builder = new StringBuilder(
 				// text.length() + 2 * (text.length()/period)+1);
