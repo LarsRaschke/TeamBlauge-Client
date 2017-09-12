@@ -18,7 +18,7 @@ public class Main extends Application {
 
 	// Setze auf false wenn nicht in der Schule gearbeitet wird, sodass keine LDAP
 	// verbindung benoetigt wird
-	private boolean LDAPConnection = false;
+	private boolean LDAPConnection = true;
 
 	public User user;
 
