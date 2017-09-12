@@ -188,7 +188,7 @@ public class GUIController {
 	private GuiTask activeLabel = null;
 
 	// private ArrayList<String[]> labelList;
-	
+
 	private ArrayList<Label> taskList;
 
 	private static int usedScrollBarHeight_ToDo;
@@ -221,7 +221,7 @@ public class GUIController {
 		buttonEditDescription.setVisible(false);
 
 		// Kanban columns Init
-		mansoryPaneToDo.setAlignment(Pos.TOP_CENTER);	
+		mansoryPaneToDo.setAlignment(Pos.TOP_CENTER);
 		mansoryPaneToDo.setSpacing(10);
 		mansoryPaneDoing.setAlignment(Pos.TOP_CENTER);
 		mansoryPaneDoing.setSpacing(10);
@@ -763,8 +763,8 @@ public class GUIController {
 	private void createTask(String name) {
 		taskCounter++;
 		main.log("Add Task", "Button pressed");
-		
-		//Neues Label wird erzeugt und konfiguriert
+
+		// Neues Label wird erzeugt und konfiguriert
 		Label lbl = new Label();
 		lbl.setId(name);
 		lbl.setText(name);
@@ -776,7 +776,15 @@ public class GUIController {
 
 		mansoryPaneToDo.getChildren().add(lbl);
 
+		// Erzeugt Eventhandler für das erzeugte Label
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			/**
+			 * Eventhandler für das Label.
+			 * Wenn kein Label ausgewählt ist wird das ausgeählte Label aktiv. Ist ein Label
+			 * und ein andere Label wird geklickt, wird das geklickte Label aktiv. Wird das
+			 * ausgewählte Label angeklickt, ist danach kein Label aktiv.
+			 * 
+			 */
 			@Override
 			public void handle(MouseEvent e) {
 
@@ -800,6 +808,9 @@ public class GUIController {
 		taskList.add(lbl);
 	}
 
+	/**
+	 * Überladene Methode, ohne einen Namen angeben zu müssen
+	 */
 	private void createTask() {
 		taskCounter++;
 		main.log("Add Task", "Button pressed");
