@@ -53,7 +53,12 @@ public class LoginController {
 
 	}
 
+	/**
+	 * Initialisierung des LoginScreen
+	 */
 	public void initnshit() {
+		textFieldLogInScreenUsername.setText("schmidfi");
+
 		this.textFieldLogInScreenPassword.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent ke) {
@@ -78,12 +83,25 @@ public class LoginController {
 	public void setMainApp(Main main) {
 		this.main = main;
 	}
-	
+
+	/**
+	 * Methode wird beim dr�cken des Login-Buttons ausgef�hrt. Ruft die Methode
+	 * checkLoginData() aus
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonLogInScreenLogInPressed(ActionEvent event) {
 		checkLoginData();
 	}
 
+	private String username = "fiete";
+	// private String passwort = "123";
+
+	/**
+	 * �berpr�ft, ob der eingegebene Username auf dem Server hinterlegt ist.
+	 * 
+	 */
 	public void checkLoginData() {
 
 		main.log("Check Login");
@@ -99,16 +117,31 @@ public class LoginController {
 
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonLogInScreenSettingsPressed(ActionEvent event) {
 
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonSaveNewProjectPressed(ActionEvent event) {
 
 	}
 
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void buttonNewProjectPressed(ActionEvent event) {
 

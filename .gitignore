@@ -23,3 +23,5 @@
 hs_err_pid*
 /bin/
 /UML_Klassen.asta.lock
+
+/classes/production/
