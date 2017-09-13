@@ -11,7 +11,14 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 
+/**
+ * Eigene SSLSocket-Factory für eigenen TrustManager.
+ * 
+ * @author withakea
+ *
+ */
 public class CustomSSLSocketFactory extends SSLSocketFactory {
+	
 	private SSLSocketFactory socketFactory;
 
 	public CustomSSLSocketFactory() {

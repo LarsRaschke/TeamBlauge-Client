@@ -5,6 +5,12 @@ import java.security.cert.X509Certificate;
 
 import javax.net.ssl.X509TrustManager;
 
+/**
+ * Eigener TrustManager, der jedes Zertifikat akzeptiert.
+ * 
+ * @author withakea
+ *
+ */
 public class FakeTrustmanager implements X509TrustManager {
 	
 	public void checkClientTrusted(X509Certificate[] cert, String string) throws CertificateException {

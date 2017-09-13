@@ -9,6 +9,12 @@ import javax.naming.directory.SearchControls;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.InitialLdapContext;
 
+/**
+ * LDAP-Client
+ * 
+ * @author withakea
+ *
+ */
 public class LdapConnectionClient {
 	
 	private String host;
@@ -59,11 +65,11 @@ public class LdapConnectionClient {
 	/**
 	 * Search function.
 	 * 
-	 * @param base
-	 * @param filter
-	 * @param returningAttributes
+	 * @param base - Struktur, in der gesucht wird.
+	 * @param filter - Die Filter-Argumente.
+	 * @param returningAttributes - Die Attribute, die zurückgegeben werden sollen.
 	 * 
-	 * @return
+	 * @return Ein SearchResult.
 	 */
 	public NamingEnumeration<SearchResult> search(String base, String filter, String[] returningAttributes) {
 		
@@ -92,15 +98,15 @@ public class LdapConnectionClient {
 	}
 	
 	/**
-	 * Search function.
+	 * Compare function für Passwort-Check.
 	 * 
-	 * @param base
-	 * @param filter
-	 * @param returningAttributes
+	 * @param base - Struktur, in der gesucht wird.
+	 * @param filter - Die Filter-Argumente.
+	 * @param wert - Der Wert, der überprüft wird.
 	 * 
-	 * @return
+	 * @return Ein SearchResult.
 	 */
-	public NamingEnumeration<SearchResult> compare(String base, String filter, String passwort) {
+	public NamingEnumeration<SearchResult> compare(String base, String filter, String wert) {
 		
 		InitialLdapContext ctx = null;
 		try {
@@ -109,7 +115,7 @@ public class LdapConnectionClient {
 			e.printStackTrace();
 		}
 
-		byte[] key = passwort.getBytes();
+		byte[] key = wert.getBytes();
 		
 		SearchControls ctls = new SearchControls();
 		ctls.setSearchScope(SearchControls.OBJECT_SCOPE);
