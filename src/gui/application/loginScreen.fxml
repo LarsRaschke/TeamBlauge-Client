@@ -20,7 +20,7 @@
          <font>
             <Font name="Roboto Light" size="15.0" />
          </font></JFXPasswordField>
-      <JFXButton fx:id="buttonLogInScreenLogIn" contentDisplay="RIGHT" layoutX="624.0" layoutY="306.0" onAction="#buttonLogInScreenLogInPressed" prefHeight="34.0" prefWidth="96.0" text=" Login" textAlignment="RIGHT" AnchorPane.topAnchor="400.0">
+      <JFXButton fx:id="buttonLogInScreenLogIn" buttonType="RAISED" contentDisplay="RIGHT" layoutX="624.0" layoutY="306.0" onAction="#buttonLogInScreenLogInPressed" prefHeight="34.0" prefWidth="96.0" text=" Login" textAlignment="RIGHT" AnchorPane.topAnchor="400.0">
          <graphic>
             <ImageView fitHeight="24.0" fitWidth="24.0">
                <image>
@@ -50,11 +50,11 @@
             </ImageView>
          </graphic>
       </JFXButton>
-      <ImageView fitHeight="128.0" fitWidth="128.0" layoutX="556.0" layoutY="68.0">
+      <Label fx:id="infoLabelLogInScreen" layoutX="520.0" layoutY="244.0" prefHeight="34.0" prefWidth="200.0" textAlignment="CENTER" textFill="RED" />
+      <ImageView fitHeight="90.0" fitWidth="239.0" layoutX="501.0" layoutY="112.0" preserveRatio="true">
          <image>
-            <Image url="@../resources/Icons/Blauge-Logo.png" />
+            <Image url="@../resources/Icons/BLAUGE_Labs_Logo_2.png" />
          </image>
       </ImageView>
-      <Label fx:id="infoLabelLogInScreen" layoutX="520.0" layoutY="244.0" prefHeight="34.0" prefWidth="200.0" textAlignment="CENTER" textFill="RED" />
    </children>
 </AnchorPane>

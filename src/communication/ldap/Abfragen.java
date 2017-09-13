@@ -6,8 +6,22 @@ import javax.naming.directory.SearchResult;
 
 import model.User;
 
-public class Abfragen {
+/**
+ * Finale Klasse für LDAP-Abfragen.
+ * 
+ * @author withakea
+ *
+ */
+public final class Abfragen {
 	
+	/**
+	 * Überprüft, ob das Passwort zu dem Usernamen passt.
+	 * 
+	 * @param username - Der Username.
+	 * @param passwort - Das Passwort.
+	 * 
+	 * @return True, falls das Passwort korrekt ist, andernfalls False.
+	 */
 	public static boolean authenticateUser(String username, String passwort)
 	{
 		boolean authenticate = false;
@@ -26,6 +40,13 @@ public class Abfragen {
 		return authenticate;
 	}
 	
+	/**
+	 * Erstellt den zugehörigen User zum Usernamen.
+	 * 
+	 * @param username - Der gegebene Username.
+	 * 
+	 * @return Den User, falls der Username vorhanden ist. Ansonsten null.
+	 */
 	public static User erstelleUser(String username) {
 		
 		User user = null;
