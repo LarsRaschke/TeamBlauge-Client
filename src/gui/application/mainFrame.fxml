@@ -92,7 +92,7 @@
                         <Font name="Roboto Light" size="15.0" />
                      </font>
                   </JFXTextField>
-                  <JFXButton fx:id="buttonEditTaskName" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="305.0" layoutY="1.0" onAction="#buttonEditTaskNamePressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373" text="SaveTaskName">
+                  <JFXButton fx:id="buttonEditTaskName" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="305.0" layoutY="1.0" onAction="#buttonEditTaskNamePressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373" text="SaveTaskName" visible="false">
                      <graphic>
                         <ImageView fx:id="buttonEditTaskNameIcon" fitHeight="25.0" fitWidth="25.0">
                            <image>
