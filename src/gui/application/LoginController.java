@@ -107,6 +107,7 @@ public class LoginController {
 		main.user = Abfragen.erstelleUser(textFieldLogInScreenUsername.getText());
 
 		if (main.user != null) {
+			main.projektliste = new ArrayList<String>();
 			main.showGUI();
 		} else {
 			infoLabelLogInScreen.setText("Falscher Username!");

@@ -384,6 +384,15 @@ public class GUIController {
 	 */
 	@FXML
 	void buttonProjectselectionPressed(ActionEvent event) {
+		try {
+
+			Registry registry = LocateRegistry.getRegistry(null);
+			RMI_Projektmanager manager = (RMI_Projektmanager) registry.lookup("manager");
+			main.projektliste = manager.ladeProjekte(main.user.getNutzername());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		main.showProjectList();
 	}
 
