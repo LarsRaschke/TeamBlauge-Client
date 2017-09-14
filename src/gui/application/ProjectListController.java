@@ -88,9 +88,6 @@ public class ProjectListController {
 	@FXML
 	private JFXButton buttonSaveNewProject;
 
-	private String usernameVN = "";
-	private String usernameNV = "";
-
 	private Main main;
 
 	public ProjectListController() {
@@ -101,16 +98,8 @@ public class ProjectListController {
 		textFieldProjectName.editableProperty().set(false);
 		textAreaProjectDescription.editableProperty().set(false);
 
-		if (main.getLDAPConnection()) {
-			usernameVN = main.user.getVorname() + " " + main.user.getNachname();
-			usernameNV = main.user.getNachname() + ", " + main.user.getVorname();
-		} else {
-			// guilog("Keine Verbindung zum LDAP Server");
-			usernameVN = "Hans Dampf";
-			usernameNV = "Dampf, Hans";
-		}
-
-		labelUser.setText("    " + usernameNV);
+		labelUser.setText("    " + main.user.getNachname() + ", " + main.user.getVorname());
+		
 		((Scene) labelProjectList.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent ke) {

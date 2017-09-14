@@ -1,5 +1,7 @@
 package gui.application;
 
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXButton;
@@ -17,7 +19,6 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.ScrollPane;
@@ -33,6 +34,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import model.interfaces.RMI_Projektmanager;
 
 public class GUIController {
 
@@ -196,9 +198,9 @@ public class GUIController {
 	private static int usedScrollBarHeight_Finished;
 
 	private static int taskCounter;
-
-	private String usernameVN = "";
-	private String usernameNV = "";
+	//
+	// private String usernameVN = "";
+	// private String usernameNV = "";
 
 	private Color selectedColor = new Color(0, 0, 1, 0);
 
@@ -228,18 +230,7 @@ public class GUIController {
 		mansoryPaneFinished.setAlignment(Pos.TOP_CENTER);
 		mansoryPaneFinished.setSpacing(10);
 
-		if (main.getLDAPConnection()) {
-			usernameVN = main.user.getVorname() + " " + main.user.getNachname();
-			usernameNV = main.user.getNachname() + ", " + main.user.getVorname();
-		} else {
-			guilog("Keine Verbindung zum LDAP Server");
-			usernameVN = "Hans Dampf";
-			usernameNV = "Dampf, Hans";
-		}
-
-		labelUser.setText("    " + usernameNV);
-		labelProjectname.setText("    Testprojekt");
-		labelProjectinformation.setText("    Erstelldatum: 07.07.2017, Ersteller: Fiete Schmidt");
+		labelUser.setText("    " + main.user.getNachname() + ", " + main.user.getVorname());
 
 		((Scene) labelProjectname.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
@@ -397,8 +388,8 @@ public class GUIController {
 	}
 
 	/**
-	 * Je nach dem wo sich das aktive Label befindet wir es nach "links"/ entgegen
-	 * der Richtung verschoben
+	 * Je nach dem wo sich das aktive Label befindet wir es nach "links"/
+	 * entgegen der Richtung verschoben
 	 * 
 	 * @param event
 	 */
@@ -492,9 +483,9 @@ public class GUIController {
 	}
 
 	/**
-	 * Methode wird beim Drï¿½cken des EditDescription-Button ausgefï¿½hrt. Macht
-	 * das Textfeld zur Task-Beschreibung editierbar, sofern es im Moment nicht
-	 * editierbar ist. Ist es editierbar, wird es wieder gelocked.
+	 * Methode wird beim Drï¿½cken des EditDescription-Button ausgefï¿½hrt.
+	 * Macht das Textfeld zur Task-Beschreibung editierbar, sofern es im Moment
+	 * nicht editierbar ist. Ist es editierbar, wird es wieder gelocked.
 	 * 
 	 * Beim Klicken des Buttons wechselt das Icon entspechend seiner aktuellen
 	 * Funktion.
@@ -512,19 +503,20 @@ public class GUIController {
 
 		} else {
 			/*
-			 * Changelistener der aktiv wird wenn textarea den fokus verliert funktioniert
-			 * nicht, obwohl genau so wie bei editTaskname......
+			 * Changelistener der aktiv wird wenn textarea den fokus verliert
+			 * funktioniert nicht, obwohl genau so wie bei editTaskname......
 			 * 
 			 * this.textAreaDescription.focusedProperty().addListener(new
 			 * ChangeListener<Boolean>() {
 			 * 
-			 * @Override public void changed(ObservableValue<? extends Boolean> observable,
-			 * Boolean oldValue, Boolean newValue) { if(!newValue) {
+			 * @Override public void changed(ObservableValue<? extends Boolean>
+			 * observable, Boolean oldValue, Boolean newValue) { if(!newValue) {
 			 * textAreaDescription.editableProperty().set(false);
 			 * buttonEditDescriptionIcon.setImage(new
 			 * Image(getClass().getResourceAsStream("compose.png")));
-			 * textAreaDescription.setStyle("-fx-background-color: orange;"); if(activeLabel
-			 * != null) { textAreaDescription.setText(activeLabel.getDescription()); } } }
+			 * textAreaDescription.setStyle("-fx-background-color: orange;");
+			 * if(activeLabel != null) {
+			 * textAreaDescription.setText(activeLabel.getDescription()); } } }
 			 * });
 			 */
 
@@ -583,8 +575,9 @@ public class GUIController {
 	}
 
 	/**
-	 * Methode erstellt einen neuen Tag mit dem ï¿½bergebenen Namen und fï¿½gt ihn
-	 * an passende Stelle im Tag-Pane an. Eine MouseEvent-Handle wird initialisiert
+	 * Methode erstellt einen neuen Tag mit dem ï¿½bergebenen Namen und fï¿½gt
+	 * ihn an passende Stelle im Tag-Pane an. Eine MouseEvent-Handle wird
+	 * initialisiert
 	 * 
 	 * @param name
 	 */
@@ -680,7 +673,7 @@ public class GUIController {
 		main.log("Button pressed", "Comment");
 		if (!textFieldComments.getText().equals("")) {
 
-			createComment(textFieldComments.getText(), usernameVN);
+			createComment(textFieldComments.getText(), main.user.getNutzername());
 		} else {
 			main.log("Kein Text eingegeben!", "Comment");
 		}
@@ -733,12 +726,13 @@ public class GUIController {
 		anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation1.getHeight()
 				+ anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
 		/*
-		 * System.out.println("AnchorPane1: "+anchorPaneTaskInformation1. getHeight());
-		 * System.out.println("AnchorPane2: "+anchorPaneTaskInformation2. getHeight());
-		 * System.out.println("AnchorPane3: "+anchorPaneTaskInformation3. getHeight());
-		 * System.out.println("MasonaryPaneComment: "+mansoryPaneComments. getHeight());
-		 * System.out.println("AnchorPaneRoot: "+anchorPaneTaskInformation.
-		 * getHeight());
+		 * System.out.println("AnchorPane1: "+anchorPaneTaskInformation1.
+		 * getHeight()); System.out.println("AnchorPane2: "
+		 * +anchorPaneTaskInformation2. getHeight()); System.out.println(
+		 * "AnchorPane3: "+anchorPaneTaskInformation3. getHeight());
+		 * System.out.println("MasonaryPaneComment: "+mansoryPaneComments.
+		 * getHeight()); System.out.println("AnchorPaneRoot: "
+		 * +anchorPaneTaskInformation. getHeight());
 		 */
 
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -802,8 +796,8 @@ public class GUIController {
 
 	/**
 	 * Methode erstellt einen neuen Task und fï¿½gt ihn am ToDo-Pane an. Eine
-	 * MouseEvent-Handle wird initialisiert und das erstellte Label wird zum Aktiven
-	 * Label. Die Buttons zum verschieben der Task werden sichtbar
+	 * MouseEvent-Handle wird initialisiert und das erstellte Label wird zum
+	 * Aktiven Label. Die Buttons zum verschieben der Task werden sichtbar
 	 */
 	private void createTask(String name) {
 		taskCounter++;
@@ -824,9 +818,9 @@ public class GUIController {
 		// Erzeugt Eventhandler für das erzeugte Label
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			/**
-			 * Eventhandler für das Label.
-			 * Wenn kein Label ausgewählt ist wird das ausgeählte Label aktiv. Ist ein Label
-			 * und ein andere Label wird geklickt, wird das geklickte Label aktiv. Wird das
+			 * Eventhandler für das Label. Wenn kein Label ausgewählt ist wird
+			 * das ausgeählte Label aktiv. Ist ein Label und ein andere Label
+			 * wird geklickt, wird das geklickte Label aktiv. Wird das
 			 * ausgewählte Label angeklickt, ist danach kein Label aktiv.
 			 * 
 			 */
@@ -864,7 +858,7 @@ public class GUIController {
 		lbl.setId("Task " + taskCounter);
 		// lbl.setText("Task " + taskCounter);
 		lbl.setName("Task " + taskCounter);
-		lbl.setAuthor(usernameVN);
+		lbl.setAuthor(main.user.getNutzername());
 		lbl.setDescription("Dies ist eine Beschreibung");
 		lbl.showText();
 		lbl.setPrefSize(200, 75);
@@ -941,8 +935,9 @@ public class GUIController {
 	 */
 	void getTaskInfoFromServer(String id) {
 		/*
-		 * textFieldTaskname.setText(String value); labelActualAuthor.setText(String
-		 * value); labelActualStatus.setText(String value);
+		 * textFieldTaskname.setText(String value);
+		 * labelActualAuthor.setText(String value);
+		 * labelActualStatus.setText(String value);
 		 * textAreaDescription.setText(String value)
 		 */
 	}

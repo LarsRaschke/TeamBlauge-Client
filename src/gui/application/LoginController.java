@@ -1,5 +1,7 @@
 package gui.application;
 
+import java.util.ArrayList;
+
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -11,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import model.User;
 
 public class LoginController {
 
@@ -55,7 +58,6 @@ public class LoginController {
 	 * Initialisierung des LoginScreen
 	 */
 	public void initnshit() {
-		textFieldLogInScreenUsername.setText("schmidfi");
 
 		this.textFieldLogInScreenPassword.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
@@ -93,9 +95,6 @@ public class LoginController {
 		checkLoginData();
 	}
 
-	private String username = "fiete";
-	// private String passwort = "123";
-
 	/**
 	 * �berpr�ft, ob der eingegebene Username auf dem Server hinterlegt ist.
 	 * 
@@ -104,7 +103,13 @@ public class LoginController {
 
 		main.log("Check Login");
 
-		main.user = Abfragen.erstelleUser(textFieldLogInScreenUsername.getText());
+		if (main.getLDAPConnection()) {
+			main.user = Abfragen.erstelleUser(textFieldLogInScreenUsername.getText());
+		}
+		else
+		{
+			main.user = new User("admin", true, "Administrator", "Admin");
+		}
 
 		if (main.user != null) {
 			main.projektliste = new ArrayList<String>();

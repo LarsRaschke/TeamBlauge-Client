@@ -19,7 +19,7 @@ public class Main extends Application {
 
 	// Setze auf false wenn nicht in der Schule gearbeitet wird, sodass keine LDAP
 	// verbindung benoetigt wird
-	private boolean LDAPConnection = true;
+	private boolean LDAPConnection = false;
 
 	public User user;
 	public ArrayList<String> projektliste;
@@ -30,11 +30,7 @@ public class Main extends Application {
 			this.primaryStage = primaryStage;
 			this.primaryStage.setTitle("BLAUGE Kanban");
 			initRoot();
-			if (LDAPConnection) {
-				showLogin();
-			} else {
-				showGUI();
-			}
+			showLogin();
 
 		} catch (Exception e) {
 			e.printStackTrace();
