@@ -75,6 +75,9 @@ public class ProjectListController {
     private JFXButton buttonOpenProject;
 	
 	@FXML
+    private Label labelNotification;
+	
+	@FXML
     void buttonOpenProjectPressed(ActionEvent event) {
 
     }

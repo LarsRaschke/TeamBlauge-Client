@@ -113,7 +113,7 @@ public class LoginController {
 
 		if (main.user != null) {
 			main.projektliste = new ArrayList<String>();
-			main.showProjectList();;
+			main.showProjectList();
 		} else {
 			infoLabelLogInScreen.setText("Falscher Username!");
 		}
