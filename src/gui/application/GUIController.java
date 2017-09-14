@@ -378,7 +378,7 @@ public class GUIController {
 
 			Registry registry = LocateRegistry.getRegistry(null);
 			RMI_Projektmanager manager = (RMI_Projektmanager) registry.lookup("manager");
-			main.projektliste = manager.ladeProjekte(main.user.getNutzername());
+			main.projektliste = manager.ladeProjekte(main.user);
 
 		} catch (Exception e) {
 			e.printStackTrace();

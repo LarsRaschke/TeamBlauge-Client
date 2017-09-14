@@ -14,7 +14,7 @@ import model.User;
  */
 public interface RMI_Projektmanager extends Remote {
 	
-	public void erstelleProjekt(User u, String projektname, String beschreibung) throws RemoteException;
+	public boolean erstelleProjekt(User u, String projektname, String beschreibung) throws RemoteException;
 
-	public ArrayList<String> ladeProjekte(String nutzername) throws RemoteException;
+	public ArrayList<String> ladeProjekte(User user) throws RemoteException;
 }
