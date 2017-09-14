@@ -119,7 +119,7 @@
             <Font size="1.0" />
          </font>
       </JFXButton>
-      <Label fx:id="labelNotification" layoutX="277.0" prefHeight="50.0" prefWidth="599.0" style="-fx-background-color: #969696;">
+      <Label fx:id="labelNotification" layoutX="277.0" prefHeight="50.0" prefWidth="599.0" style="-fx-background-color: #969696;" textFill="RED">
          <font>
             <Font name="Roboto Light" size="15.0" />
          </font></Label>
