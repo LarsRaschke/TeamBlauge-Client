@@ -149,7 +149,12 @@ public class ProjectListController {
 	 */
 	@FXML
 	void buttonAddProjectPressed(ActionEvent event) {
-
+		buttonSaveNewProject.setVisible(true);
+		textFieldProjectName.editableProperty().set(true);
+		textFieldProjectName.setStyle("-fx-background-color: white;");
+		buttonEditProjectDescription.setVisible(false);
+		textAreaProjectDescription.editableProperty().set(true);
+		textAreaProjectDescription.setStyle("text-area-background: white;");
 	}
 
 	/**
@@ -231,14 +236,29 @@ public class ProjectListController {
 	@FXML
 	void buttonSaveNewProjectPressed(ActionEvent event) {
 		
+		boolean itWorked = false;
+		
 		try {
 
 			Registry registry = LocateRegistry.getRegistry(null);
 			RMI_Projektmanager manager = (RMI_Projektmanager) registry.lookup("manager");
-			manager.erstelleProjekt(main.user, textFieldProjectName.getText(), "");
+			itWorked = manager.erstelleProjekt(main.user, textFieldProjectName.getText(), "");
 
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+		
+		if (itWorked) {
+			buttonSaveNewProject.setVisible(false);
+			textFieldProjectName.editableProperty().set(false);
+			textFieldProjectName.setStyle("-fx-background-color: orange;");
+			buttonEditProjectDescription.setVisible(true);
+			textAreaProjectDescription.editableProperty().set(false);
+			textAreaProjectDescription.setStyle("text-area-background: orange;");
+		}
+		else
+		{
+			labelNotification.setText("Fehler");
 		}
 	}
 
