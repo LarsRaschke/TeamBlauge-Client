@@ -33,7 +33,7 @@ public class ProjectListController {
 	private JFXButton buttonLogOut;
 
 	@FXML
-	private JFXListView<Label> tableProjectList;
+    private JFXListView<Label> tableProjectList;
 
 	@FXML
 	private JFXTextField textFieldProjectName;
@@ -70,14 +70,17 @@ public class ProjectListController {
 
 	@FXML
 	private JFXButton buttonSaveNewProject;
-
+	
 	@FXML
-	private JFXButton buttonOpenProject;
-
+    private JFXButton buttonOpenProject;
+	
 	@FXML
-	void buttonOpenProjectPressed(ActionEvent event) {
+    private Label labelNotification;
+	
+	@FXML
+    void buttonOpenProjectPressed(ActionEvent event) {
 
-	}
+    }
 
 	private Main main;
 
@@ -90,11 +93,21 @@ public class ProjectListController {
 		textAreaProjectDescription.editableProperty().set(false);
 
 		labelUser.setText("    " + main.user.getNachname() + ", " + main.user.getVorname());
-
-		for (String projekt : main.projektliste) {
+		
+		Registry registry;
+		try {
+			registry = LocateRegistry.getRegistry(null);
+			RMI_Projektmanager manager = (RMI_Projektmanager) registry.lookup("manager");
+			main.projektliste = manager.ladeProjekte(main.user.getNutzername());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		for(String projekt : main.projektliste)
+		{
 			tableProjectList.getItems().add(new Label(projekt));
 		}
-
+		
 		((Scene) labelProjectList.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent ke) {
@@ -136,12 +149,7 @@ public class ProjectListController {
 	 */
 	@FXML
 	void buttonAddProjectPressed(ActionEvent event) {
-		buttonSaveNewProject.setVisible(true);
-		textFieldProjectName.editableProperty().set(true);
-		textFieldProjectName.setStyle("-fx-background-color: white;");
-		buttonEditProjectDescription.setVisible(false);
-		textAreaProjectDescription.editableProperty().set(true);
-		textAreaProjectDescription.setStyle("text-area-background: white;");
+
 	}
 
 	/**
@@ -222,30 +230,15 @@ public class ProjectListController {
 	 */
 	@FXML
 	void buttonSaveNewProjectPressed(ActionEvent event) {
-
-		boolean itWorked = false;
-
+		
 		try {
 
 			Registry registry = LocateRegistry.getRegistry(null);
 			RMI_Projektmanager manager = (RMI_Projektmanager) registry.lookup("manager");
-			itWorked = manager.erstelleProjekt(main.user, textFieldProjectName.getText(), "");
+			manager.erstelleProjekt(main.user, textFieldProjectName.getText(), "");
 
 		} catch (Exception e) {
 			e.printStackTrace();
-		}
-
-		if (itWorked) {
-			buttonSaveNewProject.setVisible(false);
-			textFieldProjectName.editableProperty().set(false);
-			textFieldProjectName.setStyle("-fx-background-color: orange;");
-			buttonEditProjectDescription.setVisible(true);
-			textAreaProjectDescription.editableProperty().set(false);
-			textAreaProjectDescription.setStyle("text-area-background: orange;");
-		}
-		else
-		{
-			System.out.println("Fehler");
 		}
 	}
 
