@@ -50,7 +50,7 @@ public class ProjectListController {
 	private JFXButton buttonLogOut;
 
 	@FXML
-	private JFXTreeTableView<?> tableProjectList;
+    private JFXListView<?> tableProjectList;
 
 	@FXML
 	private JFXTextField textFieldProjectName;

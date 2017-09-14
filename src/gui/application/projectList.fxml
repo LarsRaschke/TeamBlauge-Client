@@ -4,7 +4,6 @@
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
@@ -37,7 +36,6 @@
             </JFXButton>
          </children>
       </AnchorPane>
-      <JFXTreeTableView fx:id="tableProjectList" layoutY="100.0" prefHeight="620.0" prefWidth="553.0" />
       <ScrollPane layoutX="593.0" layoutY="100.0" prefHeight="620.0" prefWidth="647.0">
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="780.0" prefWidth="637.0" style="-fx-background-color: #FFA500;">
@@ -76,7 +74,7 @@
                         </ImageView>
                      </graphic>
                   </JFXButton>
-                  <JFXButton fx:id="buttonEditProjectName" contentDisplay="GRAPHIC_ONLY" layoutX="589.0" layoutY="1.0" onAction="#buttonEditProjectNamePressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373" text="SaveProjectName">
+                  <JFXButton fx:id="buttonEditProjectName" contentDisplay="GRAPHIC_ONLY" layoutX="589.0" layoutY="1.0" onAction="#buttonEditProjectNamePressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373" text="SaveProjectName" visible="false">
                      <graphic>
                         <ImageView fx:id="buttonEditProjectNameIcon" fitHeight="25.0" fitWidth="25.0">
                            <image>
@@ -127,5 +125,6 @@
             <Font size="15.0" />
          </font>
       </JFXButton>
+      <JFXListView fx:id="tableProjectList" layoutY="100.0" prefHeight="620.0" prefWidth="553.0" />
    </children>
 </AnchorPane>
