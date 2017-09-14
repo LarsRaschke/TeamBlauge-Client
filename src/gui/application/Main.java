@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -22,7 +23,7 @@ public class Main extends Application {
 	private boolean LDAPConnection = false;
 
 	public User user;
-	public ArrayList<String> projektliste;
+	public ArrayList<String> projektliste = new ArrayList<>();
 
 	@Override
 	public void start(Stage primaryStage) {

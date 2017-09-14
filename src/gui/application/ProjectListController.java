@@ -2,38 +2,21 @@ package gui.application;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTreeTableColumn;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
-import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.TreeTableColumn.CellDataFeatures;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.util.Callback;
-import model.User;
 import model.interfaces.RMI_Projektmanager;
 
 /*
@@ -50,7 +33,7 @@ public class ProjectListController {
 	private JFXButton buttonLogOut;
 
 	@FXML
-    private JFXListView<?> tableProjectList;
+    private JFXListView<Label> tableProjectList;
 
 	@FXML
 	private JFXTextField textFieldProjectName;
@@ -99,6 +82,20 @@ public class ProjectListController {
 		textAreaProjectDescription.editableProperty().set(false);
 
 		labelUser.setText("    " + main.user.getNachname() + ", " + main.user.getVorname());
+		
+		Registry registry;
+		try {
+			registry = LocateRegistry.getRegistry(null);
+			RMI_Projektmanager manager = (RMI_Projektmanager) registry.lookup("manager");
+			main.projektliste = manager.ladeProjekte(main.user.getNutzername());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		for(String projekt : main.projektliste)
+		{
+			tableProjectList.getItems().add(new Label(projekt));
+		}
 		
 		((Scene) labelProjectList.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
