@@ -95,7 +95,7 @@
                </children></AnchorPane>
         </content>
       </ScrollPane>
-      <JFXButton fx:id="buttonAddProject" contentDisplay="GRAPHIC_ONLY" layoutX="501.0" layoutY="50.0" onAction="#buttonAddProjectPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE" text="Button">
+      <JFXButton fx:id="buttonAddProject" contentDisplay="GRAPHIC_ONLY" layoutX="593.0" layoutY="51.0" onAction="#buttonAddProjectPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE" text="Button">
          <graphic>
             <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -120,11 +120,30 @@
          </font>
       </JFXButton>
       <Label layoutX="277.0" prefHeight="50.0" prefWidth="599.0" style="-fx-background-color: #969696;" />
-      <JFXButton fx:id="buttonSaveNewProject" buttonType="RAISED" layoutX="1095.0" layoutY="54.0" onAction="#buttonSaveNewProjectPressed" prefHeight="43.0" prefWidth="131.0" text="Projekt anlegen" textAlignment="CENTER">
+      <JFXButton fx:id="buttonSaveNewProject" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="1166.0" layoutY="50.0" onAction="#buttonSaveNewProjectPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE" text="Projekt anlegen" textAlignment="CENTER" visible="false">
          <font>
             <Font size="15.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/Icons/save.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </JFXButton>
       <JFXListView fx:id="tableProjectList" layoutY="100.0" prefHeight="620.0" prefWidth="553.0" />
+      <JFXButton fx:id="buttonOpenProject" contentDisplay="GRAPHIC_ONLY" layoutX="503.0" layoutY="51.0" onAction="#buttonOpenProjectPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE" text="Button">
+         <graphic>
+            <ImageView fitHeight="50.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/Icons/open_file-512.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <font>
+            <Font size="1.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>

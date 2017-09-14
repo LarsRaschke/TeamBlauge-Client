@@ -70,6 +70,14 @@ public class ProjectListController {
 
 	@FXML
 	private JFXButton buttonSaveNewProject;
+	
+	@FXML
+    private JFXButton buttonOpenProject;
+	
+	@FXML
+    void buttonOpenProjectPressed(ActionEvent event) {
+
+    }
 
 	private Main main;
 
