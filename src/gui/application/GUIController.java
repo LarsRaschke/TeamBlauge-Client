@@ -187,7 +187,7 @@ public class GUIController {
 
 	private GuiTask activeLabel = null;
 
-	// private ArrayList<String[]> labelList;
+	private ArrayList<String[]> labelList;
 
 	private ArrayList<Label> taskList;
 
@@ -796,7 +796,7 @@ public class GUIController {
 	 * MouseEvent-Handle wird initialisiert und das erstellte Label wird zum Aktiven
 	 * Label. Die Buttons zum verschieben der Task werden sichtbar
 	 */
-	private void createTask(String name) {
+	private void createTask(String name, VBox parentPane) {
 		taskCounter++;
 		main.log("Add Task", "Button pressed");
 
@@ -810,15 +810,14 @@ public class GUIController {
 		lbl.setStyle(
 				"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 
-		mansoryPaneToDo.getChildren().add(lbl);
-
+		
 		// Erzeugt Eventhandler für das erzeugte Label
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			/**
-			 * Eventhandler für das Label.
-			 * Wenn kein Label ausgewählt ist wird das ausgeählte Label aktiv. Ist ein Label
-			 * und ein andere Label wird geklickt, wird das geklickte Label aktiv. Wird das
-			 * ausgewählte Label angeklickt, ist danach kein Label aktiv.
+			 * Eventhandler für das Label. Wenn kein Label ausgewählt ist wird das
+			 * ausgeählte Label aktiv. Ist ein Label und ein andere Label wird geklickt,
+			 * wird das geklickte Label aktiv. Wird das ausgewählte Label angeklickt, ist
+			 * danach kein Label aktiv.
 			 * 
 			 */
 			@Override
@@ -842,6 +841,7 @@ public class GUIController {
 			}
 		});
 		taskList.add(lbl);
+		updateTaskPane();
 	}
 
 	/**
@@ -865,7 +865,7 @@ public class GUIController {
 		lbl.setStyle("-fx-background-color:" + lbl.getColorString()
 				+ "; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 
-		mansoryPaneToDo.getChildren().add(lbl);
+		//mansoryPaneToDo.getChildren().add(lbl);
 
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -898,10 +898,12 @@ public class GUIController {
 					buttonEditDescription.setVisible(false);
 
 				}
-				showTaskInfo();
 			}
 		});
 		showTaskInfo();
+		
+		taskList.add(lbl);
+		updateTaskPane();
 	}
 
 	public void showTaskInfo() {
@@ -923,10 +925,12 @@ public class GUIController {
 			textAreaDescription.setText(" ");
 			labelActualStatus.setText(" ");
 		}
+
 	}
 
 	/**
-	 * Ruft die Informationen eines Task ï¿½ber seine ID auf und schreibt sie
+	 * Ruft die Informationen eines Task ï¿½ber seine ID auf und schreibt sie.
+	 * Bisher nicht genutzt. Soll zur Anwendug mit dem Server genutzt werden.
 	 * 
 	 * @param id
 	 */
@@ -944,5 +948,28 @@ public class GUIController {
 
 	void guilog(int text) {
 		labelBenachrichtigung.setText("" + text);
+	}
+
+	/**
+	 * Läd alle Tasks aus der ArrayList "taskList" in de richten Spalten des
+	 * Kanban-Board.
+	 */
+	void updateTaskPane() {
+		for (Label lbl : taskList) {
+			if (lbl.getParent() == mansoryPaneToDo) {
+				mansoryPaneToDo.getChildren().add(lbl);
+			} else if (lbl.getParent() == mansoryPaneDoing) {
+				mansoryPaneDoing.getChildren().add(lbl);
+			} else if (lbl.getParent() == mansoryPaneFinished) {
+				mansoryPaneFinished.getChildren().add(lbl);
+			}
+
+		}
+	}
+	
+	void parseTasksToLabel() {
+		for(String[] tskArr : labelList) {
+			
+		}
 	}
 }

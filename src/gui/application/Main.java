@@ -50,6 +50,7 @@ public class Main extends Application {
 			Scene scene = new Scene(root);
 			primaryStage.setScene(scene);
 			primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("BLAUGE_Labs_Logo_small.png")));
+			primaryStage.setResizable(false);
 			primaryStage.show();
 
 		} catch (Exception e) {
