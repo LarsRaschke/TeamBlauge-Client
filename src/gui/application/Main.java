@@ -24,6 +24,7 @@ public class Main extends Application {
 
 	public User user;
 	public ArrayList<String> projektliste = new ArrayList<>();
+	public String aktuellesProjekt;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -65,7 +66,7 @@ public class Main extends Application {
 			GUIController controller = loader.getController();
 			controller.setMainApp(this);
 			root.setCenter(GUI);
-			controller.initnshit();
+			controller.init();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -80,7 +81,7 @@ public class Main extends Application {
 			LoginController controller = loader.getController();
 			controller.setMainApp(this);
 			root.setCenter(GUI);
-			controller.initnshit();
+			controller.init();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

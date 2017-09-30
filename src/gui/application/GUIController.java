@@ -34,7 +34,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import model.interfaces.RMI_Projektmanager;
+import model.interfaces.RMI_Projekt;
 
 public class GUIController {
 
@@ -198,21 +198,24 @@ public class GUIController {
 	private static int usedScrollBarHeight_Finished;
 
 	private static int taskCounter;
-	//
-	// private String usernameVN = "";
-	// private String usernameNV = "";
 
 	private Color selectedColor = new Color(0, 0, 1, 0);
 
+	/**
+	 * Konstruktor.
+	 */
 	public GUIController() {
+		
 	}
 
 	/**
-	 * Quasi erweiterter Konstruktor, der in der Main aufgerufen wird, da bspw
-	 * keylistener nicht im Konstruktor angelegt werden koeï¿½nnen
+	 * Init-Methode:
+	 * Quasi erweiterter Konstruktor, der in der Main aufgerufen wird, da bspw.
+	 * KeyListener nicht im Konstruktor angelegt werden können.
 	 */
-	public void initnshit() {
-		// hier kÃ¶nnen keylistener und sowas initialisiert werden
+	public void init() {
+		
+		// Initialisierung von KeyListenern etc.
 		textFieldTaskname.editableProperty().set(false);
 		textAreaDescription.editableProperty().set(false);
 
@@ -222,7 +225,7 @@ public class GUIController {
 		buttonEditTaskName.setVisible(false);
 		buttonEditDescription.setVisible(false);
 
-		// Kanban columns Init
+		// Kanban-Columns Init
 		mansoryPaneToDo.setAlignment(Pos.TOP_CENTER);
 		mansoryPaneToDo.setSpacing(10);
 		mansoryPaneDoing.setAlignment(Pos.TOP_CENTER);
@@ -230,7 +233,7 @@ public class GUIController {
 		mansoryPaneFinished.setAlignment(Pos.TOP_CENTER);
 		mansoryPaneFinished.setSpacing(10);
 
-		labelUser.setText("    " + main.user.getNachname() + ", " + main.user.getVorname());
+		// EventHandler Init
 
 		((Scene) labelProjectname.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
@@ -285,18 +288,38 @@ public class GUIController {
 				}
 			}
 		});
+		
+		// Funktionalität - Laden & Setzen der Informationen
+		
+		labelUser.setText("    " + main.user.getNachname() + ", " + main.user.getVorname());
+		labelProjectname.setText(main.aktuellesProjekt);
+		
+		Registry registry;
+		try {
+			registry = LocateRegistry.getRegistry(null);
+			RMI_Projekt projekt = (RMI_Projekt) registry.lookup(main.aktuellesProjekt);
+			labelProjectinformation.setText(projekt.getBeschreibung());
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
 
 	}
 
+	/**
+	 * Setter-Methode.
+	 * 
+	 * @param main - Die Main-App die gesetzt werden soll.
+	 */
 	public void setMainApp(Main main) {
 		this.main = main;
 	}
 
 	/**
-	 * Wenn eine Farbe ausgewählt wurde und ein Label aktiv ist wird die
-	 * Hintergrundfarbe des Labels dementspreched geändert
+	 * Wenn eine Farbe ausgewählt wurde und ein Label aktiv ist,
+	 * wird die Hintergrundfarbe des Labels dementspreched geändert.
 	 * 
-	 * @param event
+	 * @param event - Das Action-Event.
 	 */
 	@FXML
 	void ColorPickerSelectionChanged(ActionEvent event) {
@@ -307,9 +330,7 @@ public class GUIController {
 		if (activeLabel != null) {
 			activeLabel.setBackground(new Background(
 					new BackgroundFill(Paint.valueOf(selectedColor.toString()), CornerRadii.EMPTY, Insets.EMPTY)));
-
 		}
-
 	}
 
 	/**
@@ -335,7 +356,7 @@ public class GUIController {
 	/**
 	 * Logout des Users und Weiterleitung an das Login-Fenster
 	 * 
-	 * @param event
+	 * @param event - Das Action-Event.
 	 */
 	@FXML
 	void buttonLogOutPressed(ActionEvent event) {
@@ -374,15 +395,7 @@ public class GUIController {
 	 */
 	@FXML
 	void buttonProjectselectionPressed(ActionEvent event) {
-		try {
-
-			Registry registry = LocateRegistry.getRegistry(null);
-			RMI_Projektmanager manager = (RMI_Projektmanager) registry.lookup("manager");
-			main.projektliste = manager.ladeProjekte(main.user);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 		main.showProjectList();
 	}
 

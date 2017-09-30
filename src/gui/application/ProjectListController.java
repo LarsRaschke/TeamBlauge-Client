@@ -76,11 +76,6 @@ public class ProjectListController {
 	
 	@FXML
     private Label labelNotification;
-	
-	@FXML
-    void buttonOpenProjectPressed(ActionEvent event) {
-
-    }
 
 	private Main main;
 
@@ -116,6 +111,7 @@ public class ProjectListController {
 				}
 			}
 		});
+		
 	}
 
 	public void setMainApp(Main main) {
@@ -242,24 +238,36 @@ public class ProjectListController {
 
 			Registry registry = LocateRegistry.getRegistry(null);
 			RMI_Projektmanager manager = (RMI_Projektmanager) registry.lookup("manager");
-			itWorked = manager.erstelleProjekt(main.user, textFieldProjectName.getText(), "");
+			itWorked = manager.erstelleProjekt(main.user, textFieldProjectName.getText(), textAreaProjectDescription.getText());
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		if (itWorked) {
+			
+			main.projektliste.add(textFieldProjectName.getText());
+			tableProjectList.getItems().add(new Label(textFieldProjectName.getText()));
+			
 			buttonSaveNewProject.setVisible(false);
 			textFieldProjectName.editableProperty().set(false);
+			textFieldProjectName.clear();
 			textFieldProjectName.setStyle("-fx-background-color: orange;");
 			buttonEditProjectDescription.setVisible(true);
 			textAreaProjectDescription.editableProperty().set(false);
+			textAreaProjectDescription.clear();
 			textAreaProjectDescription.setStyle("text-area-background: orange;");
 		}
-		else
-		{
-			labelNotification.setText("Fehler");
+		else {
+			
+			labelNotification.setText("Fehler beim Anlegen des Projekts!");
 		}
 	}
 
+	@FXML
+    void buttonOpenProjectPressed(ActionEvent event) {
+		
+		main.aktuellesProjekt = tableProjectList.getSelectionModel().getSelectedItem().getText();
+		main.showGUI();
+    }
 }

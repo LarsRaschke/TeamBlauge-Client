@@ -57,7 +57,7 @@ public class LoginController {
 	/**
 	 * Initialisierung des LoginScreen
 	 */
-	public void initnshit() {
+	public void init() {
 
 		this.textFieldLogInScreenPassword.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
