@@ -272,7 +272,7 @@
             </ContextMenu>
          </contextMenu>
       </Label>
-      <JFXButton fx:id="buttonNewTask" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="14.0" layoutY="50.0" onAction="#buttonNewTaskPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE">
+      <JFXButton fx:id="buttonNewTask" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="876.0" layoutY="50.0" onAction="#buttonNewTaskPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE">
          <graphic>
             <ImageView fitHeight="40.0" fitWidth="40.0">
                <image>
@@ -317,5 +317,17 @@
             <Font name="Roboto Light" size="15.0" />
          </font>
       </Label>
+      <JFXButton fx:id="buttonSaveNewTask" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="1166.0" layoutY="50.0" onAction="#buttonSaveNewTaskPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE" text="Task anlegen" textAlignment="CENTER" visible="false">
+         <font>
+            <Font size="15.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../resources/Icons/save.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </JFXButton>
    </children>
 </AnchorPane>

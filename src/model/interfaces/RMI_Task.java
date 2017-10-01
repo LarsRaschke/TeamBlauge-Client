@@ -17,6 +17,8 @@ public interface RMI_Task extends Remote {
 
 	public String getName() throws RemoteException;
 	
+	public String getBeschreibung() throws RemoteException;
+	
 	public String getKommentar() throws RemoteException;
 	
 	public int getFarbe() throws RemoteException;
@@ -26,6 +28,8 @@ public interface RMI_Task extends Remote {
 	public ZonedDateTime getLetzteAenderung() throws RemoteException;
 	
 	public ArrayList<String> getTags() throws RemoteException;
+	
+	public void ändereBeschreibung(String beschreibung, User user) throws RemoteException;
 	
 	public void fügeKommentarHinzu(String kommentar, User user) throws RemoteException;
 	

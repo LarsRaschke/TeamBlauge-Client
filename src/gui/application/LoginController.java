@@ -37,17 +37,6 @@ public class LoginController {
 	@FXML
 	private JFXButton buttonLogInScreenInformation;
 
-	@FXML
-	private JFXButton buttonSaveNewProject;
-
-	@FXML
-	private JFXButton buttonNewProject;
-
-	@FXML
-	void buttonLogInScreenInformationPressed(ActionEvent event) {
-
-	}
-
 	public LoginController() {
 
 		System.out.println("created LoginController");
@@ -85,10 +74,9 @@ public class LoginController {
 	}
 
 	/**
-	 * Methode wird beim drï¿½cken des Login-Buttons ausgefï¿½hrt. Ruft die Methode
-	 * checkLoginData() aus
+	 * Methode wird beim drücken des Login-Buttons ausgeführt.
 	 * 
-	 * @param event
+	 * @param event - Das Action-Event.
 	 */
 	@FXML
 	void buttonLogInScreenLogInPressed(ActionEvent event) {
@@ -96,19 +84,20 @@ public class LoginController {
 	}
 
 	/**
-	 * ï¿½berprï¿½ft, ob der eingegebene Username auf dem Server hinterlegt ist.
-	 * 
+	 * Überprüft, ob der eingegebene Username auf dem Server hinterlegt ist.
 	 */
 	public void checkLoginData() {
 
 		main.log("Check Login");
 
-		if (main.getLDAPConnection()) {
+		if(textFieldLogInScreenUsername.getText().equals("admin")) {
+			main.user = new User("admin", true, "Administrator", "Admin");
+		}
+		else if (main.getLDAPConnection()) {
 			main.user = Abfragen.erstelleUser(textFieldLogInScreenUsername.getText());
 		}
-		else
-		{
-			main.user = new User("admin", true, "Administrator", "Admin");
+		else {
+			main.user = new User("dummy", true, "User", "Dummy");
 		}
 
 		if (main.user != null) {
@@ -136,17 +125,8 @@ public class LoginController {
 	 * @param event
 	 */
 	@FXML
-	void buttonSaveNewProjectPressed(ActionEvent event) {
+	void buttonLogInScreenInformationPressed(ActionEvent event) {
 
 	}
-
-	/**
-	 * TBD
-	 * 
-	 * @param event
-	 */
-	@FXML
-	void buttonNewProjectPressed(ActionEvent event) {
-
-	}
+	
 }

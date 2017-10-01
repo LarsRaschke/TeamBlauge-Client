@@ -83,9 +83,29 @@ public class ProjectListController {
 
 	}
 
+	/**
+	 * Init-Methode:
+	 * Quasi erweiterter Konstruktor, der in der Main aufgerufen wird, da bspw.
+	 * KeyListener nicht im Konstruktor angelegt werden können.
+	 */
 	public void init() {
+		
+		// Initialisierung von KeyListenern etc.
 		textFieldProjectName.editableProperty().set(false);
 		textAreaProjectDescription.editableProperty().set(false);
+		
+		// EventHandler Init
+		
+		((Scene) labelProjectList.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent ke) {
+				if (ke.getCode().equals(KeyCode.ESCAPE)) {
+					main.showGUI();
+				}
+			}
+		});
+		
+		// Funktionalität - Laden & Setzen der Informationen
 
 		labelUser.setText("    " + main.user.getNachname() + ", " + main.user.getVorname());
 		
@@ -103,25 +123,21 @@ public class ProjectListController {
 			tableProjectList.getItems().add(new Label(projekt));
 		}
 		
-		((Scene) labelProjectList.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent ke) {
-				if (ke.getCode().equals(KeyCode.ESCAPE)) {
-					main.showGUI();
-				}
-			}
-		});
-		
 	}
 
+	/**
+	 * Setter-Methode.
+	 * 
+	 * @param main - Die Main-App, die gesetzt wird.
+	 */
 	public void setMainApp(Main main) {
 		this.main = main;
 	}
 
 	/**
-	 * Logt den Benutzer aus Öffnet den LoginScreen
+	 * Loggt den Benutzer aus und öffnet den LoginScreen.
 	 * 
-	 * @param event
+	 * @param event - Das Action Event.
 	 */
 	@FXML
 	void buttonLogOutPressed(ActionEvent event) {
@@ -129,9 +145,9 @@ public class ProjectListController {
 	}
 
 	/**
-	 * Öffnet das Hauptfenster
+	 * Öffnet das Hauptfenster.
 	 * 
-	 * @param event
+	 * @param event - Das Action-Event.
 	 */
 	@FXML
 	void buttonBackPressed(ActionEvent event) {
@@ -139,95 +155,31 @@ public class ProjectListController {
 	}
 
 	/**
-	 * TBD
+	 * Aktiviert die Textfelder, die zum Erstellen eines neuen Projektes ausgefüllt werden müssen und
+	 * setzt den Button zum Speichern des Projekts sichtbar.
 	 * 
-	 * @param event
+	 * @param event - Das Action-Event.
 	 */
 	@FXML
 	void buttonAddProjectPressed(ActionEvent event) {
+		
 		buttonSaveNewProject.setVisible(true);
+		textFieldProjectName.clear();
 		textFieldProjectName.editableProperty().set(true);
 		textFieldProjectName.setStyle("-fx-background-color: white;");
 		buttonEditProjectDescription.setVisible(false);
 		textAreaProjectDescription.editableProperty().set(true);
+		textAreaProjectDescription.clear();
 		textAreaProjectDescription.setStyle("text-area-background: white;");
+		buttonAddMember.setVisible(false);
+		listProjectMember.getItems().clear();
+		listProjectMember.setStyle("-fx-background-color: orange;");
 	}
-
+	
 	/**
-	 * Enabled das TextFieldProjectName
+	 * Speichert das neue Projekt auf dem Server.
 	 * 
-	 * @param event
-	 */
-	@FXML
-	void buttonEditProjectNamePressed(ActionEvent event) {
-		if (textFieldProjectName.editableProperty().get()) {
-			textFieldProjectName.editableProperty().set(false);
-			saveEnteredProjectName(textFieldProjectName.getText());
-			this.buttonEditProjectNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
-			textFieldProjectName.setStyle("-fx-background-color: orange;");
-
-		} else {
-			this.textFieldProjectName.setOnKeyPressed(new EventHandler<KeyEvent>() {
-				@Override
-				public void handle(KeyEvent ke) {
-					if (ke.getCode().equals(KeyCode.ENTER)) {
-						saveEnteredProjectName(textFieldProjectName.getText());
-						textFieldProjectName.editableProperty().set(false);
-						buttonEditProjectNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
-						textFieldProjectName.setStyle("-fx-background-color: orange;");
-					}
-				}
-			});
-			textFieldProjectName.editableProperty().set(true);
-			this.buttonEditProjectNameIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
-			textFieldProjectName.setStyle("-fx-background-color: white;");
-		}
-	}
-
-	/**
-	 * TBD
-	 * 
-	 * @param name
-	 */
-	void saveEnteredProjectName(String name) {
-
-	}
-
-	/**
-	 * Enabled die TextAreaProjectDescription
-	 * 
-	 * @param event
-	 */
-	@FXML
-	void buttonEditProjectDescriptionPressed(ActionEvent event) {
-		if (textAreaProjectDescription.editableProperty().get()) {
-			textAreaProjectDescription.editableProperty().set(false);
-			saveEnteredProjectDescription(textAreaProjectDescription.getText());
-			this.buttonEditProjectDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
-			textAreaProjectDescription.setStyle("text-area-background: orange;");
-
-		} else {
-
-			textAreaProjectDescription.editableProperty().set(true);
-			this.buttonEditProjectDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
-			textAreaProjectDescription.setStyle("text-area-background: white;");
-
-		}
-	}
-
-	/**
-	 * TBD
-	 * 
-	 * @param name
-	 */
-	void saveEnteredProjectDescription(String name) {
-
-	}
-
-	/**
-	 * TBD
-	 * 
-	 * @param event
+	 * @param event - Das Action-Event.
 	 */
 	@FXML
 	void buttonSaveNewProjectPressed(ActionEvent event) {
@@ -257,17 +209,100 @@ public class ProjectListController {
 			textAreaProjectDescription.editableProperty().set(false);
 			textAreaProjectDescription.clear();
 			textAreaProjectDescription.setStyle("text-area-background: orange;");
+			buttonAddMember.setVisible(true);
+			listProjectMember.setStyle("-fx-background-color: white;");
 		}
 		else {
 			
-			labelNotification.setText("Fehler beim Anlegen des Projekts!");
+			main.log("Fehler beim Anlegen des Projekts!");
 		}
 	}
-
+	
+	/**
+	 * Öffnet das selektierte Projekt aus der Projektliste im MainFrame.
+	 * 
+	 * @param event - Das Action-Event.
+	 */
 	@FXML
     void buttonOpenProjectPressed(ActionEvent event) {
 		
 		main.aktuellesProjekt = tableProjectList.getSelectionModel().getSelectedItem().getText();
 		main.showGUI();
     }
+	
+	/**
+	 * Aktiviert das Textfeld für die Projekt-Beschreibung, sodass diese verändert werden kann.
+	 * Der Button wechselt zwischen "editieren" und "speichern".
+	 * 
+	 * @param event - Das Action-Event.
+	 */
+	@FXML
+	void buttonEditProjectDescriptionPressed(ActionEvent event) {
+		
+		if (textAreaProjectDescription.editableProperty().get()) {
+			
+			textAreaProjectDescription.editableProperty().set(false);
+			saveEnteredProjectDescription(textAreaProjectDescription.getText());
+			this.buttonEditProjectDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
+			textAreaProjectDescription.setStyle("text-area-background: orange;");
+		} else {
+
+			textAreaProjectDescription.editableProperty().set(true);
+			this.buttonEditProjectDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
+			textAreaProjectDescription.setStyle("text-area-background: white;");
+		}
+	}
+
+	/**
+	 * Speichert die geänderte Projektbeschreibung.
+	 * 
+	 * @param name - Die neue Projektbeschreibung.
+	 */
+	void saveEnteredProjectDescription(String name) {
+
+	}
+
+	/**
+	 * Aktiviert das Textfeld für den Projekt-Name, sodass diese verändert werden kann.
+	 * Diese Methode wird momentan nicht verwendet, da der Projektname nicht veränderbar ist (Button ist nicht sichtbar).
+	 * Der Button wechselt zwischen "editieren" und "speichern".
+	 * 
+	 * @param event - Das Action Event.
+	 */
+	@FXML
+	void buttonEditProjectNamePressed(ActionEvent event) {
+		
+		if (textFieldProjectName.editableProperty().get()) {
+			textFieldProjectName.editableProperty().set(false);
+			saveEnteredProjectName(textFieldProjectName.getText());
+			this.buttonEditProjectNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
+			textFieldProjectName.setStyle("-fx-background-color: orange;");
+
+		} else {
+			this.textFieldProjectName.setOnKeyPressed(new EventHandler<KeyEvent>() {
+				@Override
+				public void handle(KeyEvent ke) {
+					if (ke.getCode().equals(KeyCode.ENTER)) {
+						saveEnteredProjectName(textFieldProjectName.getText());
+						textFieldProjectName.editableProperty().set(false);
+						buttonEditProjectNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
+						textFieldProjectName.setStyle("-fx-background-color: orange;");
+					}
+				}
+			});
+			textFieldProjectName.editableProperty().set(true);
+			this.buttonEditProjectNameIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
+			textFieldProjectName.setStyle("-fx-background-color: white;");
+		}
+	}
+
+	/**
+	 * Speichert den geänderten Projektnamen.
+	 * 
+	 * @param name - Der neue Projektname.
+	 */
+	void saveEnteredProjectName(String name) {
+		// nicht implementiert, da der Projektname momentan nicht veränderbar ist.
+	}
+	
 }

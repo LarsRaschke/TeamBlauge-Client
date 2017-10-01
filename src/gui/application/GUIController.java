@@ -3,6 +3,7 @@ package gui.application;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXColorPicker;
@@ -35,6 +36,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import model.interfaces.RMI_Projekt;
+import model.interfaces.RMI_Projektmanager;
+import model.interfaces.RMI_Task;
 
 public class GUIController {
 
@@ -139,6 +142,9 @@ public class GUIController {
 
 	@FXML
 	private JFXButton buttonNewTask;
+	
+	@FXML
+	private JFXButton buttonSaveNewTask;
 
 	@FXML
 	private Label labelToDo;
@@ -188,14 +194,15 @@ public class GUIController {
 	private JFXColorPicker colorPicker; // https://github.com/jfoenixadmin/JFoenix/issues/408
 
 	private Label activeLabel = null;
+	private List<String[]> taskList = new ArrayList<>();
 
-	// private ArrayList<String[]> labelList;
-
-	private ArrayList<Label> taskList = new ArrayList<Label>();
-
-	private static int usedScrollBarHeight_ToDo;
-	private static int usedScrollBarHeight_Doing;
-	private static int usedScrollBarHeight_Finished;
+	public String STATUS_TODO = "To Do";
+	public String STATUS_DOING = "Doing";
+	public String STATUS_FINISHED = "Finished";
+	
+	private int usedScrollBarHeight_ToDo;
+	private int usedScrollBarHeight_Doing;
+	private int usedScrollBarHeight_Finished;
 
 	private static int taskCounter;
 
@@ -224,8 +231,13 @@ public class GUIController {
 		buttonProceed.setVisible(false);
 		buttonEditTaskName.setVisible(false);
 		buttonEditDescription.setVisible(false);
+		buttonAddTag.setVisible(false);
+		buttonAddComment.setVisible(false);
 
 		// Kanban-Columns Init
+		labelToDo.setText(STATUS_TODO);
+		labelDoing.setText(STATUS_DOING);
+		labelFinished.setText(STATUS_FINISHED);
 		mansoryPaneToDo.setAlignment(Pos.TOP_CENTER);
 		mansoryPaneToDo.setSpacing(10);
 		mansoryPaneDoing.setAlignment(Pos.TOP_CENTER);
@@ -299,11 +311,39 @@ public class GUIController {
 			registry = LocateRegistry.getRegistry(null);
 			RMI_Projekt projekt = (RMI_Projekt) registry.lookup(main.aktuellesProjekt);
 			labelProjectinformation.setText(projekt.getBeschreibung());
+			taskList = projekt.taskListe();
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
+		
+		for(String[] task : taskList)
+		{
+			Label lbl = new Label(task[0]);
+			lbl.setPrefSize(200, 75);
+			lbl.setMinSize(200, 75);
+			lbl.setAlignment(Pos.CENTER);
+			lbl.setStyle("-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
 
+			if(task[1].equals(STATUS_TODO))
+			{
+				mansoryPaneToDo.getChildren().add(lbl);
+				usedScrollBarHeight_ToDo = usedScrollBarHeight_ToDo + 90;
+				checkScrollBarSpace();
+			}
+			else if(task[1].equals(STATUS_DOING))
+			{
+				mansoryPaneDoing.getChildren().add(lbl);
+				usedScrollBarHeight_Doing = usedScrollBarHeight_Doing + 90;
+				checkScrollBarSpace();
+			}
+			else if(task[1].equals(STATUS_FINISHED))
+			{
+				mansoryPaneFinished.getChildren().add(lbl);
+				usedScrollBarHeight_Finished = usedScrollBarHeight_Finished + 90;
+				checkScrollBarSpace();
+			}
+		}
 	}
 
 	/**
@@ -313,6 +353,315 @@ public class GUIController {
 	 */
 	public void setMainApp(Main main) {
 		this.main = main;
+	}
+	
+	/**
+	 * Logout des Users und Weiterleitung an das Login-Fenster.
+	 * 
+	 * @param event - Das Action-Event.
+	 */
+	@FXML
+	void buttonLogOutPressed(ActionEvent event) {
+		main.showLogin();
+	}
+	
+	/**
+	 * Öffnet das Fenster mit der Projektübersicht.
+	 * 
+	 * @param event - Das Action-Event.
+	 */
+	@FXML
+	void buttonProjectselectionPressed(ActionEvent event) {
+		
+		main.showProjectList();
+	}
+	
+	/**
+	 * Aktiviert die Textfelder, die zum Erstellen eines neuen Tasks ausgefüllt werden müssen und
+	 * setzt den Button zum Speichern des Tasks sichtbar.
+	 * 
+	 * @param event - Das Action-Event.
+	 */
+	@FXML
+	void buttonNewTaskPressed(ActionEvent event) {
+		
+		buttonSaveNewTask.setVisible(true);
+		textFieldTaskname.clear();
+		textFieldTaskname.editableProperty().set(true);
+		textFieldTaskname.setStyle("-fx-background-color: white;");
+		buttonEditDescription.setVisible(false);
+		textAreaDescription.clear();
+		textAreaDescription.editableProperty().set(true);
+		textAreaDescription.setStyle("text-area-background: white;");
+		buttonAddComment.setVisible(false);
+		textFieldComments.clear();
+		buttonAddTag.setVisible(false);
+		textFieldTags.clear();
+		labelActualAuthor.setText("");
+		labelActualStatus.setText("");
+	}
+
+	/**
+	 * Speichert den neuen Task im Projekt auf dem Server.
+	 * 
+	 * @param event - Das Action-Event.
+	 */
+	@FXML
+	void buttonSaveNewTaskPressed(ActionEvent event) {
+		
+		boolean itWorked = false;
+		
+		try {
+
+			Registry registry = LocateRegistry.getRegistry(null);
+			RMI_Projekt projekt = (RMI_Projekt) registry.lookup(main.aktuellesProjekt);
+			itWorked = projekt.taskHinzufügen(textFieldTaskname.getText(), textAreaDescription.getText(), main.user);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (itWorked) {
+			
+			createTask(textFieldTaskname.getText());
+			usedScrollBarHeight_ToDo = usedScrollBarHeight_ToDo + 90;
+			checkScrollBarSpace();
+			
+			buttonSaveNewTask.setVisible(false);
+			textFieldTaskname.editableProperty().set(false);
+			textFieldTaskname.clear();
+			textFieldTaskname.setStyle("-fx-background-color: orange;");
+			textAreaDescription.editableProperty().set(false);
+			textAreaDescription.clear();
+			textAreaDescription.setStyle("text-area-background: orange;");
+			
+		}
+		else {
+			
+			labelBenachrichtigung.setText("Fehler beim Anlegen des Tasks!");
+		}
+	}
+	
+	/**
+	 * Methode erstellt einen neuen Task und fügt ihn am ToDo-Pane an.
+	 * Ein MouseEvent-Handler wird initialisiert und das erstellte Label wird zum aktiven Label.
+	 * Die Buttons zum verschieben der Task werden sichtbar.
+	 * 
+	 * @param taskname - Der Name des Tasks.
+	 */
+	private void createTask(String taskname) {
+		
+		taskCounter++;
+		
+		main.log("Add Task", "Button pressed");
+
+		// Neues Label wird erzeugt und konfiguriert
+		Label lbl = new Label(taskname);
+		lbl.setPrefSize(200, 75);
+		lbl.setMinSize(200, 75);
+		lbl.setAlignment(Pos.CENTER);
+		lbl.setStyle("-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+
+		mansoryPaneToDo.getChildren().add(lbl);
+		taskList.add(new String[] {lbl.getText(), STATUS_TODO});
+
+		// Erzeugt Eventhandler für das erzeugte Label
+		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			
+			/**
+			 * Eventhandler für das Label. 
+			 * Wenn kein Label ausgewählt ist wird das ausgewählte Label aktiv.
+			 * Ist ein Label und ein anderes Label wird angeklickt, wird das angeklickte Label aktiv.
+			 * Wird das ausgewählte Label angeklickt, ist danach kein Label aktiv.
+			 */
+			@Override
+			public void handle(MouseEvent e) {
+
+				if (activeLabel != null) {
+					activeLabel.setStyle("-fx-background-color: white"
+							+ "; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+				}
+
+				if (activeLabel != lbl) {
+					buttonReturn.setVisible(true);
+					buttonProceed.setVisible(true);
+					buttonEditDescription.setVisible(true);
+					buttonAddComment.setVisible(true);
+					buttonAddTag.setVisible(true);
+					activeLabel = lbl;
+					main.log(lbl.getId());
+					lbl.setStyle("-fx-background-color: white"
+							+ "; -fx-border-width: 2; -fx-border-color: orange; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+
+				}
+				else if (activeLabel == lbl) {
+					activeLabel = null;
+					lbl.setStyle(" -fx-background-color: white"
+							+ "; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
+					buttonProceed.setVisible(false);
+					buttonReturn.setVisible(false);
+					buttonEditDescription.setVisible(false);
+					buttonAddComment.setVisible(false);
+					buttonAddTag.setVisible(false);
+				}
+				
+				showTaskInfo();
+			}
+		});
+	}
+	
+	/**
+	 * Zeigt die Informationen des aktiven Tasks an.
+	 */
+	public void showTaskInfo() {
+		
+		if (activeLabel != null) {
+			
+			try {
+
+				Registry registry = LocateRegistry.getRegistry(null);
+				RMI_Task task = (RMI_Task) registry.lookup(activeLabel.getText());
+				
+				textFieldTaskname.setText(activeLabel.getText());
+				labelActualAuthor.setText(task.getLetzterNutzer().getNachname() + ", " + task.getLetzterNutzer().getVorname());
+				textAreaDescription.setText(task.getBeschreibung());
+				if (activeLabel.getParent() == mansoryPaneToDo) {
+					labelActualStatus.setText(STATUS_TODO);
+				} else if (activeLabel.getParent() == mansoryPaneDoing) {
+					labelActualStatus.setText(STATUS_DOING);
+				} else if (activeLabel.getParent() == mansoryPaneFinished) {
+					labelActualStatus.setText(STATUS_FINISHED);
+				}
+				textFieldComments.setText(task.getKommentar());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else {
+			textFieldTaskname.clear();
+			labelActualAuthor.setText("");
+			textAreaDescription.clear();
+			labelActualStatus.setText("");
+		}
+	}
+	
+	/**
+	 * Überprüft, ob noch genug Platz in den Spalten ist. 
+	 * Sollte nicht genug Platz sein, wird die Größe der Panes angepasst.
+	 */
+	public void checkScrollBarSpace() {
+		
+		if (mansoryPaneToDo.getPrefHeight() <= usedScrollBarHeight_ToDo) {
+
+			mansoryPaneDoing.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+		}
+		if (mansoryPaneDoing.getPrefHeight() <= usedScrollBarHeight_Doing) {
+
+			mansoryPaneDoing.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+		}
+		if (mansoryPaneToDo.getPrefHeight() <= usedScrollBarHeight_Finished) {
+
+			mansoryPaneFinished.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
+		}
+	}
+	
+	/**
+	 * Je nach Position des aktive Labels befindet wir es nach "rechts" bzw. in Prozessrichtung verschoben.
+	 * Passt die benötigte Höhe der Scrollbar an.
+	 * 
+	 * @param event - Das Action-Event
+	 */
+	@FXML
+	void buttonProceedPressed(ActionEvent event) {
+
+		boolean itWorked = false;
+		
+		try {
+
+			Registry registry = LocateRegistry.getRegistry(null);
+			RMI_Task task = (RMI_Task) registry.lookup(activeLabel.getText());
+			itWorked = task.taskNachVorneVerschieben();
+			if (itWorked)
+			{
+				RMI_Projekt projekt = (RMI_Projekt) registry.lookup(main.aktuellesProjekt);
+				itWorked = projekt.speichereProjekt();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			labelBenachrichtigung.setText("Fehler beim Verschieben des Tasks!");
+		}
+		
+		if (itWorked)
+		{
+			if (activeLabel.getParent() == mansoryPaneToDo) {
+				mansoryPaneToDo.getChildren().remove(activeLabel);
+				usedScrollBarHeight_ToDo = usedScrollBarHeight_ToDo - 90;
+				mansoryPaneDoing.getChildren().add(activeLabel);
+				usedScrollBarHeight_Doing = usedScrollBarHeight_Doing + 90;
+			} else if (activeLabel.getParent() == mansoryPaneDoing) {
+				mansoryPaneDoing.getChildren().remove(activeLabel);
+				usedScrollBarHeight_Doing = usedScrollBarHeight_Doing - 90;
+				mansoryPaneFinished.getChildren().add(activeLabel);
+				usedScrollBarHeight_Finished = usedScrollBarHeight_Finished + 90;
+			}
+		}
+		else {
+			
+			main.log("Fehler beim Verschieben des Tasks!");
+		}
+		
+		showTaskInfo();
+	}
+
+	/**
+	 * Je nach Position des aktive Labels befindet wir es nach "links" bzw. entgegen der Prozessrichtung verschoben.
+	 * Passt die benötigte Höhe der Scrollbar an.
+	 * 
+	 * @param event
+	 */
+	@FXML
+	void buttonReturnPressed(ActionEvent event) {
+		
+		boolean itWorked = false;
+		
+		try {
+
+			Registry registry = LocateRegistry.getRegistry(null);
+			RMI_Task task = (RMI_Task) registry.lookup(activeLabel.getText());
+			itWorked = task.taskNachHintenVerschieben();
+			if (itWorked)
+			{
+				RMI_Projekt projekt = (RMI_Projekt) registry.lookup(main.aktuellesProjekt);
+				itWorked = projekt.speichereProjekt();
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if (itWorked)
+		{
+			if (activeLabel.getParent() == mansoryPaneDoing) {
+				mansoryPaneDoing.getChildren().remove(activeLabel);
+				usedScrollBarHeight_Doing = usedScrollBarHeight_Doing - 90;
+				mansoryPaneToDo.getChildren().add(activeLabel);
+				usedScrollBarHeight_ToDo = usedScrollBarHeight_ToDo + 90;
+			} else if (activeLabel.getParent() == mansoryPaneFinished) {
+				mansoryPaneFinished.getChildren().remove(activeLabel);
+				usedScrollBarHeight_Finished = usedScrollBarHeight_Finished - 90;
+				mansoryPaneDoing.getChildren().add(activeLabel);
+				usedScrollBarHeight_Doing = usedScrollBarHeight_Doing + 90;
+			}
+		}
+		else {
+			
+			main.log("Fehler beim Verschieben des Tasks!");
+		}
+		
+		showTaskInfo();
 	}
 
 	/**
@@ -334,175 +683,10 @@ public class GUIController {
 	}
 
 	/**
-	 * TBD
+	 * Aktiviert das Textfeld für die Task-Beschreibung, sodass diese verändert werden kann.
+	 * Der Button wechselt zwischen "editieren" und "speichern".
 	 * 
-	 * @param event
-	 */
-	@FXML
-	void buttonCommentsPressed(ActionEvent event) {
-
-	}
-
-	/**
-	 * TBD
-	 * 
-	 * @param event
-	 */
-	@FXML
-	void buttonInformationPressed(ActionEvent event) {
-
-	}
-
-	/**
-	 * Logout des Users und Weiterleitung an das Login-Fenster
-	 * 
-	 * @param event - Das Action-Event.
-	 */
-	@FXML
-	void buttonLogOutPressed(ActionEvent event) {
-		main.showLogin();
-	}
-
-	/**
-	 * Methode wird beim drï¿½cken des Proceed-Buttons ausgefï¿½hrt. Es wird
-	 * ï¿½berprï¿½ft in welchem Pane sich der aktuelle Task befindet. Passt die
-	 * benï¿½tigte Hï¿½he der Scrollbar an.
-	 * 
-	 * @param event
-	 */
-	@FXML
-	void buttonProceedPressed(ActionEvent event) {
-
-		if (activeLabel.getParent() == mansoryPaneToDo) {
-			usedScrollBarHeight_ToDo = usedScrollBarHeight_ToDo - 90;
-			mansoryPaneToDo.getChildren().remove(activeLabel);
-			mansoryPaneDoing.getChildren().add(activeLabel);
-		} else if (activeLabel.getParent() == mansoryPaneDoing) {
-			usedScrollBarHeight_Doing = usedScrollBarHeight_Doing - 90;
-			mansoryPaneDoing.getChildren().remove(activeLabel);
-			mansoryPaneFinished.getChildren().add(activeLabel);
-		} else if (activeLabel.getParent() == mansoryPaneFinished) {
-			usedScrollBarHeight_Finished = usedScrollBarHeight_Finished - 90;
-		}
-		showTaskInfo();
-	}
-
-	/**
-	 * Methode wird beim drï¿½cken des ProjectSelection-Buttons ausgefï¿½hrt.
-	 * ï¿½ffnet das Fenster mit der Projektï¿½bersicht.
-	 * 
-	 * @param event
-	 */
-	@FXML
-	void buttonProjectselectionPressed(ActionEvent event) {
-		
-		main.showProjectList();
-	}
-
-	/**
-	 * Je nach dem wo sich das aktive Label befindet wir es nach "links"/
-	 * entgegen der Richtung verschoben
-	 * 
-	 * @param event
-	 */
-	@FXML
-	void buttonReturnPressed(ActionEvent event) {
-		if (activeLabel.getParent() == mansoryPaneToDo) {
-			usedScrollBarHeight_ToDo = usedScrollBarHeight_ToDo - 90;
-
-		} else if (activeLabel.getParent() == mansoryPaneDoing) {
-			usedScrollBarHeight_Doing = usedScrollBarHeight_Doing - 90;
-			mansoryPaneDoing.getChildren().remove(activeLabel);
-			mansoryPaneToDo.getChildren().add(activeLabel);
-
-		} else if (activeLabel.getParent() == mansoryPaneFinished) {
-			usedScrollBarHeight_Finished = usedScrollBarHeight_Finished - 90;
-			mansoryPaneFinished.getChildren().remove(activeLabel);
-			mansoryPaneDoing.getChildren().add(activeLabel);
-		}
-		showTaskInfo();
-	}
-
-	/**
-	 * Ruft die Methode createMoreTags auf
-	 * 
-	 * @param event
-	 */
-	@FXML
-	void buttonTagsPressed(ActionEvent event) {
-		createMoreTags(25);
-	}
-
-	/**
-	 * Methode wird beim drï¿½cken des EditTask-Buttons ausgefï¿½hrt. Der Button
-	 * wechselt zwischen "editieren" und "speichern".
-	 * 
-	 * Wird der der Text geï¿½ndert, wird der Name des Aktiven Tasks geï¿½ndert.
-	 * 
-	 * @param event
-	 */
-	@FXML
-	void buttonEditTaskNamePressed(ActionEvent event) {
-		if (textFieldTaskname.editableProperty().get()) {
-			textFieldTaskname.editableProperty().set(false);
-			saveEnteredTaskname(textFieldTaskname.getText());
-			this.buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
-			textFieldTaskname.setStyle("-fx-background-color: orange;");
-
-		} else {
-			this.textFieldTaskname.setOnKeyPressed(new EventHandler<KeyEvent>() {
-				@Override
-				public void handle(KeyEvent ke) {
-					if (ke.getCode().equals(KeyCode.ENTER)) {
-						saveEnteredTaskname(textFieldTaskname.getText());
-						textFieldTaskname.editableProperty().set(false);
-						buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
-						textFieldTaskname.setStyle("-fx-background-color: orange;");
-
-					}
-				}
-			});
-
-			this.textFieldTaskname.focusedProperty().addListener(new ChangeListener<Boolean>() {
-				@Override
-				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-					if (!newValue) {
-						textFieldTaskname.editableProperty().set(false);
-						buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
-						textFieldTaskname.setStyle("-fx-background-color: orange;");
-						if (activeLabel != null) {
-							textFieldTaskname.setText(activeLabel.getText());
-						}
-					}
-				}
-			});
-
-			textFieldTaskname.editableProperty().set(true);
-			textFieldTaskname.requestFocus();
-			this.buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
-			textFieldTaskname.setStyle("-fx-background-color: white;");
-		}
-	}
-
-	/**
-	 * Ändert den Text des aktiven Labels
-	 * 
-	 * @param name
-	 */
-	void saveEnteredTaskname(String name) {
-		activeLabel.setText(textFieldTaskname.getText());
-		showTaskInfo();
-	}
-
-	/**
-	 * Methode wird beim Drï¿½cken des EditDescription-Button ausgefï¿½hrt.
-	 * Macht das Textfeld zur Task-Beschreibung editierbar, sofern es im Moment
-	 * nicht editierbar ist. Ist es editierbar, wird es wieder gelocked.
-	 * 
-	 * Beim Klicken des Buttons wechselt das Icon entspechend seiner aktuellen
-	 * Funktion.
-	 * 
-	 * @param event
+	 * @param event - Das Action Event.
 	 */
 	@FXML
 	void buttonEditDescriptionPressed(ActionEvent event) {
@@ -514,23 +698,19 @@ public class GUIController {
 			textAreaDescription.setStyle("text-area-background: orange;");
 
 		} else {
-			/*
-			 * Changelistener der aktiv wird wenn textarea den fokus verliert
-			 * funktioniert nicht, obwohl genau so wie bei editTaskname......
-			 * 
-			 * this.textAreaDescription.focusedProperty().addListener(new
-			 * ChangeListener<Boolean>() {
-			 * 
-			 * @Override public void changed(ObservableValue<? extends Boolean>
-			 * observable, Boolean oldValue, Boolean newValue) { if(!newValue) {
-			 * textAreaDescription.editableProperty().set(false);
-			 * buttonEditDescriptionIcon.setImage(new
-			 * Image(getClass().getResourceAsStream("compose.png")));
-			 * textAreaDescription.setStyle("-fx-background-color: orange;");
-			 * if(activeLabel != null) {
-			 * textAreaDescription.setText(activeLabel.getDescription()); } } }
-			 * });
-			 */
+			
+			this.textAreaDescription.setOnKeyPressed(new EventHandler<KeyEvent>() {
+				@Override
+				public void handle(KeyEvent ke) {
+					if (ke.getCode().equals(KeyCode.ENTER)) {
+						saveEnteredTaskname(textAreaDescription.getText());
+						textAreaDescription.editableProperty().set(false);
+						buttonEditDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
+						textAreaDescription.setStyle("-fx-background-color: orange;");
+
+					}
+				}
+			});
 
 			textAreaDescription.editableProperty().set(true);
 			textAreaDescription.requestFocus();
@@ -542,33 +722,93 @@ public class GUIController {
 	}
 
 	/**
-	 * Ändert den Text der textArea auf dem aktivel Label
+	 * Ändert die Beschreibung des aktiven Tasks. 
 	 * 
-	 * @param name
+	 * @param name - Die neue Beschreibung.
 	 */
 	void saveEnteredDescription(String name) {
-		textAreaDescription.setText("");
-		showTaskInfo();
+		
+		boolean itWorked = false;
+		
+		try {
+
+			Registry registry = LocateRegistry.getRegistry(null);
+			RMI_Task task = (RMI_Task) registry.lookup(activeLabel.getText());
+			task.ändereBeschreibung(textAreaDescription.getText(), main.user);
+			RMI_Projekt projekt = (RMI_Projekt) registry.lookup(main.aktuellesProjekt);
+			itWorked = projekt.speichereProjekt();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(itWorked)
+		{
+			showTaskInfo();
+		}
 	}
 
 	/**
-	 * Methode wird beim Drï¿½cken des NewTask-Buttons ausgefï¿½hrt. Fï¿½hrt die
-	 * Methode createTask() aus und erhï¿½ht die benï¿½tigte Hï¿½he im ToDo-Pane
+	 * Ruft die Funktion createComment auf wenn das Textfeld nicht leer ist
 	 * 
 	 * @param event
 	 */
 	@FXML
-	void buttonNewTaskPressed(ActionEvent event) {
-		createTask();
-		usedScrollBarHeight_ToDo = usedScrollBarHeight_ToDo + 90;
+	void buttonAddCommentPressed(ActionEvent event) {
+		main.log("Button pressed", "Comment");
+		
+		if (!textFieldComments.getText().equals("")) {
 
-		main.log(anchorPaneMansory.getPrefHeight(), "anchorPaneMansory");
-		main.log(mansoryPaneToDo.getPrefHeight(), "mansoryPaneToDo");
-
-		checkScrollBarSpace();
-
+			createComment(textFieldComments.getText(), main.user.getNutzername());
+		} else {
+			main.log("Kein Text eingegeben!", "Comment");
+		}
 	}
 
+	/**
+	 * Fügt einen Kommentar in der Liste hinzu, wenn der Button gedrückt wird.
+	 * 
+	 * @param name
+	 * @param author
+	 */
+	public void createComment(String name, String author) {
+		Label lbl = new Label();
+
+		this.mansoryPaneComments.setCellHeight(10);
+		this.mansoryPaneComments.setCellWidth(290);
+		this.mansoryPaneComments.setMaxWidth(300);
+		lbl.setMaxWidth(290);
+
+		lbl.setWrapText(true);
+
+		name = insertPeriodically(name, "-\n\t", 25);
+		System.out.println(name);
+
+		int additionalLength = (name.length() / 25 + 2) * 20;
+
+		lbl.setText(author + ":\n\n\t" + name);
+		textFieldComments.setText("");
+		lbl.setAlignment(Pos.TOP_LEFT);
+		lbl.setStyle("display:inline-block; -fx-padding: 0; -fx-background-color: orange;");
+		mansoryPaneComments.getChildren().add(lbl);
+
+		mansoryPaneComments.setPrefHeight(mansoryPaneComments.getHeight() + additionalLength);
+		anchorPaneTaskInformation3.setPrefHeight(mansoryPaneComments.getPrefHeight() + 220);// +95
+
+		anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation1.getHeight()
+				+ anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
+
+		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent e) {
+				anchorPaneTaskInformation3.setPrefHeight(mansoryPaneComments.getPrefHeight() + 220);
+				anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation1.getHeight()
+						+ anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
+			}
+		});
+
+	}
+	
 	/**
 	 * Methode wird beim Drï¿½cken des AddTag-Buttons ausgefï¿½hrt. Fï¿½hrt die
 	 * Methode addTag(String name)
@@ -623,142 +863,6 @@ public class GUIController {
 	}
 
 	/**
-	 * Testmethode von Fiete
-	 * 
-	 * @param name
-	 */
-	public void createMoreTags(String[] name) {
-		anchorPaneTaskInformation2.setPrefHeight(100 + name.length * 200);
-		anchorPaneTaskInformation
-				.setPrefHeight(400 + anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
-		for (int i = 0; i < name.length; i++) {
-			createTag(name[i]);
-		}
-	}
-
-	/**
-	 * Erzeugt Zufällige Tags und zeigt diese an Testmethode
-	 * 
-	 * @param name
-	 */
-	public void createMoreTags(int name) {
-		anchorPaneTaskInformation2.setPrefHeight(100 + name * 200);
-		anchorPaneTaskInformation
-				.setPrefHeight(400 + anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
-		for (int i = 0; i < name - 2; i++) {
-			String tag = "";
-			int b = (int) (2 + Math.random() * 10);
-			for (int a = 0; a < b; a++) {
-				tag = tag + (char) (97 + Math.random() * 26);
-
-			}
-
-			createTag(tag);
-		}
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException ex) {
-			Thread.currentThread().interrupt();
-		}
-
-		// TimeUnit.SECONDS.sleep(1);
-		textFieldTags.setText("sdfsdfs");
-		buttonAddTagPressed(null);
-		textFieldTags.setText("");
-		textFieldTags.setText("nsvjlkv");
-		buttonAddTagPressed(null);
-		textFieldTags.setText("");
-
-		anchorPaneTaskInformation3
-				.setLayoutY(anchorPaneTaskInformation1.getHeight() + anchorPaneTaskInformation2.getHeight() + 200);
-		anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation.getPrefHeight() + 200);
-
-	}
-
-	/**
-	 * Ruft die Funktion createComment auf wenn das Textfeld nicht leer ist
-	 * 
-	 * @param event
-	 */
-	@FXML
-	void buttonAddCommentPressed(ActionEvent event) {
-		main.log("Button pressed", "Comment");
-		if (!textFieldComments.getText().equals("")) {
-
-			createComment(textFieldComments.getText(), main.user.getNutzername());
-		} else {
-			main.log("Kein Text eingegeben!", "Comment");
-		}
-	}
-
-	/**
-	 * Testmethode von Fiete
-	 * 
-	 * @param name
-	 */
-	public void createMoreComment(String[] name) {
-		anchorPaneTaskInformation3.setPrefHeight(100 + name.length * 200);
-		anchorPaneTaskInformation
-				.setPrefHeight(400 + anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
-		for (int i = 0; i < name.length; i++) {
-			createComment(name[i], "Christian Hopp");
-		}
-	}
-
-	/**
-	 * Fügt einen Kommentar in der Liste hinzu, wenn der Button gedrückt wird
-	 * 
-	 * @param name
-	 * @param author
-	 */
-	public void createComment(String name, String author) {
-		Label lbl = new Label();
-
-		this.mansoryPaneComments.setCellHeight(10);
-		this.mansoryPaneComments.setCellWidth(290);
-		this.mansoryPaneComments.setMaxWidth(300);
-		lbl.setMaxWidth(290);
-
-		lbl.setWrapText(true);
-
-		name = insertPeriodically(name, "-\n\t", 25);
-		System.out.println(name);
-
-		int additionalLength = (name.length() / 25 + 2) * 20;
-
-		lbl.setText(author + ":\n\n\t" + name);
-		textFieldComments.setText("");
-		lbl.setAlignment(Pos.TOP_LEFT);
-		lbl.setStyle("display:inline-block; -fx-padding: 0; -fx-background-color: orange;");
-		mansoryPaneComments.getChildren().add(lbl);
-
-		mansoryPaneComments.setPrefHeight(mansoryPaneComments.getHeight() + additionalLength);
-		anchorPaneTaskInformation3.setPrefHeight(mansoryPaneComments.getPrefHeight() + 220);// +95
-
-		anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation1.getHeight()
-				+ anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
-		/*
-		 * System.out.println("AnchorPane1: "+anchorPaneTaskInformation1.
-		 * getHeight()); System.out.println("AnchorPane2: "
-		 * +anchorPaneTaskInformation2. getHeight()); System.out.println(
-		 * "AnchorPane3: "+anchorPaneTaskInformation3. getHeight());
-		 * System.out.println("MasonaryPaneComment: "+mansoryPaneComments.
-		 * getHeight()); System.out.println("AnchorPaneRoot: "
-		 * +anchorPaneTaskInformation. getHeight());
-		 */
-
-		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			@Override
-			public void handle(MouseEvent e) {
-				anchorPaneTaskInformation3.setPrefHeight(mansoryPaneComments.getPrefHeight() + 220);
-				anchorPaneTaskInformation.setPrefHeight(anchorPaneTaskInformation1.getHeight()
-						+ anchorPaneTaskInformation2.getHeight() + anchorPaneTaskInformation3.getHeight());
-			}
-		});
-
-	}
-
-	/**
 	 * Formatierung des Kommentars
 	 * 
 	 * @param text
@@ -783,125 +887,94 @@ public class GUIController {
 		}
 		return builder.toString();
 	}
-
+	
 	/**
-	 * ï¿½berprï¿½ft, ob noch genug Platz in den Spalten ist. Sollte nicht genug
-	 * Platz sein, wird die Grï¿½ï¿½te der Panes angepasst.
-	 */
-	public void checkScrollBarSpace() {
-		if (mansoryPaneToDo.getPrefHeight() <= usedScrollBarHeight_ToDo) {
-
-			mansoryPaneDoing.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
-			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
-		}
-		if (mansoryPaneDoing.getPrefHeight() <= usedScrollBarHeight_Doing) {
-
-			mansoryPaneDoing.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
-			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
-		}
-		if (mansoryPaneToDo.getPrefHeight() <= usedScrollBarHeight_Finished) {
-
-			mansoryPaneFinished.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
-			anchorPaneMansory.setPrefHeight(anchorPaneMansory.getPrefHeight() + 90);
-		}
-	}
-
-	/**
-	 * Methode erstellt einen neuen Task und fï¿½gt ihn am ToDo-Pane an. Eine
-	 * MouseEvent-Handle wird initialisiert und das erstellte Label wird zum
-	 * Aktiven Label. Die Buttons zum verschieben der Task werden sichtbar
-	 */
-	private void createTask() {
-		taskCounter++;
-		main.log("Add Task", "Button pressed");
-
-		// Neues Label wird erzeugt und konfiguriert
-		Label lbl = new Label();
-		lbl.setPrefSize(200, 75);
-		lbl.setMinSize(200, 75);
-		lbl.setAlignment(Pos.CENTER);
-		lbl.setStyle(
-				"-fx-background-color: white; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-
-		mansoryPaneToDo.getChildren().add(lbl);
-
-		// Erzeugt Eventhandler für das erzeugte Label
-		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
-			/**
-			 * Eventhandler für das Label. Wenn kein Label ausgewählt ist wird
-			 * das ausgeählte Label aktiv. Ist ein Label und ein andere Label
-			 * wird geklickt, wird das geklickte Label aktiv. Wird das
-			 * ausgewählte Label angeklickt, ist danach kein Label aktiv.
-			 * 
-			 */
-			@Override
-			public void handle(MouseEvent e) {
-
-				if (activeLabel != null) {
-					activeLabel.setStyle("-fx-background-color: white"
-							+ "; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-				}
-
-				if (activeLabel != lbl) {
-					buttonReturn.setVisible(true);
-					buttonProceed.setVisible(true);
-					buttonEditTaskName.setVisible(true);
-					buttonEditDescription.setVisible(true);
-					activeLabel = lbl;
-					main.log(lbl.getId());
-					lbl.setStyle("-fx-background-color: white"
-							+ "; -fx-border-width: 2; -fx-border-color: orange; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-
-				}
-
-				else if (activeLabel == lbl) {
-					activeLabel = null;
-					lbl.setStyle(" -fx-background-color: white"
-							+ "; -fx-padding: -20px; -fx-background-radius: 5px; width:40pt; height:10pt; display:inline-block;");
-					buttonProceed.setVisible(false);
-					buttonReturn.setVisible(false);
-					buttonEditTaskName.setVisible(false);
-					buttonEditDescription.setVisible(false);
-
-				}
-				showTaskInfo();
-			}
-		});
-		taskList.add(lbl);
-	}
-
-	public void showTaskInfo() {
-		if (activeLabel != null) {
-			textFieldTaskname.setText("");
-			labelActualAuthor.setText("");
-			textAreaDescription.setText("");
-			if (activeLabel.getParent() == mansoryPaneToDo) {
-				labelActualStatus.setText("To Do");
-			} else if (activeLabel.getParent() == mansoryPaneDoing) {
-				labelActualStatus.setText("Doing");
-			} else if (activeLabel.getParent() == mansoryPaneFinished) {
-				labelActualStatus.setText("Finished");
-			}
-		} else {
-			textFieldTaskname.setText(" ");
-			labelActualAuthor.setText(" ");
-			textAreaDescription.setText(" ");
-			labelActualStatus.setText(" ");
-		}
-	}
-
-	/**
-	 * Ruft die Informationen eines Task ï¿½ber seine ID auf und schreibt sie
+	 * TBD
 	 * 
-	 * @param id
+	 * @param event
 	 */
-	void getTaskInfoFromServer(String id) {
-		/*
-		 * textFieldTaskname.setText(String value);
-		 * labelActualAuthor.setText(String value);
-		 * labelActualStatus.setText(String value);
-		 * textAreaDescription.setText(String value)
-		 */
+	@FXML
+	void buttonCommentsPressed(ActionEvent event) {
+
+	}
+	
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
+	@FXML
+	void buttonInformationPressed(ActionEvent event) {
+
+	}
+
+	/**
+	 * TBD
+	 * 
+	 * @param event
+	 */
+	@FXML
+	void buttonTagsPressed(ActionEvent event) {
+		
+	}
+	
+	/**
+	 * Aktiviert das Textfeld für den Task-Name, sodass diese verändert werden kann.
+	 * Diese Methode wird momentan nicht verwendet, da der Taskname nicht veränderbar ist (Button ist nicht sichtbar).
+	 * Der Button wechselt zwischen "editieren" und "speichern".
+	 * 
+	 * @param event - Das Action-Event.
+	 */
+	@FXML
+	void buttonEditTaskNamePressed(ActionEvent event) {
+		if (textFieldTaskname.editableProperty().get()) {
+			textFieldTaskname.editableProperty().set(false);
+			saveEnteredTaskname(textFieldTaskname.getText());
+			this.buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
+			textFieldTaskname.setStyle("-fx-background-color: orange;");
+
+		} else {
+			this.textFieldTaskname.setOnKeyPressed(new EventHandler<KeyEvent>() {
+				@Override
+				public void handle(KeyEvent ke) {
+					if (ke.getCode().equals(KeyCode.ENTER)) {
+						saveEnteredTaskname(textFieldTaskname.getText());
+						textFieldTaskname.editableProperty().set(false);
+						buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
+						textFieldTaskname.setStyle("-fx-background-color: orange;");
+
+					}
+				}
+			});
+
+			this.textFieldTaskname.focusedProperty().addListener(new ChangeListener<Boolean>() {
+				@Override
+				public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+					if (!newValue) {
+						textFieldTaskname.editableProperty().set(false);
+						buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
+						textFieldTaskname.setStyle("-fx-background-color: orange;");
+						if (activeLabel != null) {
+							textFieldTaskname.setText(activeLabel.getText());
+						}
+					}
+				}
+			});
+
+			textFieldTaskname.editableProperty().set(true);
+			textFieldTaskname.requestFocus();
+			this.buttonEditTaskNameIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
+			textFieldTaskname.setStyle("-fx-background-color: white;");
+		}
+	}
+
+	/**
+	 * Speichert den geänderten Tasknamen.
+	 * 
+	 * @param name - Der neue Projektname.
+	 */
+	void saveEnteredTaskname(String name) {
+		// nicht implementiert, da der Taskname momentan nicht veränderbar ist.
 	}
 
 	void guilog(String text) {

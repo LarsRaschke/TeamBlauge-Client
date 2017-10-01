@@ -29,11 +29,11 @@ public interface RMI_Projekt extends Remote {
 	
 	public List<String[]> taskListe() throws RemoteException;
 	
-	public void taskHinzufügen(String name, String kommentar, User u) throws RemoteException;
+	public boolean taskHinzufügen(String name, String kommentar, User u) throws RemoteException;
 	
-	public void userHinzufügen(User user) throws RemoteException;
+	public boolean userHinzufügen(User user) throws RemoteException;
 	
 	public void ändereBeschreibung(String beschreibung) throws RemoteException;
 	
-	public void speichereProjekt() throws RemoteException;
+	public boolean speichereProjekt() throws RemoteException;
 }
