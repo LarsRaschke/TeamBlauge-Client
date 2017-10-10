@@ -19,7 +19,7 @@ public interface RMI_Task extends Remote {
 	
 	public String getBeschreibung() throws RemoteException;
 	
-	public String getKommentar() throws RemoteException;
+	public ArrayList<String> getKommentar() throws RemoteException;
 	
 	public int getFarbe() throws RemoteException;
 	
