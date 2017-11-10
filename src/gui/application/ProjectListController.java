@@ -2,6 +2,8 @@ package gui.application;
 
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
@@ -9,73 +11,64 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Scene;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
+import model.User;
+import model.interfaces.RMI_Projekt;
 import model.interfaces.RMI_Projektmanager;
-
-/*
- * TODO:
- * Schriftart anpassen Roboto Light
- */
 
 public class ProjectListController {
 
 	@FXML
-	private Label labelUser;
-
-	@FXML
 	private JFXButton buttonLogOut;
-
-	@FXML
-    private JFXListView<Label> tableProjectList;
-
-	@FXML
-	private JFXTextField textFieldProjectName;
-
-	@FXML
-	private JFXButton buttonEditProjectName;
-
-	@FXML
-	private ImageView buttonEditProjectNameIcon;
-
-	@FXML
-	private JFXTextArea textAreaProjectDescription;
-
-	@FXML
-	private JFXButton buttonEditProjectDescription;
-
-	@FXML
-	private ImageView buttonEditProjectDescriptionIcon;
-
-	@FXML
-	private JFXListView<?> listProjectMember;
-
-	@FXML
-	private ImageView buttonAddMember;
-
-	@FXML
-	private JFXButton buttonAddProject;
-
+	
 	@FXML
 	private JFXButton buttonBack;
 
 	@FXML
-	private Label labelProjectList;
-
-	@FXML
-	private JFXButton buttonSaveNewProject;
+	private JFXButton buttonAddProject;
 	
 	@FXML
     private JFXButton buttonOpenProject;
 	
 	@FXML
+    private JFXButton buttonRefresh;
+	
+	@FXML
+	private Label labelUser;
+	
+	@FXML
     private Label labelNotification;
+
+	@FXML
+    private JFXListView<Label> tableProjectList;
+	
+	@FXML
+    private JFXButton buttonMore;
+
+	@FXML
+	private JFXButton buttonSaveNewProject;
+
+	@FXML
+	private JFXTextField textFieldProjectName;
+	
+	@FXML
+	private JFXTextArea textAreaProjectDescription;
+
+	@FXML
+    private Label labelLastChange;
+	
+	@FXML
+    private Label labelCreationDate;
+	
+	@FXML
+    private Label labelProjectCreator;
+	
 
 	private Main main;
 
@@ -90,37 +83,52 @@ public class ProjectListController {
 	 */
 	public void init() {
 		
-		// Initialisierung von KeyListenern etc.
+		// Initialisierung von Button-States etc.
+		
 		textFieldProjectName.editableProperty().set(false);
 		textAreaProjectDescription.editableProperty().set(false);
 		
-		// EventHandler Init
+		buttonMore.setVisible(false);
+		buttonSaveNewProject.setVisible(false);
+		buttonOpenProject.setVisible(false);
 		
-		((Scene) labelProjectList.getScene()).setOnKeyPressed(new EventHandler<KeyEvent>() {
-			@Override
-			public void handle(KeyEvent ke) {
-				if (ke.getCode().equals(KeyCode.ESCAPE)) {
-					main.showGUI();
-				}
-			}
-		});
+		buttonRefresh.setStyle("-fx-background-color: transparent;");
 		
 		// Funktionalität - Laden & Setzen der Informationen
 
-		labelUser.setText("    " + main.user.getNachname() + ", " + main.user.getVorname());
+		labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
+		
+		ArrayList<String> projektliste = new ArrayList<>();
 		
 		Registry registry;
 		try {
 			registry = LocateRegistry.getRegistry(null);
 			RMI_Projektmanager manager = (RMI_Projektmanager) registry.lookup("manager");
-			main.projektliste = manager.ladeProjekte(main.user);
+			projektliste = manager.ladeProjekte(main.user);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		for(String projekt : main.projektliste)
+		for(String projekt : projektliste)
 		{
-			tableProjectList.getItems().add(new Label(projekt));
+			Image image = new Image(getClass().getResource("../resources/Icons/pricetags.png").toExternalForm());
+			ImageView view = new ImageView();
+			view.setImage(image);
+			view.setFitHeight(25.0);
+			view.setFitWidth(25.0);
+			
+			Label lbl = new Label();
+			lbl.setGraphicTextGap(15);
+			lbl.setGraphic(view);
+			lbl.setStyle("-fx-font-size: 20px; -fx-font-family: \"Candara\";");
+			lbl.setText(projekt);
+			
+			
+			if(tableProjectList.getItems() != null)
+			{
+				tableProjectList.getItems().add(lbl);
+			}
+			
 		}
 		
 	}
@@ -151,8 +159,52 @@ public class ProjectListController {
 	 */
 	@FXML
 	void buttonBackPressed(ActionEvent event) {
-		main.showGUI();
+		main.showMainFrame();
 	}
+	
+	/**
+	 * Öffnet das selektierte Projekt aus der Projektliste im MainFrame.
+	 * 
+	 * @param event - Das Action-Event.
+	 */
+	@FXML
+    void buttonOpenProjectPressed(ActionEvent event) {
+		
+		main.aktuellesProjekt = tableProjectList.getSelectionModel().getSelectedItem().getText();
+		main.showMainFrame();
+    }
+	
+	/**
+	 * Aktualisiert die Seite
+	 * 
+	 * @param event - Das Action-Event.
+	 */
+	@FXML
+    void buttonRefreshPressed(ActionEvent event) {
+		
+		buttonRefresh.setStyle("-fx-background-color: transparent;");
+		main.showProjectList();
+    }
+	
+	/**
+	 * Benachrichtigt den User über Änderungen.
+	 */
+	public void notifyUser()
+	{
+		buttonRefresh.setStyle("-fx-background-color: #ff2d37;");
+	}
+	
+	/**
+	 * Öffnet den ProjectFrame für das ausgewählte Projekt.
+	 * 
+	 * @param event - Das Action-Event.
+	 */
+	@FXML
+    void buttonMorePressed(ActionEvent event) {
+		
+		main.aktuellesProjekt = tableProjectList.getSelectionModel().getSelectedItem().getText();
+		main.showProjectFrame();
+    }
 
 	/**
 	 * Aktiviert die Textfelder, die zum Erstellen eines neuen Projektes ausgefüllt werden müssen und
@@ -163,17 +215,21 @@ public class ProjectListController {
 	@FXML
 	void buttonAddProjectPressed(ActionEvent event) {
 		
+		buttonMore.setVisible(false);
+		buttonOpenProject.setVisible(false);
 		buttonSaveNewProject.setVisible(true);
+		tableProjectList.getSelectionModel().clearSelection();
+		
+		labelCreationDate.setText(null);
+		labelLastChange.setText(null);
+		labelProjectCreator.setText(null);
+		
 		textFieldProjectName.clear();
 		textFieldProjectName.editableProperty().set(true);
 		textFieldProjectName.setStyle("-fx-background-color: white;");
-		buttonEditProjectDescription.setVisible(false);
 		textAreaProjectDescription.editableProperty().set(true);
 		textAreaProjectDescription.clear();
 		textAreaProjectDescription.setStyle("text-area-background: white;");
-		buttonAddMember.setVisible(false);
-		listProjectMember.getItems().clear();
-		listProjectMember.setStyle("-fx-background-color: orange;");
 	}
 	
 	/**
@@ -198,19 +254,27 @@ public class ProjectListController {
 		
 		if (itWorked) {
 			
-			main.projektliste.add(textFieldProjectName.getText());
-			tableProjectList.getItems().add(new Label(textFieldProjectName.getText()));
+			Image image = new Image(getClass().getResource("../resources/Icons/pricetags.png").toExternalForm());
+			ImageView view = new ImageView();
+			view.setImage(image);
+			view.setFitHeight(25.0);
+			view.setFitWidth(25.0);
+			
+			Label lbl = new Label();
+			lbl.setGraphicTextGap(15);
+			lbl.setGraphic(view);
+			lbl.setStyle("-fx-font-size: 20px; -fx-font-family: \"Candara\";");
+			lbl.setText(textFieldProjectName.getText());
+			
+			tableProjectList.getItems().add(lbl);
 			
 			buttonSaveNewProject.setVisible(false);
 			textFieldProjectName.editableProperty().set(false);
 			textFieldProjectName.clear();
 			textFieldProjectName.setStyle("-fx-background-color: orange;");
-			buttonEditProjectDescription.setVisible(true);
 			textAreaProjectDescription.editableProperty().set(false);
 			textAreaProjectDescription.clear();
 			textAreaProjectDescription.setStyle("text-area-background: orange;");
-			buttonAddMember.setVisible(true);
-			listProjectMember.setStyle("-fx-background-color: white;");
 		}
 		else {
 			
@@ -219,90 +283,43 @@ public class ProjectListController {
 	}
 	
 	/**
-	 * Öffnet das selektierte Projekt aus der Projektliste im MainFrame.
+	 * Aktualisiert die Projektübersicht bei Mausklick in der Tabelle.
 	 * 
-	 * @param event - Das Action-Event.
+	 * @param event - Das Mouse-Event.
 	 */
 	@FXML
-    void buttonOpenProjectPressed(ActionEvent event) {
-		
-		main.aktuellesProjekt = tableProjectList.getSelectionModel().getSelectedItem().getText();
-		main.showGUI();
-    }
-	
-	/**
-	 * Aktiviert das Textfeld für die Projekt-Beschreibung, sodass diese verändert werden kann.
-	 * Der Button wechselt zwischen "editieren" und "speichern".
-	 * 
-	 * @param event - Das Action-Event.
-	 */
-	@FXML
-	void buttonEditProjectDescriptionPressed(ActionEvent event) {
-		
-		if (textAreaProjectDescription.editableProperty().get()) {
-			
-			textAreaProjectDescription.editableProperty().set(false);
-			saveEnteredProjectDescription(textAreaProjectDescription.getText());
-			this.buttonEditProjectDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
-			textAreaProjectDescription.setStyle("text-area-background: orange;");
-		} else {
+    void projectTableListMouseClicked(MouseEvent event) {
 
-			textAreaProjectDescription.editableProperty().set(true);
-			this.buttonEditProjectDescriptionIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
-			textAreaProjectDescription.setStyle("text-area-background: white;");
-		}
-	}
-
-	/**
-	 * Speichert die geänderte Projektbeschreibung.
-	 * 
-	 * @param name - Die neue Projektbeschreibung.
-	 */
-	void saveEnteredProjectDescription(String name) {
-
-	}
-
-	/**
-	 * Aktiviert das Textfeld für den Projekt-Name, sodass diese verändert werden kann.
-	 * Diese Methode wird momentan nicht verwendet, da der Projektname nicht veränderbar ist (Button ist nicht sichtbar).
-	 * Der Button wechselt zwischen "editieren" und "speichern".
-	 * 
-	 * @param event - Das Action Event.
-	 */
-	@FXML
-	void buttonEditProjectNamePressed(ActionEvent event) {
-		
-		if (textFieldProjectName.editableProperty().get()) {
-			textFieldProjectName.editableProperty().set(false);
-			saveEnteredProjectName(textFieldProjectName.getText());
-			this.buttonEditProjectNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
-			textFieldProjectName.setStyle("-fx-background-color: orange;");
-
-		} else {
-			this.textFieldProjectName.setOnKeyPressed(new EventHandler<KeyEvent>() {
-				@Override
-				public void handle(KeyEvent ke) {
-					if (ke.getCode().equals(KeyCode.ENTER)) {
-						saveEnteredProjectName(textFieldProjectName.getText());
-						textFieldProjectName.editableProperty().set(false);
-						buttonEditProjectNameIcon.setImage(new Image(getClass().getResourceAsStream("compose.png")));
-						textFieldProjectName.setStyle("-fx-background-color: orange;");
-					}
+		if(event.getButton() == MouseButton.PRIMARY)
+		{
+			if(tableProjectList.getSelectionModel().getSelectedItem() != null)
+			{
+				textFieldProjectName.setText(tableProjectList.getSelectionModel().getSelectedItem().getText());
+				
+				Registry registry;
+				try {
+					registry = LocateRegistry.getRegistry(null);
+					RMI_Projekt projekt = (RMI_Projekt) registry.lookup(textFieldProjectName.getText());
+					
+					User ersteller = projekt.getErsteller();
+					ZonedDateTime erstellungsDatum = projekt.getErstellungsDatum();
+					ZonedDateTime letzteÄnderung = projekt.getLetzteAenderung();
+					
+					labelProjectCreator.setText(ersteller.getNachname() + ", " + ersteller.getVorname());
+					labelCreationDate.setText(erstellungsDatum.getDayOfWeek().toString() + ", " + 
+							erstellungsDatum.getDayOfMonth() + "." + erstellungsDatum.getMonth().toString() + " " + erstellungsDatum.getYear());
+					labelLastChange.setText(letzteÄnderung.getDayOfWeek().toString() + ", " + 
+							letzteÄnderung.getDayOfMonth() + "." + letzteÄnderung.getMonth().toString() + " " + letzteÄnderung.getYear());
+					textAreaProjectDescription.setText(projekt.getBeschreibung());
+					
+				} catch (Exception e) {
+					e.printStackTrace();
 				}
-			});
-			textFieldProjectName.editableProperty().set(true);
-			this.buttonEditProjectNameIcon.setImage(new Image(getClass().getResourceAsStream("save.png")));
-			textFieldProjectName.setStyle("-fx-background-color: white;");
+				
+				buttonOpenProject.setVisible(true);
+				buttonMore.setVisible(true);
+			}
 		}
-	}
-
-	/**
-	 * Speichert den geänderten Projektnamen.
-	 * 
-	 * @param name - Der neue Projektname.
-	 */
-	void saveEnteredProjectName(String name) {
-		// nicht implementiert, da der Projektname momentan nicht veränderbar ist.
-	}
+    }
 	
 }

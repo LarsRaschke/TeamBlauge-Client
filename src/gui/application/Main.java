@@ -23,8 +23,10 @@ public class Main extends Application {
 	private boolean LDAPConnection = false;
 
 	public User user;
-	public ArrayList<String> projektliste = new ArrayList<>();
+
 	public String aktuellesProjekt;
+	
+	public String aktuellerTask;
 
 	@Override
 	public void start(Stage primaryStage) {
@@ -57,21 +59,6 @@ public class Main extends Application {
 		}
 	}
 
-	public void showGUI() {
-		try {
-			// Load GUI fxml
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getResource("mainFrame.fxml"));
-			AnchorPane GUI = (AnchorPane) loader.load();
-			GUIController controller = loader.getController();
-			controller.setMainApp(this);
-			root.setCenter(GUI);
-			controller.init();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public void showLogin() {
 		try {
 			// Load Loginscreen fxml.
@@ -93,6 +80,49 @@ public class Main extends Application {
 			loader.setLocation(Main.class.getResource("projectList.fxml"));
 			AnchorPane GUI = (AnchorPane) loader.load();
 			ProjectListController controller = loader.getController();
+			controller.setMainApp(this);
+			root.setCenter(GUI);
+			controller.init();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void showProjectFrame() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main.class.getResource("projectFrame.fxml"));
+			AnchorPane GUI = (AnchorPane) loader.load();
+			ProjectFrameController controller = loader.getController();
+			controller.setMainApp(this);
+			root.setCenter(GUI);
+			controller.init();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void showMainFrame() {
+		try {
+			// Load GUI fxml
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main.class.getResource("mainFrame.fxml"));
+			AnchorPane GUI = (AnchorPane) loader.load();
+			GUIController controller = loader.getController();
+			controller.setMainApp(this);
+			root.setCenter(GUI);
+			controller.init();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void showTaskFrame() {
+		try {
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main.class.getResource("TaskFrame.fxml"));
+			AnchorPane GUI = (AnchorPane) loader.load();
+			TaskFrameController controller = loader.getController();
 			controller.setMainApp(this);
 			root.setCenter(GUI);
 			controller.init();

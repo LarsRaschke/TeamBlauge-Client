@@ -1,0 +1,88 @@
+/* JavaFX CSS */
+
+.list-view {
+    -fx-background-color: #f0f0f0;
+}
+
+.list-view .list-cell:selected {
+    -fx-background-color:  #ffc966;
+}
+
+.list-view .list-cell {
+    -fx-background-color: #f0f0f0;
+}
+
+.list-view .label {
+    -fx-text-fill: #000000;
+}
+
+.jfx-rippler {
+    -jfx-rippler-fill: #ffa500;
+}
+
+
+/* JavaFX CSS */
+
+.list-view .scroll-bar{
+	-fx-background-color: #f0f0f0;
+	-fx-background-radius: 2em;
+}
+.list-view .scroll-bar:horizontal .track,
+.list-view .scroll-bar:vertical .track {
+	-fx-background-color: transparent;
+	-fx-border-color:transparent;
+	-fx-background-radius: 2em;
+}
+.list-view .scroll-bar:vertical .track-background,
+.list-view .scroll-bar:horizontal .track-background {
+	-fx-background-color: transparent;
+	-fx-background-insets: 0;
+	-fx-background-radius: 2em;
+}
+.list-view .scroll-bar:horizontal .thumb {
+	-fx-background-color: #969696;
+	-fx-background-insets: 4 0 4 0;
+	-fx-background-radius: 2em;
+}
+.list-view .scroll-bar:vertical .thumb {
+	-fx-background-color: #969696;
+	-fx-background-insets: 0 4 0 4;
+	-fx-background-radius: 2em;
+}
+.list-view .scroll-bar:vertical .increment-button, .scroll-bar:vertical .decrement-button {
+	-fx-background-color:transparent;
+	-fx-background-radius: 2em;
+	-fx-padding: 5;
+}
+.list-view .scroll-bar:horizontal .increment-button, .scroll-bar:horizontal .decrement-button {
+	-fx-background-color:transparent;
+	-fx-background-radius: 2em;
+	-fx-padding: 5;
+}
+.list-view .scroll-bar:horizontal .increment-arrow {
+	-fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+	-fx-background-color: #969696;
+	-fx-padding: 0.25em;
+	-fx-rotate: -90;
+}
+.list-view .scroll-bar:vertical .increment-arrow {
+	-fx-background-color: #969696;
+	-fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+	-fx-padding: 0.25em;
+	-fx-rotate: 0;
+}
+.list-view .scroll-bar:horizontal .decrement-arrow {
+	-fx-background-color: #969696;
+	-fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+	-fx-padding: 0.25em;
+	-fx-rotate: 90;
+}
+.list-view .scroll-bar:vertical .decrement-arrow {
+	-fx-background-color: #969696;
+	-fx-shape: "M 0 0 L 4 8 L 8 0 Z";
+	-fx-padding: 0.25em;
+	-fx-rotate: -180;
+}
+.list-view .corner {
+	-fx-background-color: #f0f0f0;
+}

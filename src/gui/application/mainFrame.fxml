@@ -1,333 +1,285 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXColorPicker?>
-<?import com.jfoenix.controls.JFXMasonryPane?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.scene.control.CheckMenuItem?>
-<?import javafx.scene.control.ContextMenu?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1240.0" style="-fx-background-color: #737373;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.application.GUIController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1240.0" style="-fx-background-color: #cdcdcd;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.application.GUIController">
    <children>
-      <Label fx:id="labelProjectname" prefHeight="50.0" prefWidth="277.0" style="-fx-background-color: #FFA500;" text="Projektname">
-         <font>
-            <Font name="Roboto Light" size="15.0" />
-         </font></Label>
-      <Label fx:id="labelProjectinformation" layoutX="277.0" prefHeight="50.0" prefWidth="599.0" style="-fx-background-color: #969696;" text="Projektinformationen">
-         <font>
-            <Font name="Roboto Light" size="15.0" />
-         </font></Label>
-      <Label fx:id="labelUser" layoutX="876.0" prefHeight="50.0" prefWidth="364.0" style="-fx-background-color: #cdcdcd;" text="Benutzer">
-         <font>
-            <Font name="Roboto Light" size="15.0" />
-         </font></Label>
-      <MenuButton fx:id="menuButtonFilter" layoutX="677.0" layoutY="60.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Filter">
-         <items>
-            <CheckMenuItem mnemonicParsing="false" text="Meine" />
-            <CheckMenuItem mnemonicParsing="false" text="A" />
-            <CheckMenuItem mnemonicParsing="false" text="B" />
-         </items>
-         <font>
-            <Font name="Roboto Light" size="15.0" />
-         </font>
-      </MenuButton>
-      <ScrollPane fx:id="scrollPaneTaskInformation" hbarPolicy="NEVER" layoutX="876.0" layoutY="100.0" prefHeight="620.0" prefWidth="364.0">
-        <content>
-        
-        
-        
-        
-          <AnchorPane fx:id="anchorPaneTaskInformation" minHeight="0.0" minWidth="0.0" prefHeight="660.0" prefWidth="345.0" style="-fx-background-color: #FFA500;">
-               <children>
-               <AnchorPane fx:id="anchorPaneTaskInformation1" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="349.0" style="-fx-background-color: #FFA500;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <children>
-                  <Label fx:id="labelTaskname" layoutX="5.0" layoutY="5.0" prefHeight="25.0" prefWidth="75.0" text="Taskname:">
-                     <font>
-                        <Font name="Roboto Light" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="labelAuthor" layoutX="5.0" layoutY="55.0" prefHeight="25.0" prefWidth="75.0" text="Autor:">
-                     <font>
-                        <Font name="Roboto Light" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="labelStatus" layoutX="5.0" layoutY="105.0" prefHeight="25.0" prefWidth="75.0" text="Status:">
-                     <font>
-                        <Font name="Roboto Light" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="labelColor" layoutX="5.0" layoutY="155.0" prefHeight="25.0" prefWidth="75.0" text="Farbe:">
-                     <font>
-                        <Font name="Roboto Light" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="labelDescription" layoutX="5.0" layoutY="205.0" prefHeight="25.0" prefWidth="100.0" text="Beschreibung:">
-                     <font>
-                        <Font name="Roboto Light" size="15.0" />
-                     </font>
-                  </Label>
-                  
-                  <Label fx:id="labelActualAuthor" layoutX="85.0" layoutY="55.0" prefHeight="25.0" prefWidth="260.0" text="">
-                     <font>
-                        <Font name="Roboto Light" size="15.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="labelActualStatus" layoutX="85.0" layoutY="105.0" prefHeight="25.0" prefWidth="260.0" text="">
-                     <font>
-                        <Font name="Roboto Light" size="15.0" />
-                     </font>
-                  </Label>
-                  <JFXTextField fx:id="textFieldTaskname" focusColor="#b71c1c" layoutX="85.0" layoutY="5.0" prefHeight="27.0" prefWidth="219.0" style="-fx-background-color: orange;" text="">
-                     <font>
-                        <Font name="Roboto Light" size="15.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXButton fx:id="buttonEditTaskName" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="305.0" layoutY="1.0" onAction="#buttonEditTaskNamePressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373" text="SaveTaskName" visible="false">
-                     <graphic>
-                        <ImageView fx:id="buttonEditTaskNameIcon" fitHeight="25.0" fitWidth="25.0">
-                           <image>
-                              <Image url="@../resources/Icons/compose.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
-                  <JFXColorPicker fx:id="colorPicker" layoutX="85.0" layoutY="155.0" onAction="#ColorPickerSelectionChanged" prefHeight="25.0" />
-                  <JFXTextArea fx:id="textAreaDescription" focusColor="#b71c1c" layoutX="5.0" layoutY="236.0" prefHeight="150.0" prefWidth="339.0" stylesheets="@application.css" text="">
-                     <font>
-                        <Font name="Roboto Light" size="15.0" />
-                     </font>
-                  </JFXTextArea>
-                        <JFXButton fx:id="buttonEditDescription" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="305.0" layoutY="200.0" onAction="#buttonEditDescriptionPressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373" text="SaveDescription">
+      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="70.0" style="-fx-background-color: #737373;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <JFXButton fx:id="buttonLogOut" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#buttonLogOutPressed" prefHeight="70.0" prefWidth="70.0" ripplerFill="ORANGE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0">
+                     <image>
+                        <Image url="@../resources/Icons/log-out.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="buttonNewTask" contentDisplay="GRAPHIC_ONLY" onAction="#buttonNewTaskPressed" prefHeight="70.0" prefWidth="70.0" ripplerFill="ORANGE" text="Button" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="150.0">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/Icons/custom-plus-circled.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="1.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="buttonRefresh" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#buttonRefreshPressed" prefHeight="70.0" prefWidth="70.0" ripplerFill="ORANGE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="80.0">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0">
+                     <image>
+                        <Image url="@../resources/Icons/icon-aktualisieren.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="buttonProceed" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#buttonProceedPressed" prefHeight="70.0" prefWidth="70.0" ripplerFill="ORANGE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="220.0">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0">
+                     <image>
+                        <Image url="@../resources/Icons/ios7-custom-proceed.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="buttonReturn" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#buttonReturnPressed" prefHeight="70.0" prefWidth="70.0" ripplerFill="ORANGE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="290.0">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0">
+                     <image>
+                        <Image url="@../resources/Icons/ios7-custom-back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="buttonProjectselection" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#buttonProjectselectionPressed" prefHeight="60.0" prefWidth="70.0" ripplerFill="#737373" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0">
+                     <image>
+                        <Image url="@../resources/Icons/ios7-browsers.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="1170.0" style="-fx-background-color: #969696;" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label prefHeight="60.0" prefWidth="100.0" text="Projekt:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <padding>
+                  <Insets left="20.0" right="10.0" />
+               </padding>
+               <font>
+                  <Font name="Candara Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelUser" alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="10.0" prefHeight="60.0" prefWidth="575.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/Icons/user-icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Candara" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelProjectname" prefHeight="50.0" prefWidth="495.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Candara" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="25.0" prefWidth="835.0" style="-fx-background-color: #f0f0f0;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <Label layoutY="4.0" prefHeight="15.0" prefWidth="130.0" text="Benachrichtigungen:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Candara" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelBenachrichtigung" layoutX="158.0" layoutY="3.0" prefWidth="680.0" text=" " textFill="RED" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="1020.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Candara" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <GridPane hgap="20.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="595.0" prefWidth="1130.0" vgap="20.0" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="80.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="700.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="410.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="595.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ScrollPane minHeight="0.0" minWidth="0.0" prefHeight="595.0" prefWidth="490.0" style="-fx-fit-to-height: true; -fx-fit-to-width: true; -fx-background-color: #ffa500;" stylesheets="@scrollbar.css" GridPane.columnIndex="1">
+               <content>
+                  <AnchorPane minHeight="595.0" minWidth="390.0" prefHeight="595.0" prefWidth="410.0" style="-fx-background-color: #FFA500;">
+                     <children>
+                        <Label layoutX="14.0" layoutY="62.0" text="Name:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="50.0">
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="14.0" layoutY="144.0" text="Beschreibung:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="210.0">
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                        </Label>
+                        <Label style="-fx-background-color: #ffc966;" text="Taskdetails" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="Candara" size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Letzter Benutzer:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="115.0">
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                        </Label>
+                        <JFXButton fx:id="buttonMore" contentDisplay="GRAPHIC_ONLY" onAction="#buttonMorePressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="ORANGE" text="Button" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <graphic>
-                              <ImageView fx:id="buttonEditDescriptionIcon" fitHeight="25.0" fitWidth="25.0">
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
-                                    <Image url="@../resources/Icons/compose.png" />
+                                    <Image url="@../resources/Icons/more.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <font>
+                              <Font size="1.0" />
+                           </font>
+                        </JFXButton>
+                        <JFXButton fx:id="buttonSaveNewTask" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#buttonSaveNewTaskPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE" text="Button" textAlignment="CENTER" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0">
+                           <font>
+                              <Font size="15.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/Icons/save.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </JFXButton>
-                  </children>
-            </AnchorPane>
-            
-            <AnchorPane fx:id="anchorPaneTaskInformation2" layoutY="400.0" minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="349.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="400.0">
-               <children>
-               
-                  <Label fx:id="labelTags" layoutX="5.0" layoutY="0.0" prefHeight="25.0" prefWidth="100.0" text="Tags:">
-                     <font>
-                        <Font name="Roboto Light" size="15.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fx:id="tagIcon" fitHeight="25.0" fitWidth="25.0">
-                           <image>
-                              <Image url="@../resources/Icons/pricetags.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Label>
-                  <JFXButton fx:id="buttonAddTag" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="305.0" layoutY="25.0" onAction="#buttonAddTagPressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0">
-                           <image>
-                              <Image url="@../resources/Icons/plus-round.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
-                  <JFXTextField fx:id="textFieldTags" focusColor="#b71c1c" layoutX="5.0" layoutY="25.0" prefWidth="300.0">
-                     <font>
-                        <Font name="Roboto Light" size="15.0" />
-                     </font>
-                  </JFXTextField>
-				  <JFXMasonryPane fx:id="mansoryPaneTags" layoutX="3.0" layoutY="60.0" prefWidth="340.0" style="-fx-background-color: green;" />
-                  </children>
-            </AnchorPane>
-            
-            
-                  <AnchorPane fx:id="anchorPaneTaskInformation3" layoutY="500.0" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="349.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-               <children>
-                  <Label fx:id="labelComments" layoutX="5.0" layoutY="0.0" prefHeight="25.0" prefWidth="120.0" text="Kommentare:">
-                     <font>
-                        <Font name="Roboto Light" size="15.0" />
-                     </font>
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0">
-                           <image>
-                              <Image url="@../resources/Icons/ios7-chatbubble.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Label>
-                  
-                  
-                  <JFXTextField fx:id="textFieldComments" focusColor="#b71c1c" layoutX="5.0" layoutY="25.0" prefWidth="300.0">
-                     <font>
-                        <Font name="Roboto Light" size="15.0" />
-                     </font>
-                  </JFXTextField>
-                  <JFXButton fx:id="buttonAddComment" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="305.0" layoutY="25.0" onAction="#buttonAddCommentPressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373">
-                     <graphic>
-                        <ImageView fitHeight="25.0" fitWidth="25.0">
-                           <image>
-                              <Image url="@../resources/Icons/Forward-512.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </JFXButton>
-                  <JFXMasonryPane fx:id="mansoryPaneComments" layoutX="5.0" layoutY="60.0" prefHeight="100.0" prefWidth="300.0" />
-                  </children>
-            </AnchorPane>
-            
-            </children>
-            </AnchorPane>
-            
-            
-            
-        </content>
-      </ScrollPane>
-      <JFXButton fx:id="buttonProjectselection" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="207.0" onAction="#buttonProjectselectionPressed" prefHeight="50.0" prefWidth="70.0" ripplerFill="#737373">
-         <graphic>
-            <ImageView fitHeight="40.0" fitWidth="40.0">
-               <image>
-                  <Image url="@../resources/Icons/ios7-browsers.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </JFXButton>
-      <JFXButton fx:id="buttonLogOut" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="1170.0" onAction="#buttonLogOutPressed" prefHeight="50.0" prefWidth="70.0" ripplerFill="ORANGE">
-         <graphic>
-            <ImageView fitHeight="40.0" fitWidth="40.0">
-               <image>
-                  <Image url="@../resources/Icons/log-out.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </JFXButton>
-      <JFXButton fx:id="buttonProceed" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="409.0" layoutY="50.0" onAction="#buttonProceedPressed" prefHeight="50.0" prefWidth="70.0" ripplerFill="ORANGE">
-         <graphic>
-            <ImageView fitHeight="40.0" fitWidth="40.0">
-               <image>
-                  <Image url="@../resources/Icons/ios7-custom-proceed.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </JFXButton>
-      <JFXButton fx:id="buttonReturn" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="339.0" layoutY="50.0" onAction="#buttonReturnPressed" prefHeight="50.0" prefWidth="70.0" ripplerFill="ORANGE">
-         <graphic>
-            <ImageView fitHeight="40.0" fitWidth="40.0">
-               <image>
-                  <Image url="@../resources/Icons/ios7-custom-back.png" />
-               </image>
-            </ImageView>
-         </graphic></JFXButton>
-      <JFXButton fx:id="buttonInformation" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="827.0" layoutY="100.0" onAction="#buttonInformationPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE">
-         <graphic>
-            <ImageView fitHeight="25.0" fitWidth="25.0">
-               <image>
-                  <Image url="@../resources/Icons/ios7-custom-information-bold.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </JFXButton>
-      <JFXButton fx:id="buttonTags" alignment="CENTER" buttonType="RAISED" cache="true" contentDisplay="GRAPHIC_ONLY" layoutX="827.0" layoutY="150.0" onAction="#buttonTagsPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffa100">
-         <graphic>
-            <ImageView fitHeight="25.0" fitWidth="25.0">
-               <image>
-                  <Image url="@../resources/Icons/pricetags.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </JFXButton>
-      <JFXButton fx:id="buttonComments" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="827.0" layoutY="200.0" onAction="#buttonCommentsPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="#ffa100">
-         <graphic>
-            <ImageView fitHeight="25.0" fitWidth="25.0">
-               <image>
-                  <Image url="@../resources/Icons/ios7-chatbubble.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </JFXButton>
-      <Label alignment="CENTER" contentDisplay="GRAPHIC_ONLY" layoutX="1170.0" layoutY="50.0" prefHeight="50.0" prefWidth="70.0" text="Label" visible="false">
-         <graphic>
-            <ImageView fitHeight="50.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../resources/Icons/navicon-round.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <contextMenu>
-            <ContextMenu>
-              <items>
-                <MenuItem mnemonicParsing="false" text="Unspecified Action" />
-              </items>
-            </ContextMenu>
-         </contextMenu>
-      </Label>
-      <JFXButton fx:id="buttonNewTask" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="876.0" layoutY="50.0" onAction="#buttonNewTaskPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE">
-         <graphic>
-            <ImageView fitHeight="40.0" fitWidth="40.0">
-               <image>
-                  <Image url="@../resources/Icons/plus-circled.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </JFXButton>
-      <ScrollPane fx:id="scrollPaneMansory" hbarPolicy="NEVER" layoutY="130.0" prefHeight="596.0" prefWidth="835.0" style="-fx-background-color: #969696;" AnchorPane.bottomAnchor="25.0">
-        <content>
-          <AnchorPane fx:id="anchorPaneMansory" minHeight="0.0" minWidth="0.0" prefHeight="596.0" prefWidth="820.0" style="-fx-background-color: #969696;">
-               <children>
-                  <VBox fx:id="mansoryPaneToDo" prefHeight="596.0" prefWidth="271.0" AnchorPane.topAnchor="30.0" />
-                  <VBox fx:id="mansoryPaneDoing" layoutX="272.0" prefHeight="596.0" prefWidth="271.0" style="-fx-background-color: #888888;" AnchorPane.topAnchor="30.0" />
-                  <VBox fx:id="mansoryPaneFinished" layoutX="543.0" prefHeight="596.0" prefWidth="276.0" AnchorPane.topAnchor="30.0" />
-               </children>
-            </AnchorPane>
-        </content>
-      </ScrollPane>
-      <AnchorPane layoutX="29.0" layoutY="595.0" prefHeight="25.0" prefWidth="835.0" style="-fx-background-color: cdcdcd;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
-         <children>
-            <Label layoutY="4.0" prefHeight="15.0" prefWidth="140.0" text="Benachrichtigungen:" AnchorPane.leftAnchor="10.0">
-               <font>
-                  <Font name="Roboto Light" size="13.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelBenachrichtigung" layoutX="158.0" layoutY="3.0" prefWidth="680.0" text=" " textFill="RED" AnchorPane.leftAnchor="150.0" />
+                        <JFXTextField fx:id="textFieldTaskname" focusColor="WHITE" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="55.0" AnchorPane.topAnchor="46.0">
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                        </JFXTextField>
+                        <Label text="Letzte Änderung:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="145.0">
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                        </Label>
+                        <JFXTextArea fx:id="textAreaDescription" focusColor="WHITE" stylesheets="@textArea.css" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="240.0">
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                        </JFXTextArea>
+                        <Label fx:id="labelLastChange" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="145.0">
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="labelLastUser" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="115.0">
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
+            <ScrollPane minHeight="0.0" minWidth="0.0" prefHeight="595.0" prefWidth="700.0" style="-fx-fit-to-height: true; -fx-fit-to-width: true; -fx-background-color: #969696;" stylesheets="@scrollbarKanban.css">
+               <content>
+                  <AnchorPane fx:id="anchor" minHeight="575.0" minWidth="790.0" prefHeight="595.0" prefWidth="790.0" style="-fx-background-color: #969696;">
+                     <children>
+                        <GridPane fx:id="gridKanban" hgap="10.0" style="-fx-background-color: #969696;" vgap="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="250.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="40.0" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <VBox alignment="TOP_CENTER" minWidth="250.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: #737373;" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" minWidth="250.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: #737373;" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </VBox>
+                              <VBox alignment="TOP_CENTER" minWidth="250.0" prefWidth="250.0" spacing="10.0" style="-fx-background-color: #737373;" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                 <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 </padding>
+                              </VBox>
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #737373;" />
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #737373;" GridPane.columnIndex="1" />
+                              <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #737373;" GridPane.columnIndex="2" />
+                           </children>
+                           <padding>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </padding>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </ScrollPane>
          </children>
-      </AnchorPane>
-      <Label fx:id="labelFinished" alignment="CENTER" prefHeight="30.0" prefWidth="273.0" style="-fx-background-color: #969696;" text="Finished" AnchorPane.leftAnchor="544.0" AnchorPane.topAnchor="100.0">
-         <font>
-            <Font name="Roboto Light" size="15.0" />
-         </font>
-      </Label>
-      <Label fx:id="labelDoing" alignment="CENTER" prefHeight="31.0" prefWidth="271.0" style="-fx-background-color: #888888;" text="Doing" AnchorPane.leftAnchor="273.0" AnchorPane.topAnchor="100.0">
-         <font>
-            <Font name="Roboto Light" size="15.0" />
-         </font>
-      </Label>
-      <Label fx:id="labelToDo" alignment="CENTER" prefHeight="30.0" prefWidth="273.0" style="-fx-background-color: #969696;" text="To Do" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="100.0">
-         <font>
-            <Font name="Roboto Light" size="15.0" />
-         </font>
-      </Label>
-      <JFXButton fx:id="buttonSaveNewTask" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" layoutX="1166.0" layoutY="50.0" onAction="#buttonSaveNewTaskPressed" prefHeight="50.0" prefWidth="50.0" ripplerFill="ORANGE" text="Task anlegen" textAlignment="CENTER" visible="false">
-         <font>
-            <Font size="15.0" />
-         </font>
-         <graphic>
-            <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../resources/Icons/save.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </JFXButton>
+      </GridPane>
    </children>
 </AnchorPane>

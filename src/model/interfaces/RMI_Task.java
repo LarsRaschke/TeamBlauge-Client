@@ -23,6 +23,8 @@ public interface RMI_Task extends Remote {
 	
 	public int getFarbe() throws RemoteException;
 	
+	public String getStatusname() throws RemoteException;
+	
 	public User getLetzterNutzer() throws RemoteException;
 	
 	public ZonedDateTime getLetzteAenderung() throws RemoteException;

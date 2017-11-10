@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextArea?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1240.0" style="-fx-background-color: #cdcdcd;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.application.ProjectFrameController">
+   <children>
+      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="70.0" style="-fx-background-color: #737373;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <JFXButton fx:id="buttonLogOut" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#buttonLogOutPressed" prefHeight="70.0" prefWidth="70.0" ripplerFill="ORANGE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0">
+               <graphic>
+                  <ImageView fitHeight="40.0" fitWidth="40.0">
+                     <image>
+                        <Image url="@../resources/Icons/log-out.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="buttonBack" alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY" onAction="#buttonBackPressed" prefHeight="60.0" prefWidth="70.0" ripplerFill="ORANGE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <graphic>
+                  <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/Icons/ios7-custom-back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font size="1.0" />
+               </font>
+            </JFXButton>
+         </children></AnchorPane>
+      <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="1170.0" style="-fx-background-color: #969696;" AnchorPane.leftAnchor="70.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label prefHeight="60.0" prefWidth="575.0" text="Projekt bearbeiten" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+               <font>
+                  <Font name="Candara Bold" size="20.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelUser" alignment="CENTER_RIGHT" contentDisplay="RIGHT" graphicTextGap="10.0" prefHeight="60.0" prefWidth="575.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <padding>
+                  <Insets right="20.0" />
+               </padding>
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/Icons/user-icon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+               <font>
+                  <Font name="Candara" size="20.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+      <GridPane hgap="20.0" layoutX="10.0" layoutY="10.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="620.0" prefWidth="1130.0" vgap="20.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="90.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="80.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="170.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="430.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <ScrollPane minHeight="0.0" minWidth="0.0" prefHeight="620.0" prefWidth="555.0" style="-fx-background-color: #ffa500; -fx-fit-to-height: true; -fx-fit-to-width: true;" stylesheets="@scrollbar.css" GridPane.rowSpan="2">
+               <content>
+                  <AnchorPane minHeight="700.0" minWidth="535.0" prefHeight="700.0" prefWidth="555.0" style="-fx-background-color: #ffa500;">
+                     <children>
+                        <Label style="-fx-background-color: #ffc966;" text="Projekt" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="Candara" size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </Label>
+                        <JFXButton fx:id="buttonEditProjectDescription" contentDisplay="GRAPHIC_ONLY" layoutX="476.0" layoutY="118.0" onAction="#buttonEditProjectDescriptionPressed" prefHeight="35.0" prefWidth="35.0" ripplerFill="#737373" text="Button" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+                           <graphic>
+                              <ImageView fx:id="buttonEditProjectDescriptionIcon" fitHeight="25.0" fitWidth="25.0">
+                                 <image>
+                                    <Image url="@../resources/Icons/compose.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <Label text="Projektname:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="50.0">
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                        </Label>
+                        <Label text="Projektbeschreibung:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="90.0">
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                        </Label>
+                        <JFXTextArea fx:id="textAreaProjectDescription" focusColor="WHITE" layoutX="35.0" layoutY="140.0" prefHeight="170.0" prefWidth="490.0" stylesheets="@textArea.css" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0">
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                           <padding>
+                              <Insets left="5.0" right="5.0" />
+                           </padding>
+                        </JFXTextArea>
+                        <Label fx:id="labelProjectname" AnchorPane.leftAnchor="105.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Statusliste:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="320.0">
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                        </Label>
+                        <JFXListView fx:id="listStatus" cellHorizontalMargin="2.0" cellVerticalMargin="0.0" prefHeight="255.0" prefWidth="505.0" stylesheets="@listView.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="425.0">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </JFXListView>
+                        <JFXTextField fx:id="textFieldStatusName" focusColor="WHITE" promptText="Statusname" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="350.0">
+                           <font>
+                              <Font name="Candara" size="15.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXTextField fx:id="textFieldStatusBefore" focusColor="WHITE" promptText="Vorgänger" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="385.0">
+                           <font>
+                              <Font name="Candara" size="15.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXButton fx:id="buttonAddStatus" contentDisplay="GRAPHIC_ONLY" onAction="#buttonAddStatusPressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373" text="Button" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="350.0">
+                           <font>
+                              <Font size="1.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fx:id="buttonAddStatusIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/Icons/custom-plus-circled.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding></AnchorPane>
+               </content>
+            </ScrollPane>
+            <ScrollPane minHeight="0.0" minWidth="0.0" prefHeight="353.0" prefWidth="555.0" style="-fx-background-color: #ffa500; -fx-fit-to-height: true; -fx-fit-to-width: true;" stylesheets="@scrollbar.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <content>
+                  <AnchorPane minHeight="430.0" minWidth="535.0" prefHeight="430.0" prefWidth="555.0" style="-fx-background-color: #ffa500;">
+                     <children>
+                        <Label style="-fx-background-color: #ffc966;" text="Projektteilnehmer" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="Candara" size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </Label>
+                        <JFXTextField fx:id="textFieldMember" focusColor="WHITE" layoutX="10.0" layoutY="45.0" promptText="Benutzername" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="40.0">
+                           <font>
+                              <Font name="Candara" size="15.0" />
+                           </font>
+                        </JFXTextField>
+                        <JFXButton fx:id="buttonAddMember" contentDisplay="GRAPHIC_ONLY" layoutX="498.0" layoutY="45.0" onAction="#buttonAddMemberPressed" prefHeight="25.0" prefWidth="25.0" ripplerFill="#737373" text="Button" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="40.0">
+                           <font>
+                              <Font size="1.0" />
+                           </font>
+                           <graphic>
+                              <ImageView fx:id="buttonAddMemberIcon" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../resources/Icons/custom-plus-circled.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </JFXButton>
+                        <JFXListView fx:id="listProjectMember" cellHorizontalMargin="2.0" cellVerticalMargin="0.0" layoutX="25.0" prefHeight="255.0" prefWidth="505.0" stylesheets="@listView.css" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="80.0">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </JFXListView>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding></AnchorPane>
+               </content>
+            </ScrollPane>
+            <ScrollPane minHeight="0.0" minWidth="0.0" prefHeight="247.0" prefWidth="555.0" style="-fx-background-color: #ffa500; -fx-fit-to-height: true; -fx-fit-to-width: true;" stylesheets="@scrollbar.css" GridPane.columnIndex="1">
+               <content>
+                  <AnchorPane minHeight="170.0" minWidth="535.0" prefHeight="170.0" prefWidth="555.0" style="-fx-background-color: #ffa500;">
+                     <children>
+                        <Label style="-fx-background-color: #ffc966;" text="Allgemeine Informationen" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="Candara" size="20.0" />
+                           </font>
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </Label>
+                        <Label text="Projektersteller:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="50.0">
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                        </Label>
+                        <Label text="Erstellunsdatum:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="80.0">
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                        </Label>
+                        <Label text="Letzte Änderung:" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="110.0">
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelLastChange" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="110.0">
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="labelCreationDate" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </Label>
+                        <Label fx:id="labelProjectCreator" AnchorPane.leftAnchor="135.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+                           <font>
+                              <Font name="Candara" size="17.0" />
+                           </font>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding></AnchorPane>
+               </content>
+            </ScrollPane>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

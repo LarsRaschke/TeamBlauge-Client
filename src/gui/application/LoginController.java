@@ -52,7 +52,14 @@ public class LoginController {
 			@Override
 			public void handle(KeyEvent ke) {
 				if (ke.getCode().equals(KeyCode.ENTER)) {
+					
 					checkLoginData();
+					
+					if (main.user != null) {
+						main.showProjectList();
+					} else {
+						infoLabelLogInScreen.setText("Falscher Username!");
+					}
 				}
 			}
 		});
@@ -61,7 +68,14 @@ public class LoginController {
 			@Override
 			public void handle(KeyEvent ke) {
 				if (ke.getCode().equals(KeyCode.ENTER)) {
+
 					checkLoginData();
+					
+					if (main.user != null) {
+						main.showProjectList();
+					} else {
+						infoLabelLogInScreen.setText("Falscher Username!");
+					}
 				}
 			}
 		});
@@ -80,7 +94,14 @@ public class LoginController {
 	 */
 	@FXML
 	void buttonLogInScreenLogInPressed(ActionEvent event) {
+		
 		checkLoginData();
+		
+		if (main.user != null) {
+			main.showProjectList();
+		} else {
+			infoLabelLogInScreen.setText("Falscher Username!");
+		}
 	}
 
 	/**
@@ -98,13 +119,6 @@ public class LoginController {
 		}
 		else {
 			main.user = new User("dummy", true, "User", "Dummy");
-		}
-
-		if (main.user != null) {
-			main.projektliste = new ArrayList<String>();
-			main.showProjectList();
-		} else {
-			infoLabelLogInScreen.setText("Falscher Username!");
 		}
 
 	}
