@@ -1,7 +1,5 @@
 package gui.application;
 
-import java.util.ArrayList;
-
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;

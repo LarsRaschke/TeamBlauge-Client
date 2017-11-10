@@ -5,6 +5,6 @@ import java.rmi.RemoteException;
 
 public interface ClientComm extends Remote{
 
-	void notifyChanges() throws RemoteException;
+	void notifyChanges(String gui) throws RemoteException;
 	
 }

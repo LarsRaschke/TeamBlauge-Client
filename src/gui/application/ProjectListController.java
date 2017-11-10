@@ -12,7 +12,6 @@ import com.jfoenix.controls.JFXTextField;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -189,7 +188,7 @@ public class ProjectListController {
 	/**
 	 * Benachrichtigt den User über Änderungen.
 	 */
-	public void notifyUser()
+	public void notifyUserProjekt()
 	{
 		buttonRefresh.setStyle("-fx-background-color: #ff2d37;");
 	}

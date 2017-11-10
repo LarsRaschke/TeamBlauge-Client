@@ -9,6 +9,6 @@ public interface ServerComm extends Remote {
 
     void unregister(ClientComm client) throws RemoteException;
 
-    void notifyClients(ClientComm client) throws RemoteException;
+    void notifyClients(ClientComm client, String gui) throws RemoteException;
 	
 }

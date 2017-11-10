@@ -9,8 +9,16 @@ public class Client implements ClientComm{
 	}
 
 	@Override
-	public void notifyChanges() throws RemoteException {
-		// TODO Auto-generated method stub
+	public void notifyChanges(String gui) throws RemoteException {
+
+		if(gui.equals("Projekt"))
+		{
+			
+		}
+		else if(gui.equals("Task"))
+		{
+			
+		}
 		
 	}
 

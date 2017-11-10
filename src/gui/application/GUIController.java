@@ -426,7 +426,7 @@ public class GUIController {
 	/**
 	 * Benachrichtigt den User über Änderungen.
 	 */
-	public void notifyUser()
+	public void notifyUserTask()
 	{
 		buttonRefresh.setStyle("-fx-background-color: #ff2d37;");
 	}
