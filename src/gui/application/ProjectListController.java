@@ -1,5 +1,6 @@
 package gui.application;
 
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.time.ZonedDateTime;
@@ -96,6 +97,7 @@ public class ProjectListController {
 		// Funktionalität - Laden & Setzen der Informationen
 
 		labelUser.setText(main.user.getNachname() + ", " + main.user.getVorname());
+		tableProjectList.getItems().clear();
 		
 		ArrayList<String> projektliste = new ArrayList<>();
 		
@@ -122,11 +124,7 @@ public class ProjectListController {
 			lbl.setStyle("-fx-font-size: 20px; -fx-font-family: \"Candara\";");
 			lbl.setText(projekt);
 			
-			
-			if(tableProjectList.getItems() != null)
-			{
-				tableProjectList.getItems().add(lbl);
-			}
+			tableProjectList.getItems().add(lbl);
 			
 		}
 		
@@ -190,7 +188,7 @@ public class ProjectListController {
 	 */
 	public void notifyUserProjekt()
 	{
-		buttonRefresh.setStyle("-fx-background-color: #ff2d37;");
+		buttonRefresh.setStyle("-fx-background-color: #800000;");
 	}
 	
 	/**
@@ -252,6 +250,12 @@ public class ProjectListController {
 		}
 		
 		if (itWorked) {
+			
+			try {
+				main.client.somethingChanged("Projektuebersicht", "");
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 			
 			Image image = new Image(getClass().getResource("../resources/Icons/pricetags.png").toExternalForm());
 			ImageView view = new ImageView();

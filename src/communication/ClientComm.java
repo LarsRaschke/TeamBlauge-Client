@@ -3,8 +3,13 @@ package communication;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-public interface ClientComm extends Remote{
+/**
+ * 
+ * @author withakea
+ *
+ */
+public interface ClientComm extends Remote {
 
-	void notifyChanges(String gui) throws RemoteException;
+	void updateGUI(String gui, String projekt) throws RemoteException;
 	
 }

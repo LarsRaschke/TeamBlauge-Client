@@ -1,5 +1,6 @@
 package gui.application;
 
+import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.time.ZonedDateTime;
@@ -428,7 +429,7 @@ public class GUIController {
 	 */
 	public void notifyUserTask()
 	{
-		buttonRefresh.setStyle("-fx-background-color: #ff2d37;");
+		buttonRefresh.setStyle("-fx-background-color: #800000;");
 	}
 	
 	/**
@@ -565,6 +566,8 @@ public class GUIController {
 				labelBenachrichtigung.setText("");
 			}
 			
+			main.client.somethingChanged("Taskuebersicht", main.aktuellesProjekt);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			main.log("Fehler", "Proceed Task");
@@ -604,6 +607,8 @@ public class GUIController {
 				
 				labelBenachrichtigung.setText("");
 			}
+			
+			main.client.somethingChanged("Taskuebersicht", main.aktuellesProjekt);
 
 		} catch (Exception e) {
 			e.printStackTrace();

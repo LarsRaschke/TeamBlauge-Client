@@ -162,7 +162,7 @@
                               <Insets left="5.0" right="5.0" />
                            </padding>
                         </Label>
-                        <AnchorPane fx:id="anchorPaneTags" minHeight="0.0" minWidth="0.0" prefHeight="80.0" prefWidth="515.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="40.0">
+                        <AnchorPane fx:id="anchorPaneTags" minHeight="0.0" minWidth="0.0" prefHeight="135.0" prefWidth="515.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
                            <children>
                               <Label layoutX="5.0" layoutY="0.0" prefHeight="25.0" prefWidth="505.0" text="Tags:" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                                  <font>
@@ -193,10 +193,10 @@
                                     <Insets left="10.0" right="10.0" />
                                  </padding>
                               </JFXTextField>
-                              <JFXMasonryPane fx:id="mansoryPaneTags" layoutX="3.0" layoutY="60.0" prefWidth="500.0" style="-fx-background-color: green;" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="70.0" />
+                              <JFXMasonryPane fx:id="mansoryPaneTags" layoutX="3.0" layoutY="60.0" prefWidth="500.0" style="-fx-background-color: #ffa500;" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="70.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="anchorPaneComments" minHeight="0.0" minWidth="0.0" prefHeight="80.0" prefWidth="515.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="130.0">
+                        <AnchorPane fx:id="anchorPaneComments" minHeight="0.0" minWidth="0.0" prefHeight="80.0" prefWidth="515.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="205.0">
                            <children>
                               <Label layoutX="5.0" layoutY="0.0" prefHeight="25.0" prefWidth="120.0" text="Kommentare:" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                                  <font>

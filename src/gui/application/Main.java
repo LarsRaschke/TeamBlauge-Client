@@ -2,6 +2,7 @@ package gui.application;
 
 import java.io.IOException;
 
+import communication.Client;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,7 +16,9 @@ public class Main extends Application {
 
 	BorderPane root = new BorderPane();
 	Stage primaryStage = new Stage();
-
+	
+	public Client client;
+	
 	// Setze auf false wenn nicht in der Schule gearbeitet wird, sodass keine LDAP
 	// verbindung benoetigt wird
 	private boolean LDAPConnection = false;
@@ -25,10 +28,17 @@ public class Main extends Application {
 	public String aktuellesProjekt;
 	
 	public String aktuellerTask;
+	
+	public String aktiveView;
+	
+	private Object activeController;
 
 	@Override
 	public void start(Stage primaryStage) {
 		try {
+			
+			this.client = new Client(this);
+			
 			this.primaryStage = primaryStage;
 			this.primaryStage.setTitle("BLAUGE Kanban");
 			initRoot();
@@ -64,8 +74,10 @@ public class Main extends Application {
 			loader.setLocation(Main.class.getResource("loginScreen.fxml"));
 			AnchorPane GUI = (AnchorPane) loader.load();
 			LoginController controller = loader.getController();
+			activeController = controller;
 			controller.setMainApp(this);
 			root.setCenter(GUI);
+			aktiveView = "Login";
 			controller.init();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -78,8 +90,10 @@ public class Main extends Application {
 			loader.setLocation(Main.class.getResource("projectList.fxml"));
 			AnchorPane GUI = (AnchorPane) loader.load();
 			ProjectListController controller = loader.getController();
+			activeController = controller;
 			controller.setMainApp(this);
 			root.setCenter(GUI);
+			aktiveView = "ProjectList";
 			controller.init();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -92,8 +106,10 @@ public class Main extends Application {
 			loader.setLocation(Main.class.getResource("projectFrame.fxml"));
 			AnchorPane GUI = (AnchorPane) loader.load();
 			ProjectFrameController controller = loader.getController();
+			activeController = controller;
 			controller.setMainApp(this);
 			root.setCenter(GUI);
+			aktiveView = "Project";
 			controller.init();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -107,8 +123,10 @@ public class Main extends Application {
 			loader.setLocation(Main.class.getResource("mainFrame.fxml"));
 			AnchorPane GUI = (AnchorPane) loader.load();
 			GUIController controller = loader.getController();
+			activeController = controller;
 			controller.setMainApp(this);
 			root.setCenter(GUI);
+			aktiveView = "TaskList";
 			controller.init();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -121,11 +139,27 @@ public class Main extends Application {
 			loader.setLocation(Main.class.getResource("TaskFrame.fxml"));
 			AnchorPane GUI = (AnchorPane) loader.load();
 			TaskFrameController controller = loader.getController();
+			activeController = controller;
 			controller.setMainApp(this);
 			root.setCenter(GUI);
+			aktiveView = "Task";
 			controller.init();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public void notifyChanges(String gui, String projekt)
+	{
+		if(gui.equals("Projektuebersicht") && aktiveView.equals("ProjectList"))
+		{
+			ProjectListController controller = (ProjectListController) activeController;
+			controller.notifyUserProjekt();
+		}
+		else if(gui.equals("Taskuebersicht") && aktuellesProjekt.equals(projekt) && aktiveView.equals("TaskList"))
+		{
+			GUIController controller = (GUIController) activeController;
+			controller.notifyUserTask();
 		}
 	}
 
@@ -174,6 +208,7 @@ public class Main extends Application {
 	}
 
 	public static void main(String[] args) {
+		
 		launch(args);
 	}
 }

@@ -3,6 +3,7 @@ package gui.application;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXColorPicker;
@@ -13,6 +14,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -166,7 +168,19 @@ public class TaskFrameController {
 			textAreaDescription.setText(task.getBeschreibung());
 			labelStatus.setText(task.getStatusname());
 			
-			//TODO : Listen Tags & Kommentare
+			ArrayList<String> tagList = task.getTags();
+			for(String tag : tagList)
+			{
+				this.createTag(tag);
+			}
+			
+			ArrayList<String> commentList = task.getKommentar();
+			for(String comment : commentList)
+			{
+				this.createComment(comment);
+			}
+			
+			// TODO: Comments
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -209,29 +223,36 @@ public class TaskFrameController {
 	 * Legt ein Label für einen Kommentar in der GUI an.
 	 * 
 	 * @param name - Der Name des Tags.
+	 * @param user
 	 */
 	private void createComment(String name) {
+		
 		Label lbl = new Label();
+		lbl.setPadding(new Insets(0, 5, 0, 5));
 
 		this.mansoryPaneComments.setCellHeight(10);
-		this.mansoryPaneComments.setCellWidth(290);
-		this.mansoryPaneComments.setMaxWidth(300);
+		this.mansoryPaneComments.setCellWidth(270);
 		
-		lbl.setMaxWidth(290);
-
 		lbl.setWrapText(true);
+		lbl.setMaxWidth(270);
 
 		name = formatComment(name, "-\n\t", 25);
 
-		int additionalLength = (name.length() / 25 + 2) * 20;
-
 		lbl.setText(name);
+		System.out.println(lbl.getHeight());
 		textFieldComments.setText("");
-		lbl.setAlignment(Pos.TOP_LEFT);
-		lbl.setStyle("display:inline-block; -fx-padding: 0; -fx-background-color: orange;");
+		lbl.setAlignment(Pos.CENTER);
+		lbl.setStyle("display:inline-block; -fx-background-radius: 15px; -fx-background-color: #969696;");
+		mansoryPaneComments.setStyle("height:wrap-content");
+		
+		mansoryPaneComments.autosize();
 		mansoryPaneComments.getChildren().add(lbl);
 
-		mansoryPaneComments.setPrefHeight(mansoryPaneComments.getHeight() + additionalLength);
+		anchorPaneComments.setMinHeight(mansoryPaneComments.getHeight() + 300);
+		if(anchor.getHeight() < 100 + anchorPaneComments.getHeight() + anchorPaneTags.getHeight())
+		{
+			anchor.setMinHeight(100 + anchorPaneComments.getHeight() + anchorPaneTags.getHeight());
+		}
 		
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
@@ -248,12 +269,14 @@ public class TaskFrameController {
 	 * @param name - Der Name des Tags.
 	 */
 	private void createTag(String name) {
+		
 		Label lbl = new Label();
-
+		lbl.setPadding(new Insets(0, 5, 0, 5));
+		
 		this.mansoryPaneTags.setCellHeight(20);
 		this.mansoryPaneTags.setCellWidth(40);
 
-		lbl.setText(" " + name + " ");
+		lbl.setText(name);
 		textFieldTags.setText("");
 		lbl.setAlignment(Pos.CENTER);
 		lbl.setStyle("-fx-background-color: #969696; -fx-background-radius: 15px; display:inline-block");
@@ -261,7 +284,14 @@ public class TaskFrameController {
 
 		mansoryPaneTags.autosize();
 		mansoryPaneTags.getChildren().add(lbl);
-
+		
+		anchorPaneTags.setMinHeight(mansoryPaneTags.getHeight() + 135);
+		AnchorPane.setTopAnchor(anchorPaneComments, anchorPaneTags.getHeight() + 70);
+		if(anchor.getHeight() < 100 + anchorPaneComments.getHeight() + anchorPaneTags.getHeight())
+		{
+			anchor.setMinHeight(100 + anchorPaneComments.getHeight() + anchorPaneTags.getHeight());
+		}
+		
 		lbl.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent e) {
@@ -276,6 +306,7 @@ public class TaskFrameController {
 	 * @param text - Der Ausgangstext des Kommentars.
 	 * @param insert
 	 * @param period
+	 * @param user
 	 * 
 	 * @return Der formatierte Kommentar.
 	 */
@@ -295,6 +326,7 @@ public class TaskFrameController {
 			builder.append(text.substring(index, Math.min(index + period, text.length())));
 			index += period;
 		}
+		
 		return builder.toString();
 	}
 
@@ -396,7 +428,7 @@ public class TaskFrameController {
 				RMI_Projekt projekt = (RMI_Projekt) registry.lookup(main.aktuellesProjekt);
 				projekt.speichereProjekt();
 				
-				//TODO: Kommentar anzeigen
+				this.createComment(textFieldComments.getText() + " | " + main.user.getNachname() + ", " + main.user.getVorname());
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -427,7 +459,7 @@ public class TaskFrameController {
 				RMI_Projekt projekt = (RMI_Projekt) registry.lookup(main.aktuellesProjekt);
 				projekt.speichereProjekt();
 				
-				// TODO: Tag anzeigen
+				this.createTag(textFieldTags.getText());
 
 			} catch (Exception e) {
 				e.printStackTrace();
